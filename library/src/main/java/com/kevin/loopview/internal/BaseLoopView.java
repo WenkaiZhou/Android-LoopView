@@ -1,0 +1,482 @@
+package com.kevin.loopview.internal;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.kevin.loopview.R;
+
+/**
+ * 版权所有：XXX有限公司</br>
+ * <p/>
+ * BaseLoopView </br>
+ *
+ * @author zhou.wenkai ,Created on 2015-1-14 19:30:18</br>
+ * @author mender，Modified Date Modify Content:
+ * @Description Major Function：<b>自定义控件可以自动跳动的ViewPager</b> </br>
+ * <p/>
+ * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
+ */
+public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
+
+    /**
+     * ViewPager
+     */
+    protected ViewPager mViewPager;
+    /**
+     * ViewPager数据适配器
+     */
+    private BaseLoopAdapter adapter;
+    /**
+     * 底部指示点父控件
+     */
+    protected LinearLayout dotsView;
+    /**
+     * 描述文字
+     */
+    protected TextView descText;
+    /**
+     * 指示点的位置
+     */
+    protected int currentPosition = -1;
+
+    /**
+     * 描述文字大小
+     */
+    protected float mDescTextSize;
+    /**
+     * 描述文字颜色
+     */
+    protected int mDescTextColor;
+    /**
+     * 描述文字位置
+     */
+    protected int mDescTextGravity;
+    /**
+     * 指示点距离
+     */
+    protected float mDotMargin;
+    /**
+     * 指示器背景
+     */
+    protected Drawable mBackground;
+    /**
+     * 指示器背景透明度
+     */
+    protected float mBackgroundAlpha;
+    /**
+     * 自动跳转的时间间隔
+     */
+    protected long mInterval;
+    /**
+     * 是否自动跳转
+     */
+    private boolean autoLoop = false;
+
+    /**
+     * 触摸时是否停止自动跳转
+     */
+    private boolean stopScrollWhenTouch = true;
+    /**
+     * 当前状态是否是由于触摸而停止
+     */
+    private boolean isStopByTouch = false;
+    /**
+     * 当前状态是否为自动跳转
+     */
+    private boolean isAutoScroll = true;
+
+    /**
+     * 自动跳转的方向为自右向左
+     */
+    public static final int LEFT = 0;
+    /**
+     * 自动跳转的方向为自左向右
+     */
+    public static final int RIGHT = 1;
+    /**
+     * 自动跳转方向</br> 默认自左向右
+     */
+    protected int direction = RIGHT;
+
+    /**
+     * 数据实体对象
+     */
+    protected LoopData mLoopData;
+
+    private static final int SCROLL_WHAT = 0x672a47b;
+    private Handler mHandler;
+    /**
+     * 条目点击的接口回调
+     */
+    protected BaseLoopAdapter.OnItemClickListener mOnItemClickListener;
+    /**
+     * 自动跳转状态的接口回调
+     */
+    protected OnLoopListener mOnLoopListener;
+    /**
+     * 滑动控制器
+     */
+    private LoopViewScroller mScroller;
+
+    public BaseLoopView(Context context) {
+        this(context, null);
+    }
+
+    public BaseLoopView(Context context, AttributeSet attrs) {
+        this(context, attrs, -1);
+    }
+
+    public BaseLoopView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        // 加载默认资源
+        final float defaultDotMargin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
+        final int defaulInterval = 3000;
+
+        // 设置样式属性
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoopView);
+
+        mDotMargin = a.getDimension(R.styleable.LoopView_dotMargin, defaultDotMargin);
+        mInterval = a.getInt(R.styleable.LoopView_interval, defaulInterval);
+        autoLoop = a.getBoolean(R.styleable.LoopView_autoLoop, false);
+
+        a.recycle();
+
+        initRealView();
+    }
+
+    /**
+     * 设置监听
+     */
+    protected void setViewListner() {
+
+        // 设置viewPager监听
+        setOnPageChangeListener();
+
+        // 数据适配器点击事件监听回调
+        adapter.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(parent, view, position, realPosition);
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 设置页面切换过渡时间
+     *
+     * @param duration
+     */
+    @Override
+    public void setScrollDuration(long duration) {
+        mScroller = new LoopViewScroller(getContext());
+        mScroller.setScrollDuration(duration);
+        mScroller.initViewPagerScroll(mViewPager);
+    }
+
+    /**
+     * 设置页面切换时间间隔
+     */
+    @Override
+    public void setInterval(long interval) {
+        this.mInterval = interval;
+    }
+
+    /**
+     * 获取封装数据
+     *
+     * @return mLoopData
+     * @date 2015-5-25 16:27:52
+     */
+    @Override
+    public LoopData getLoopData() {
+        return mLoopData;
+    }
+
+    /**
+     * @return currentPosition
+     * @description 获取当前指示位置
+     * @date 2015-5-25 16:27:52
+     */
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    /**
+     * 集合方式初始化轮转大图
+     *
+     * @param datas
+     */
+    @Override
+    public void setLoopViewPager(List<Map<String, String>> datas) {
+        if (null == datas) return;
+        if (mLoopData == null) {
+            mLoopData = new LoopData();
+            mLoopData.items = new ArrayList();
+        }
+        for (Map<String, String> map : datas) {
+            LoopData.ItemDatas itemDatas =
+                    mLoopData.new ItemDatas(map.get("id"), map.get("imageURL"),
+                            map.get("link"), map.get("descText"), map.get("type"));
+            mLoopData.items.add(itemDatas);
+        }
+
+        initRotateViewPager();
+    }
+
+    /**
+     * 对象方式初始化轮转大图
+     *
+     * @param rotateDatas
+     */
+    @Override
+    public void setLoopViewPager(LoopData rotateDatas) {
+        if (null == rotateDatas) return;
+        mLoopData = rotateDatas;
+
+        initRotateViewPager();
+    }
+
+    /**
+     * Json方式初始化轮转大图
+     *
+     * @param jsonDatas
+     */
+    @Override
+    public void setLoopViewPager(String jsonDatas) {
+        if (null == jsonDatas) return;
+        mLoopData = JsonTool.jsonTobean(jsonDatas, LoopData.class);
+
+        initRotateViewPager();
+    }
+
+    /**
+     * 集合方式刷新数据
+     *
+     * @param datas
+     */
+    public void refreshDatas(final List<Map<String, String>> datas) {
+        if (null == datas) return;
+        stopAutoLoop();
+        removeAllViews();
+        initRealView();
+        mLoopData.items.clear();
+        for (Map<String, String> map : datas) {
+            LoopData.ItemDatas itemDatas =
+                    mLoopData.new ItemDatas(map.get("id"), map.get("imageURL"),
+                            map.get("link"), map.get("descText"), map.get("type"));
+            mLoopData.items.add(itemDatas);
+        }
+        initRotateViewPager();
+        invalidate();
+    }
+
+    /**
+     * 对象方式刷新数据
+     *
+     * @param rotateDatas
+     */
+    public void refreshDatas(LoopData rotateDatas) {
+        if (null == rotateDatas) return;
+        stopAutoLoop();
+        removeAllViews();
+        initRealView();
+        mLoopData = null;
+        mLoopData = rotateDatas;
+        initRotateViewPager();
+        invalidate();
+    }
+
+    /**
+     * Json方式刷新数据
+     *
+     * @param jsonDatas
+     */
+    public void refreshDatas(String jsonDatas) {
+        if (TextUtils.isEmpty(jsonDatas)) return;
+        stopAutoLoop();
+        removeAllViews();
+        initRealView();
+        mLoopData = null;
+        mLoopData = JsonTool.jsonTobean(jsonDatas, LoopData.class);
+        initRotateViewPager();
+        invalidate();
+    }
+
+    private void initRotateViewPager() {
+        adapter = initAdapter();
+        mViewPager.setAdapter(adapter);
+        initDots(mLoopData.items.size());                     // 初始化指示点
+        descText.setText(mLoopData.items.get(0).descText);    // 初始化描述信息
+        setViewListner();                                       // 初始化点击监听事件
+        int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
+        mViewPager.setCurrentItem(startPosition, false);        // 设置当前显示的位置
+        if (mHandler == null) {
+            mHandler = new MyHandler();
+        }
+
+        if (autoLoop) {
+            startAutoLoop();
+        }
+    }
+
+    /**
+     * <ul>
+     * stopScrollWhenTouch为TRUE时
+     * <li>按下操作停止轮转</li>
+     * <li>抬起操作继续轮转</li>
+     * </ul>
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        int action = MotionEventCompat.getActionMasked(ev);
+
+        if (stopScrollWhenTouch) {
+            if ((action == MotionEvent.ACTION_DOWN) && isAutoScroll) {
+                isStopByTouch = true;
+                stopAutoLoop();
+            } else if (ev.getAction() == MotionEvent.ACTION_UP && isStopByTouch) {
+                startAutoLoop(mInterval);
+            }
+        }
+
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 开始自动跳转
+     */
+    public void startAutoLoop() {
+        startAutoLoop(mInterval);
+    }
+
+    /**
+     * 开始自动跳转
+     *
+     * @param delayTimeInMills 延时
+     */
+    public void startAutoLoop(long delayTimeInMills) {
+        if (mLoopData.items.size() <= 1) return;
+        isAutoScroll = true;
+        sendScrollMessage(delayTimeInMills);
+    }
+
+    /**
+     * 发送跳转消息
+     *
+     * @param delayTimeInMills 延时
+     */
+    private void sendScrollMessage(long delayTimeInMills) {
+        /** 先移除消息,保证最多只有一个消息 */
+        mHandler.removeMessages(SCROLL_WHAT);
+        mHandler.sendEmptyMessageDelayed(SCROLL_WHAT, delayTimeInMills);
+    }
+
+    /**
+     * 停止自动跳转
+     */
+    @Override
+    public void stopAutoLoop() {
+        isAutoScroll = false;
+        if (mHandler != null) {
+            mHandler.removeMessages(SCROLL_WHAT);
+        }
+    }
+
+    /**
+     * 判断是否在自动轮播
+     *
+     * @return
+     */
+    public boolean isAutoScroll() {
+        return isAutoScroll;
+    }
+
+    /**
+     * 注册点击监听的方法
+     */
+    public void setOnClickListener(BaseLoopAdapter.OnItemClickListener l) {
+        this.mOnItemClickListener = l;
+    }
+
+    public void setOnRotateListener(OnLoopListener l) {
+        this.mOnLoopListener = l;
+    }
+
+    /**
+     * 初始化View
+     */
+    protected abstract void initRealView();
+
+    /**
+     * 初始化轮转ViewPager
+     */
+    protected abstract BaseLoopAdapter initAdapter();
+
+    /**
+     * 初始化指示器
+     *
+     * @param size
+     */
+    protected abstract void initDots(int size);
+
+    /**
+     * 设置viewPager监听
+     */
+    protected abstract void setOnPageChangeListener();
+
+    @SuppressLint("HandlerLeak")
+    public class MyHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case SCROLL_WHAT:
+                    if (!isAutoScroll) return;
+                    int change = (direction == LEFT) ? -1 : 1;
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + change, true);
+                    sendScrollMessage(mInterval);
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 释放资源
+     */
+    public void releaseResources() {
+        if (mHandler != null) {
+            mHandler.removeMessages(SCROLL_WHAT);
+            mHandler = null;
+        }
+    }
+
+}
