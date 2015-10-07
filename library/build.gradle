@@ -1,11 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 22
     buildToolsVersion "23.0.0 rc2"
 
     defaultConfig {
-        applicationId "com.kevin.loopview"
         minSdkVersion 4
         targetSdkVersion 22
         versionCode 1

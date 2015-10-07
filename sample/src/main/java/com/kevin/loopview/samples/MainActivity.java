@@ -1,4 +1,4 @@
-package com.kevin.loopview;
+package com.kevin.loopview.samples;
 
 import android.app.Activity;
 import android.os.Bundle;
