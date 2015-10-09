@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kevin.loopview.R;
+import com.kevin.loopview.utils.JsonTool;
 
 /**
  * 版权所有：XXX有限公司</br>
@@ -269,8 +270,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     @Override
     public void setLoopViewPager(String jsonDatas) {
         if (null == jsonDatas) return;
-        mLoopData = JsonTool.jsonTobean(jsonDatas, LoopData.class);
-
+        mLoopData = JsonTool.toBean(jsonDatas, LoopData.class);
         initRotateViewPager();
     }
 
@@ -322,7 +322,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         removeAllViews();
         initRealView();
         mLoopData = null;
-        mLoopData = JsonTool.jsonTobean(jsonDatas, LoopData.class);
+        mLoopData = JsonTool.toBean(jsonDatas, LoopData.class);
         initRotateViewPager();
         invalidate();
     }

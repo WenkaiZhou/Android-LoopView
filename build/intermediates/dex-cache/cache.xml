@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\work\GitHub\Android-LoopView\sample\build\intermediates\exploded-aar\Android-LoopView\library\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="1a670ceb2344428d11926513ce2c474aeb7a785c">
+        <dex dex="E:\work\GitHub\Android-LoopView\sample\build\intermediates\pre-dexed\debug\classes-125d367bfc62dda90af199145bf9d0b73fbd8e75.jar" />
+    </item>
+
+</items>

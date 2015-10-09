@@ -4,34 +4,42 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.kevin.loopview.AdLoopView;
+import com.kevin.loopview.internal.LoopData;
+import com.kevin.loopview.samples.utils.LocalFileUtils;
+import com.kevin.loopview.utils.JsonTool;
 
 public class MainActivity extends Activity {
+
+    AdLoopView mLoopView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initViews();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void initViews() {
+        mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
+        initRotateView();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    /**
+     * 初始化LoopView
+     *
+     * @return void
+     * @date 2015-10-9 21:32:12
+     */
+    private void initRotateView() {
+        String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
+        LoopData loopData = JsonTool.toBean(json, LoopData.class);
+        if(null != loopData) {
+            mLoopView.refreshDatas(loopData);
+            mLoopView.startAutoLoop();
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -30,6 +30,9 @@ public class LoopData {
 		/** 类型 */
 		public String type;
 
+		public ItemDatas() {
+		}
+
 		public ItemDatas(String id, String imgUrl, String link, String descText, String type) {
 			this.id = id;
 			this.imgUrl = imgUrl;
