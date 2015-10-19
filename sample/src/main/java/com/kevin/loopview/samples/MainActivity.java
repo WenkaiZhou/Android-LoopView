@@ -2,9 +2,6 @@ package com.kevin.loopview.samples;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.LoopData;
