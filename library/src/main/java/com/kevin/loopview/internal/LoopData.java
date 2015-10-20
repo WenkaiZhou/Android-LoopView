@@ -16,9 +16,9 @@ import java.util.List;
 public class LoopData {
 	
 	/** 每个条目数据 */
-	public List<ItemDatas> items;
+	public List<ItemData> items;
 	
-	public class ItemDatas {
+	public class ItemData {
 		/** ID */
 		public String id;
 		/** 图片地址 */
@@ -30,10 +30,10 @@ public class LoopData {
 		/** 类型 */
 		public String type;
 
-		public ItemDatas() {
+		public ItemData() {
 		}
 
-		public ItemDatas(String id, String imgUrl, String link, String descText, String type) {
+		public ItemData(String id, String imgUrl, String link, String descText, String type) {
 			this.id = id;
 			this.imgUrl = imgUrl;
 			this.link = link;
