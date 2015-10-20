@@ -4,21 +4,21 @@
             "id": "0",
             "descText": "传递数据纠结吗？",
             "imgUrl": "http://cms.csdnimg.cn/article/201305/21/519b0d442e3e7.jpg",
-            "link":"这个在应用里判断是否有链接,为空无链接",
-            "type":"weather"
+            "link":"https://github.com/greenrobot/EventBus",
+            "type":"ad"
         },
         {
             "id": "1",
             "descText": "OOM了肿么办，不用怕！",
             "imgUrl": "http://cms.csdnimg.cn/article/201305/03/51834d562e039_middle.jpg",
-            "link":"这个在应用里判断是否有链接,为空无链接",
+            "link":"https://github.com/nostra13/Android-Universal-Image-Loader",
             "type":"ad"
         },
         {
             "id": "2",
             "descText": "不想写sql语句唉",
             "imgUrl": "http://www.strongcms.net/uploads/allimg/c120202/132Q962920TP-1W17.png",
-            "link":"xxx",
+            "link":"http://ormlite.com/sqlite_java_android_orm.shtml",
             "type":"ad"
         }
     ]

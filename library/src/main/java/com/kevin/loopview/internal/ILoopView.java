@@ -3,7 +3,6 @@ package com.kevin.loopview.internal;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 版权所有：XXX有限公司</br>
  * 
@@ -30,39 +29,39 @@ public interface ILoopView {
 	
 	/**
 	 * 集合方式初始化轮转大图
-	 * @param datas
+	 * @param data
 	 */
-	void setLoopViewPager(List<Map<String, String>> datas);
+	void setLoopViewPager(List<Map<String, String>> data);
 	
 	/**
 	 * 对象方式初始化轮转大图 
-	 * @param rotateDatas
+	 * @param rotateData
 	 */
-	void setLoopViewPager(LoopData rotateDatas);
+	void setLoopViewPager(LoopData rotateData);
 	
 	/**
 	 * Json方式初始化轮转大图 
-	 * @param jsonDatas
+	 * @param jsonData
 	 */
-	void setLoopViewPager(String jsonDatas);
+	void setLoopViewPager(String jsonData);
 	
 	/**
 	 * 集合方式刷新数据
-	 * @param datas
+	 * @param data
 	 */
-	void refreshDatas(final List<Map<String, String>> datas);
+	void refreshData(final List<Map<String, String>> data);
 	
 	/**
 	 * 对象方式刷新数据
 	 * @param loopData
 	 */
-	void refreshDatas(LoopData loopData);
+	void refreshData(LoopData loopData);
 	
 	/**
 	 * Json方式刷新数据
-	 * @param jsonDatas
+	 * @param jsonData
 	 */
-	void refreshDatas(String jsonDatas);
+	void refreshData(String jsonData);
 
 	/**
 	 * 获取数据

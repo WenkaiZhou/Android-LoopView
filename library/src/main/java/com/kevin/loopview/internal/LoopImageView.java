@@ -36,7 +36,7 @@ import android.widget.ImageView;
 public class LoopImageView extends ImageView {
 	
 	/** 缓存路径 */
-	private static final String DISK_CACHE_PATH = "/image_cache/";
+	private static final String DISK_CACHE_PATH = "/loopview_cache/";
 	/** 连接超时时间 */
     private static final int CONNECT_TIMEOUT 	= 5000;
     /** 读取时间超时 */

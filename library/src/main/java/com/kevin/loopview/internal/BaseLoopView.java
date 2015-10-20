@@ -38,104 +38,47 @@ import com.kevin.loopview.utils.JsonTool;
  */
 public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
-    /**
-     * ViewPager
-     */
+    /** ViewPager */
     protected ViewPager mViewPager;
-    /**
-     * ViewPager数据适配器
-     */
+    /** ViewPager数据适配器 */
     private BaseLoopAdapter adapter;
-    /**
-     * 底部指示点父控件
-     */
+    /** 底部指示点父控件 */
     protected LinearLayout dotsView;
-    /**
-     * 描述文字
-     */
+    /** 描述文字 */
     protected TextView descText;
-    /**
-     * 指示点的位置
-     */
+    /** 指示点的位置 */
     protected int currentPosition = -1;
-
-    /**
-     * 描述文字大小
-     */
-    protected float mDescTextSize;
-    /**
-     * 描述文字颜色
-     */
-    protected int mDescTextColor;
-    /**
-     * 描述文字位置
-     */
-    protected int mDescTextGravity;
-    /**
-     * 指示点距离
-     */
+    /** 指示点距离 */
     protected float mDotMargin;
-    /**
-     * 指示器背景
-     */
-    protected Drawable mBackground;
-    /**
-     * 指示器背景透明度
-     */
-    protected float mBackgroundAlpha;
-    /**
-     * 自动跳转的时间间隔
-     */
+    /** 自动跳转的时间间隔 */
     protected long mInterval;
-    /**
-     * 是否自动跳转
-     */
+    /** 是否自动跳转 */
     private boolean autoLoop = false;
 
-    /**
-     * 触摸时是否停止自动跳转
-     */
+    /** 触摸时是否停止自动跳转 */
     private boolean stopScrollWhenTouch = true;
-    /**
-     * 当前状态是否是由于触摸而停止
-     */
+    /** 当前状态是否是由于触摸而停止 */
     private boolean isStopByTouch = false;
-    /**
-     * 当前状态是否为自动跳转
-     */
+    /** 当前状态是否为自动跳转 */
     private boolean isAutoScroll = true;
 
-    /**
-     * 自动跳转的方向为自右向左
-     */
+    /** 自动跳转的方向为自右向左 */
     public static final int LEFT = 0;
-    /**
-     * 自动跳转的方向为自左向右
-     */
+    /** 自动跳转的方向为自左向右 */
     public static final int RIGHT = 1;
-    /**
-     * 自动跳转方向</br> 默认自左向右
-     */
+    /** 自动跳转方向</br> 默认自左向右 */
     protected int direction = RIGHT;
 
-    /**
-     * 数据实体对象
-     */
+    /** 数据实体对象 */
     protected LoopData mLoopData;
 
     private static final int SCROLL_WHAT = 0x672a47b;
     private Handler mHandler;
-    /**
-     * 条目点击的接口回调
-     */
+    /** 条目点击的接口回调 */
     protected BaseLoopAdapter.OnItemClickListener mOnItemClickListener;
-    /**
-     * 自动跳转状态的接口回调
-     */
+    /** 自动跳转状态的接口回调 */
     protected OnLoopListener mOnLoopListener;
-    /**
-     * 滑动控制器
-     */
+    /** 滑动控制器 */
     private LoopViewScroller mScroller;
 
     public BaseLoopView(Context context) {
@@ -149,16 +92,16 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     public BaseLoopView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        // 加载默认资源
+        // 设置默认属性
         final float defaultDotMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
-        final int defaulInterval = 3000;
+                TypedValue.COMPLEX_UNIT_DIP, 3, getResources().getDisplayMetrics());
+        final int defaultInterval = 3000;
 
         // 设置样式属性
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoopView);
 
         mDotMargin = a.getDimension(R.styleable.LoopView_dotMargin, defaultDotMargin);
-        mInterval = a.getInt(R.styleable.LoopView_interval, defaulInterval);
+        mInterval = a.getInt(R.styleable.LoopView_interval, defaultInterval);
         autoLoop = a.getBoolean(R.styleable.LoopView_autoLoop, false);
 
         a.recycle();
@@ -169,7 +112,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 设置监听
      */
-    protected void setViewListner() {
+    protected void setViewListener() {
 
         // 设置viewPager监听
         setOnPageChangeListener();
@@ -240,8 +183,8 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
             mLoopData.items = new ArrayList();
         }
         for (Map<String, String> map : datas) {
-            LoopData.ItemDatas itemDatas =
-                    mLoopData.new ItemDatas(map.get("id"), map.get("imageURL"),
+            LoopData.ItemData itemDatas =
+                    mLoopData.new ItemData(map.get("id"), map.get("imageURL"),
                             map.get("link"), map.get("descText"), map.get("type"));
             mLoopData.items.add(itemDatas);
         }
@@ -277,17 +220,17 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 集合方式刷新数据
      *
-     * @param datas
+     * @param data
      */
-    public void refreshDatas(final List<Map<String, String>> datas) {
-        if (null == datas) return;
+    public void refreshData(final List<Map<String, String>> data) {
+        if (null == data) return;
         stopAutoLoop();
         removeAllViews();
         initRealView();
         mLoopData.items.clear();
-        for (Map<String, String> map : datas) {
-            LoopData.ItemDatas itemDatas =
-                    mLoopData.new ItemDatas(map.get("id"), map.get("imageURL"),
+        for (Map<String, String> map : data) {
+            LoopData.ItemData itemDatas =
+                    mLoopData.new ItemData(map.get("id"), map.get("imageURL"),
                             map.get("link"), map.get("descText"), map.get("type"));
             mLoopData.items.add(itemDatas);
         }
@@ -298,15 +241,15 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 对象方式刷新数据
      *
-     * @param rotateDatas
+     * @param rotateData
      */
-    public void refreshDatas(LoopData rotateDatas) {
-        if (null == rotateDatas) return;
+    public void refreshData(LoopData rotateData) {
+        if (null == rotateData) return;
         stopAutoLoop();
         removeAllViews();
         initRealView();
         mLoopData = null;
-        mLoopData = rotateDatas;
+        mLoopData = rotateData;
         initRotateViewPager();
         invalidate();
     }
@@ -314,15 +257,15 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * Json方式刷新数据
      *
-     * @param jsonDatas
+     * @param jsonData
      */
-    public void refreshDatas(String jsonDatas) {
-        if (TextUtils.isEmpty(jsonDatas)) return;
+    public void refreshData(String jsonData) {
+        if (TextUtils.isEmpty(jsonData)) return;
         stopAutoLoop();
         removeAllViews();
         initRealView();
         mLoopData = null;
-        mLoopData = JsonTool.toBean(jsonDatas, LoopData.class);
+        mLoopData = JsonTool.toBean(jsonData, LoopData.class);
         initRotateViewPager();
         invalidate();
     }
@@ -332,9 +275,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
         descText.setText(mLoopData.items.get(0).descText);    // 初始化描述信息
-        setViewListner();                                       // 初始化点击监听事件
+        setViewListener();                                    // 初始化点击监听事件
         int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
-        mViewPager.setCurrentItem(startPosition, false);        // 设置当前显示的位置
+        mViewPager.setCurrentItem(startPosition, false);      // 设置当前显示的位置
         if (mHandler == null) {
             mHandler = new MyHandler();
         }
@@ -419,6 +362,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /**
      * 注册点击监听的方法
+     * @param l
      */
     public void setOnClickListener(BaseLoopAdapter.OnItemClickListener l) {
         this.mOnItemClickListener = l;
@@ -477,6 +421,28 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
             mHandler.removeMessages(SCROLL_WHAT);
             mHandler = null;
         }
+    }
+
+    /**
+     * OnLoopListener </br>
+     *
+     * <b>定义一个接口,当Adapter被点击的时候作为回调被调用</b> </br>
+     */
+    public interface OnLoopListener {
+
+        /**
+         * LoopView 跳转到第一个时候会被调用
+         *
+         * @param realPosition	当前的绝对位置
+         */
+        void onLoopToStart(int realPosition);
+
+        /**
+         * LoopView 跳转到最后一个时候会被调用
+         *
+         * @param realPosition	当前的绝对位置
+         */
+        void onLoopToEnd(int realPosition);
     }
 
 }

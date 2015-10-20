@@ -1,14 +1,21 @@
 package com.kevin.loopview;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kevin.loopview.internal.BaseLoopAdapter;
@@ -26,7 +33,9 @@ import com.kevin.loopview.internal.BaseLoopView;
  * @author mender，Modified Date Modify Content:
  */
 public class AdLoopView extends BaseLoopView {
-	
+	/** 设置的自定义布局id */
+	private int mLoopItemLayoutId;
+
 	public AdLoopView(Context context) {
 		this(context, null);
 	}
@@ -38,24 +47,93 @@ public class AdLoopView extends BaseLoopView {
 	public AdLoopView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
+
+	/**
+	 * Set the custom layout to be inflated for the loop views.
+	 *
+	 * @param layoutResId Layout id to be inflated
+	 */
+	public void setCustomTabView(int layoutResId) {
+		mLoopItemLayoutId = layoutResId;
+	}
 	
 	@Override
 	@SuppressWarnings("deprecation")
 	protected void initRealView() {
+		View view = null;
 		setScrollDuration(1000);	// 设置页面切换时间
 
-		LayoutInflater inflater = LayoutInflater.from(getContext());
-		View view = inflater.inflate(R.layout.ad_loopview_layout, null);
-		// ViewPager
-		mViewPager = (ViewPager) view.findViewById(R.id.ad_loopview_viewpager);
-	    // 指示点父控件
-	    dotsView = (LinearLayout) view.findViewById(R.id.ad_loopview_dots);
-	    // 描述文字
-	    descText = (TextView) view.findViewById(R.id.ad_loopview_desc);
+		if (mLoopItemLayoutId != 0) {
+			// If there is a custom tab view layout id set, try and inflate it
+			view = LayoutInflater.from(getContext()).inflate(mLoopItemLayoutId, null);
+			// ViewPager
+			mViewPager = (ViewPager) view.findViewById(R.id.loop_view_pager);
+	    	// 指示点父控件
+	    	dotsView = (LinearLayout) view.findViewById(R.id.loop_view_dots);
+	    	// 描述文字
+	    	descText = (TextView) view.findViewById(R.id.loop_view_desc);
+		}
+
+		if(view == null) {
+			view = createDefaultView();
+		}
 
 		this.addView(view);
 	}
-	
+
+	private View createDefaultView() {
+		RelativeLayout view = new RelativeLayout(getContext());
+		int viewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
+		int viewHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
+		ViewGroup.LayoutParams viewParams = new ViewGroup.LayoutParams(viewWidth, viewHeight);
+		view.setLayoutParams(viewParams);
+		// 初始化ViewPager
+		mViewPager = new ViewPager(getContext());
+		mViewPager.setId(R.id.loop_view_pager);
+		int viewPagerWidth = LayoutParams.MATCH_PARENT;
+		int viewPagerHeight = LayoutParams.WRAP_CONTENT;
+		LayoutParams viewPagerParams = new LayoutParams(viewPagerWidth, viewPagerHeight);
+		this.addView(mViewPager, viewPagerParams);
+		// 初始化下方指示条
+		RelativeLayout bottomLayout = new RelativeLayout(getContext());
+		int bottomLayoutWidth =  LayoutParams.MATCH_PARENT;
+		int bottomLayoutHeight =  LayoutParams.WRAP_CONTENT;
+		LayoutParams bottomLayoutParams = new LayoutParams(bottomLayoutWidth, bottomLayoutHeight);
+		bottomLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, mViewPager.getId());
+		Drawable mBackground = new ColorDrawable(Color.DKGRAY);
+		mBackground.setAlpha((int) (0.3 * 255));
+		bottomLayout.setBackgroundDrawable(mBackground);
+		bottomLayout.setGravity(Gravity.CENTER_VERTICAL);
+		this.addView(bottomLayout, bottomLayoutParams);
+		// 初始化指示点父控件
+		dotsView = new LinearLayout(getContext());
+		dotsView.setId(R.id.loop_view_dots);
+		int dotsViewWidth = LayoutParams.WRAP_CONTENT;
+		int dotsViewHeight = LayoutParams.WRAP_CONTENT;
+		LayoutParams dotsViewParams = new LayoutParams(dotsViewWidth, dotsViewHeight);
+		dotsView.setOrientation(LinearLayout.HORIZONTAL);
+		dotsViewParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+		dotsViewParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+		bottomLayout.addView(dotsView, dotsViewParams);
+		// 初始描述文字
+		descText = new TextView(getContext());
+		int descTextWidth = LayoutParams.MATCH_PARENT;
+		int descTextHeight = LayoutParams.WRAP_CONTENT;
+		LayoutParams descTextParams = new LayoutParams(descTextWidth, descTextHeight);
+		descTextParams.addRule(RelativeLayout.LEFT_OF, dotsView.getId());
+		descText.setSingleLine(true);
+		descText.getPaint().setTextSize((int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics()));
+		descText.setTextColor(Color.BLACK);
+		descText.setGravity(Gravity.LEFT);
+		int padding = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+		descText.setPadding(padding, padding, padding, padding);
+		bottomLayout.addView(descText, descTextParams);
+
+		return view;
+	}
+
 	@Override
 	protected BaseLoopAdapter initAdapter() {
 		return new AdLoopAdapter(getContext(), mLoopData, mViewPager);
@@ -67,7 +145,7 @@ public class AdLoopView extends BaseLoopView {
 		dotsView.removeAllViews();
 		for(int i=0; i<size; i++){
 			ImageView dot = new ImageView(getContext());
-			dot.setBackgroundResource(R.drawable.rotateview_dots_selector);
+			dot.setBackgroundResource(R.drawable.loop_view_dots_selector);
 			int dotWidth = LinearLayout.LayoutParams.WRAP_CONTENT;
 			int dotHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
 			LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotWidth, dotHeight);

@@ -51,7 +51,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 	protected void init() {
 	}
     
-	public void setLoopDatas(LoopData loopData) {
+	public void setLoopData(LoopData loopData) {
 		this.mLoopData = loopData;
 	}
     
@@ -98,7 +98,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 			});
 		}
 
-		((ViewPager) container).addView(view, 0);
+		container.addView(view, 0);
 		return view;
 	}
 
