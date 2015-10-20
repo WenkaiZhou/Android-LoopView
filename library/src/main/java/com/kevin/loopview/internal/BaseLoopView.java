@@ -277,7 +277,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         adapter = initAdapter();
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
-        descText.setText(mLoopData.items.get(0).descText);    // 初始化描述信息
+        if(null != descText) {
+            descText.setText(mLoopData.items.get(0).descText);// 初始化描述信息
+        }
         setViewListener();                                    // 初始化点击监听事件
         int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
         mViewPager.setCurrentItem(startPosition, false);      // 设置当前显示的位置

@@ -64,7 +64,7 @@ public class AdLoopView extends BaseLoopView {
 		setScrollDuration(1000);	// 设置页面切换时间
 
 		if (mLoopLayoutId != 0) {
-			// If there is a custom tab view layout id set, try and inflate it
+			// If there is a custom loop view layout id set, try and inflate it
 			view = LayoutInflater.from(getContext()).inflate(mLoopLayoutId, null);
 			// ViewPager
 			mViewPager = (ViewPager) view.findViewById(R.id.loop_view_pager);
@@ -142,20 +142,22 @@ public class AdLoopView extends BaseLoopView {
 	/** 初始化指示点 */
 	@Override
 	protected void initDots(int size) {
-		dotsView.removeAllViews();
-		for(int i=0; i<size; i++){
-			ImageView dot = new ImageView(getContext());
-			dot.setBackgroundResource(mDotSelector);
-			int dotWidth = LinearLayout.LayoutParams.WRAP_CONTENT;
-			int dotHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
-			LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotWidth, dotHeight);
-			dotParams.setMargins(0, (int)mDotMargin, (int)mDotMargin, (int)mDotMargin);
-			if(i == 0){
-				dot.setEnabled(true);
-			}else{
-				dot.setEnabled(false);
+		if(null != dotsView) {
+			dotsView.removeAllViews();
+			for(int i=0; i<size; i++){
+				ImageView dot = new ImageView(getContext());
+				dot.setBackgroundResource(mDotSelector);
+				int dotWidth = LinearLayout.LayoutParams.WRAP_CONTENT;
+				int dotHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
+				LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotWidth, dotHeight);
+				dotParams.setMargins(0, (int)mDotMargin, (int)mDotMargin, (int)mDotMargin);
+				if(i == 0){
+					dot.setEnabled(true);
+				}else{
+					dot.setEnabled(false);
+				}
+				dotsView.addView(dot, dotParams);
 			}
-			dotsView.addView(dot, dotParams);
 		}
 	}
 
@@ -167,18 +169,23 @@ public class AdLoopView extends BaseLoopView {
 			@Override
 			public void onPageSelected(int position) {
 				int i = position % mLoopData.items.size();
-				dotsView.getChildAt(i).setEnabled(true);
-				if(currentPosition != -1) {
-					dotsView.getChildAt(currentPosition).setEnabled(false);}
+				if(null != dotsView) {
+					dotsView.getChildAt(i).setEnabled(true);
+				}
+				if(null != dotsView && currentPosition != -1) {
+					dotsView.getChildAt(currentPosition).setEnabled(false);
+				}
 				currentPosition = i;
-				if(!TextUtils.isEmpty(mLoopData.items.get(i).descText)) {
-					if(descText.getVisibility() != View.VISIBLE)
-						descText.setVisibility(View.VISIBLE);
-					String imageDesc = mLoopData.items.get(i).descText;
-					descText.setText(imageDesc);
-				} else {
-					if(descText.getVisibility() == View.VISIBLE)
-						descText.setVisibility(View.GONE);
+				if(null != descText) {
+					if(!TextUtils.isEmpty(mLoopData.items.get(i).descText)) {
+						if(descText.getVisibility() != View.VISIBLE)
+							descText.setVisibility(View.VISIBLE);
+						String imageDesc = mLoopData.items.get(i).descText;
+						descText.setText(imageDesc);
+					} else {
+						if(descText.getVisibility() == View.VISIBLE)
+							descText.setVisibility(View.GONE);
+					}
 				}
 				
 				// 跳转到头部尾部的监听回调

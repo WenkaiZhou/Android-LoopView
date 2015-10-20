@@ -52,7 +52,7 @@ public class SampleAdLoopActivity extends Activity implements BaseLoopAdapter.On
         LoopData loopData = JsonTool.toBean(json, LoopData.class);
         if(null != loopData) {
             mLoopView.refreshData(loopData);
-//            mLoopView.startAutoLoop();
+            mLoopView.startAutoLoop();
         }
     }
 
