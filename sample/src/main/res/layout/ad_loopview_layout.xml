@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/ad_loopview_viewpager"
+        android:id="@id/loop_view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -12,26 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:alpha="0.5"
+        android:background="#88EECC00"
         android:gravity="center_vertical">
 
         <LinearLayout
-            android:id="@+id/ad_loopview_dots"
+            android:id="@id/loop_view_dots"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:orientation="horizontal" />
 
         <TextView
-            android:id="@+id/ad_loopview_desc"
-            android:layout_width="wrap_content"
+            android:id="@id/loop_view_desc"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_below="@id/loop_view_dots"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/ad_loopview_dots"
-            android:padding="5dp"
+            android:gravity="center"
+            android:paddingBottom="3dp"
             android:singleLine="true"
+            android:textColor="@android:color/white"
             android:textSize="14sp" />
 
     </RelativeLayout>

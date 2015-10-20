@@ -52,6 +52,8 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     protected float mDotMargin;
     /** 自动跳转的时间间隔 */
     protected long mInterval;
+    /** 指示点选择器 */
+    protected int mDotSelector;
     /** 是否自动跳转 */
     private boolean autoLoop = false;
 
@@ -100,9 +102,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         // 设置样式属性
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoopView);
 
-        mDotMargin = a.getDimension(R.styleable.LoopView_dotMargin, defaultDotMargin);
-        mInterval = a.getInt(R.styleable.LoopView_interval, defaultInterval);
-        autoLoop = a.getBoolean(R.styleable.LoopView_autoLoop, false);
+        mDotMargin = a.getDimension(R.styleable.LoopView_loop_dotMargin, defaultDotMargin);
+        mInterval = a.getInt(R.styleable.LoopView_loop_interval, defaultInterval);
+        autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
+        mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
 
         a.recycle();
 
