@@ -12,32 +12,33 @@ import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.samples.utils.LocalFileUtils;
 import com.kevin.loopview.utils.JsonTool;
+
 /**
  * 版权所有：XXX有限公司</br>
  *
  * SampleAdLoopActivity </br>
  *
  * @author zhou.wenkai ,Created on 2015-10-20 14:32:13</br>
- * @Description Major Function：<b>简单广告轮播控件的使用</b> </br>
+ * @Description Major Function：<b>广告轮播控件的使用</b> </br>
  *
  * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  * @author mender，Modified Date Modify Content:
  */
-public class SampleAdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener{
+public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener{
 
     AdLoopView mLoopView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sample_adloopview);
+        setContentView(R.layout.activity_adloopview);
 
         initViews();
         initEvents();
     }
 
     private void initViews() {
-        mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
+        mLoopView = (AdLoopView) this.findViewById(R.id.adloop_act_adloopview);
         initRotateView();
     }
 
@@ -48,11 +49,13 @@ public class SampleAdLoopActivity extends Activity implements BaseLoopAdapter.On
      * @date 2015-10-9 21:32:12
      */
     private void initRotateView() {
+        // 设置自定义布局
+        mLoopView.setLoopLayout(R.layout.ad_loopview_layout);
+        // 设置数据
         String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
         LoopData loopData = JsonTool.toBean(json, LoopData.class);
         if(null != loopData) {
             mLoopView.refreshData(loopData);
-//            mLoopView.startAutoLoop();
         }
     }
 

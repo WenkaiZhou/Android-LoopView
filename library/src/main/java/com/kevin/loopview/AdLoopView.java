@@ -34,7 +34,7 @@ import com.kevin.loopview.internal.BaseLoopView;
  */
 public class AdLoopView extends BaseLoopView {
 	/** 设置的自定义布局id */
-	private int mLoopItemLayoutId;
+	private int mLoopLayoutId;
 
 	public AdLoopView(Context context) {
 		this(context, null);
@@ -53,8 +53,8 @@ public class AdLoopView extends BaseLoopView {
 	 *
 	 * @param layoutResId Layout id to be inflated
 	 */
-	public void setCustomTabView(int layoutResId) {
-		mLoopItemLayoutId = layoutResId;
+	public void setLoopLayout(int layoutResId) {
+		mLoopLayoutId = layoutResId;
 	}
 	
 	@Override
@@ -63,9 +63,9 @@ public class AdLoopView extends BaseLoopView {
 		View view = null;
 		setScrollDuration(1000);	// 设置页面切换时间
 
-		if (mLoopItemLayoutId != 0) {
+		if (mLoopLayoutId != 0) {
 			// If there is a custom tab view layout id set, try and inflate it
-			view = LayoutInflater.from(getContext()).inflate(mLoopItemLayoutId, null);
+			view = LayoutInflater.from(getContext()).inflate(mLoopLayoutId, null);
 			// ViewPager
 			mViewPager = (ViewPager) view.findViewById(R.id.loop_view_pager);
 	    	// 指示点父控件
@@ -145,7 +145,7 @@ public class AdLoopView extends BaseLoopView {
 		dotsView.removeAllViews();
 		for(int i=0; i<size; i++){
 			ImageView dot = new ImageView(getContext());
-			dot.setBackgroundResource(R.drawable.loop_view_dots_selector);
+			dot.setBackgroundResource(mDotSelector);
 			int dotWidth = LinearLayout.LayoutParams.WRAP_CONTENT;
 			int dotHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
 			LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotWidth, dotHeight);

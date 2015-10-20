@@ -3,6 +3,15 @@
 
 ### 无限轮转大图
 
+### Sample AdLoopView ###
+To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView` in your layout XML. Be sure to include xmlns:custom="http://schemas.android.com/apk/res-auto" in your Loop if you are setting any of the custom Loop attributes.
+
+	<com.kevin.loopview.AdLoopView
+        android:id="@+id/main_act_adloopview"
+        android:layout_width="match_parent"
+        android:layout_height="192dp">
+    </com.kevin.loopview.AdLoopView>
+
 ## License
 
     Copyright 2011, 2012 Kevin zhou

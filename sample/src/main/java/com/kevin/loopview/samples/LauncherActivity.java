@@ -24,7 +24,7 @@ import android.widget.ListView;
 
 public class LauncherActivity extends ListActivity { 
 
-	public static final String[] options = { "SampleAdLoopView"};
+	public static final String[] options = { "SampleAdLoopView", "AdLoopView"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,9 @@ public class LauncherActivity extends ListActivity {
 			default:
 			case 0:
 				intent = new Intent(this, SampleAdLoopActivity.class);
+				break;
+			case 1:
+				intent = new Intent(this, AdLoopActivity.class);
 				break;
 		}
 
