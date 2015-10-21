@@ -21,6 +21,13 @@ public interface ILoopView {
 	 * @param duration 毫秒值
 	 */
 	void setScrollDuration(long duration);
+
+	/**
+	 * Set the custom layout to be inflated for the loop views.
+	 *
+	 * @param layoutResId Layout id to be inflated
+	 */
+	void setLoopLayout(int layoutResId);
 	
 	 /**
 	  * 设置页面切换时间间隔

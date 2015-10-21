@@ -3,11 +3,12 @@
 
 Android LoopView is a powerful widget for unlimited rotation picture, It provides some configuration options and good control the appearance and operational requirements.
 
-![Sample AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_sample.gif)
+**Simple** and **Custom layout** usage picture:  
+![Sample AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_simple.gif)
 
 ![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad.gif)
 
-## Simple Use ##
+## Simple Usage ##
 
 ### Configured as View in layout.xml ###
 To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView` in your layout XML.
@@ -46,7 +47,9 @@ To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView
         });
 
 
-## XML Usage ##
+## More configuration Usage ##
+
+### XML Usage ###
 
 If you decide to use AdLoopView as a view, you can define it in your xml layout like this:
 
@@ -57,8 +60,44 @@ If you decide to use AdLoopView as a view, you can define it in your xml layout 
         kevin:loop_interval="5000"
         kevin:loop_dotMargin="5dp"
         kevin:loop_autoLoop="[true|false]"
-        kevin:loop_dotSelector="@drawable/ad_dots_selector">
+        kevin:loop_dotSelector="@drawable/ad_dots_selector"
+		kevin:loop_layoutId="@layout/ad_loopview_layout">
     </com.kevin.loopview.AdLoopView>
+
+### Programme Usage ###
+
+	// Set page switching transition time
+	mLoopView.setScrollDuration(1000);
+	// Set time interval
+	mLoopView.setInterval(3000);
+	// To initialize the data in a collection
+	mLoopView.setLoopViewPager(List<Map<String, String>> data);
+	// Initialized data in JSON data mode
+	mLoopView.setLoopViewPager(String jsonData);
+	// Initialized data in entiry mode
+	mLoopView.setLoopViewPager(LoopData rotateData);
+	// Update data in a collection mode
+	mLoopView.refreshData(final List<Map<String, String>> data);
+	// Update data in entiry mode
+	mLoopView.refreshData(LoopData loopData);
+	// Update data in JSON data mode
+	mLoopView.refreshData(String jsonData);
+	// Get the running loop date
+	mLoopView.getLoopData();
+	// Begin to auto Loop
+	mLoopView.startAutoLoop();
+	// Begin to auto Loop delay
+	mLoopView.startAutoLoop(long delayTimeInMills);
+	// Stop to auto Loop
+	mLoopView.stopAutoLoop();
+	// Set a custom loop layout
+	mLoopView.setLoopLayout(int layoutResId);
+
+### Notes: ###
+
+In custom layout you must to use those ids `loop_view_pager` in ViewPager `loop_view_dots` in indicate point parent LinearLayout and `loop_view_desc` in description TextView;
+
+Make sure you at least have `loop_view_pager`.
 
 ## License
 

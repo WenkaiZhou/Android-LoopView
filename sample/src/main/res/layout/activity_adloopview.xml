@@ -12,7 +12,8 @@
         kevin:loop_interval="5000"
         kevin:loop_dotMargin="5dp"
         kevin:loop_autoLoop="true"
-        kevin:loop_dotSelector="@drawable/ad_dots_selector">
+        kevin:loop_dotSelector="@drawable/ad_dots_selector"
+        kevin:loop_layoutId="@layout/ad_loopview_layout">
     </com.kevin.loopview.AdLoopView>
 
 </RelativeLayout>

@@ -50,7 +50,7 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
      */
     private void initRotateView() {
         // 设置自定义布局
-        mLoopView.setLoopLayout(R.layout.ad_loopview_layout);
+//        mLoopView.setLoopLayout(R.layout.ad_loopview_layout);
         // 设置数据
         String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
         LoopData loopData = JsonTool.toBean(json, LoopData.class);

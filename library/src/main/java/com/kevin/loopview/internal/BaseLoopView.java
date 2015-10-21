@@ -40,6 +40,8 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /** ViewPager */
     protected ViewPager mViewPager;
+    /** 设置的自定义布局id */
+    protected int mLoopLayoutId;
     /** ViewPager数据适配器 */
     private BaseLoopAdapter adapter;
     /** 底部指示点父控件 */
@@ -106,6 +108,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mInterval = a.getInt(R.styleable.LoopView_loop_interval, defaultInterval);
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
+        mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layoutId, 0);
 
         a.recycle();
 

@@ -33,8 +33,6 @@ import com.kevin.loopview.internal.BaseLoopView;
  * @author mender，Modified Date Modify Content:
  */
 public class AdLoopView extends BaseLoopView {
-	/** 设置的自定义布局id */
-	private int mLoopLayoutId;
 
 	public AdLoopView(Context context) {
 		this(context, null);

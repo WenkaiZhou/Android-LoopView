@@ -11,6 +11,8 @@
         <attr name="loop_dotMargin" format="dimension" />
         <!-- 指示点间距离 -->
         <attr name="loop_dotSelector" format="reference" />
+        <!-- 指示点间距离 -->
+        <attr name="loop_layoutId" format="reference" />
     </declare-styleable>
 
 </resources>
