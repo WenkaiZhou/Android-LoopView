@@ -25,7 +25,7 @@ public interface ILoopView {
 	 /**
 	  * 设置页面切换时间间隔
 	  */
-	 void setInterval(long interval);
+	void setInterval(long interval);
 	
 	/**
 	 * 集合方式初始化轮转大图
@@ -84,11 +84,11 @@ public interface ILoopView {
     /**
      * 停止自动跳转
      */
-    public void stopAutoLoop();
+    void stopAutoLoop();
     
 	/**
 	 * 释放资源 
 	 */
-	public void releaseResources();
+	void releaseResources();
 	
 }

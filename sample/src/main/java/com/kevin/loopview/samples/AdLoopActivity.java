@@ -57,6 +57,11 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
         if(null != loopData) {
             mLoopView.refreshData(loopData);
         }
+        // 设置页面切换过度事件
+        mLoopView.setScrollDuration(2000);
+        // 设置页面切换时间间隔
+        mLoopView.setInterval(3000);
+
     }
 
     /**
