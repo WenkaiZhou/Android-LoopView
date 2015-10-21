@@ -39,7 +39,7 @@ public class LauncherActivity extends ListActivity {
 		switch (position) {
 			default:
 			case 0:
-				intent = new Intent(this, SampleAdLoopActivity.class);
+				intent = new Intent(this, SimpleAdLoopActivity.class);
 				break;
 			case 1:
 				intent = new Intent(this, AdLoopActivity.class);

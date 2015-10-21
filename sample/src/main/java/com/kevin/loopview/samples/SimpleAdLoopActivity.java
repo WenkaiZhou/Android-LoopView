@@ -15,7 +15,7 @@ import com.kevin.loopview.utils.JsonTool;
 /**
  * 版权所有：XXX有限公司</br>
  *
- * SampleAdLoopActivity </br>
+ * SimpleAdLoopActivity </br>
  *
  * @author zhou.wenkai ,Created on 2015-10-20 14:32:13</br>
  * @Description Major Function：<b>简单广告轮播控件的使用</b> </br>
@@ -23,7 +23,7 @@ import com.kevin.loopview.utils.JsonTool;
  * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  * @author mender，Modified Date Modify Content:
  */
-public class SampleAdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener{
+public class SimpleAdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener{
 
     AdLoopView mLoopView;
 

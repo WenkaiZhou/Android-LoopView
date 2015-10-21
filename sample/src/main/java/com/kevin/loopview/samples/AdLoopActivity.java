@@ -16,7 +16,7 @@ import com.kevin.loopview.utils.JsonTool;
 /**
  * 版权所有：XXX有限公司</br>
  *
- * SampleAdLoopActivity </br>
+ * AdLoopActivity </br>
  *
  * @author zhou.wenkai ,Created on 2015-10-20 14:32:13</br>
  * @Description Major Function：<b>广告轮播控件的使用</b> </br>
