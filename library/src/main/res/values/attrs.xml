@@ -12,7 +12,7 @@
         <!-- 指示点间距离 -->
         <attr name="loop_dotSelector" format="reference" />
         <!-- 指示点间距离 -->
-        <attr name="loop_layoutId" format="reference" />
+        <attr name="loop_layout" format="reference" />
     </declare-styleable>
 
 </resources>
