@@ -1,17 +1,14 @@
 package com.kevin.loopview;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-
 
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
-import com.kevin.loopview.internal.LoopImageView;
+import com.kevin.loopview.internal.loopimage.LoopImageView;
 
 /**
  * 版权所有：XXX有限公司</br>
@@ -37,7 +34,7 @@ public class AdLoopAdapter extends BaseLoopAdapter {
 	 */
 	public View instantiateItemView(String imageUrl, int position) {
 		LoopImageView mImageView = new LoopImageView(mContext);
-		mImageView.setScaleType(ScaleType.FIT_XY);
+		mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 		int imageViewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
 		int imageViewHeight = ViewGroup.LayoutParams.MATCH_PARENT;
 		mImageView.setLayoutParams(new ViewGroup.LayoutParams(imageViewWidth, imageViewHeight));

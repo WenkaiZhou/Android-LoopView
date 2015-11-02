@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -109,6 +110,28 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 		final int index = position % mLoopData.items.size();
 		SoftReference reference = new SoftReference(view);
 		instantiateViewMap.put(index, reference);
+	}
+
+	/**
+	 * 释放资源
+	 */
+	public void releaseResources() {
+		mLoopData = null;
+		mOnItemClickListener = null;
+
+		RecycleBitmap recycleBitmap = new RecycleBitmap(true);
+		Iterator<Map.Entry<Integer, SoftReference<View>>> it = instantiateViewMap.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<Integer, SoftReference<View>> entry = it.next();
+			SoftReference<View> reference = entry.getValue();
+			View view = reference.get();
+			if(view != null) {
+				recycleBitmap.recycle(view);
+			}
+		}
+		recycleBitmap = null;
+
+		instantiateViewMap.clear();
 	}
 	
 	/**

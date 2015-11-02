@@ -85,4 +85,9 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
         intent.setAction(Intent.ACTION_VIEW);
         startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

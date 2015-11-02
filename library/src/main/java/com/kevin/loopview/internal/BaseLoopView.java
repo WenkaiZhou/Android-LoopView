@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -76,7 +77,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /** 数据实体对象 */
     protected LoopData mLoopData;
 
-    private static final int SCROLL_WHAT = 0x672a47b;
     private Handler mHandler;
     /** 条目点击的接口回调 */
     protected BaseLoopAdapter.OnItemClickListener mOnItemClickListener;
@@ -154,6 +154,24 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     @Override
     public void setInterval(long interval) {
         this.mInterval = interval;
+    }
+
+    /**
+     * 获取页面切换时间间隔
+     *
+     * @return
+     */
+    public long getInterval() {
+        return mInterval;
+    }
+
+    /**
+     * 获取ViewPager
+     *
+     * @return
+     */
+    public ViewPager getViewPager() {
+        return mViewPager;
     }
 
     /**
@@ -287,7 +305,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
         mViewPager.setCurrentItem(startPosition, false);      // 设置当前显示的位置
         if (mHandler == null) {
-            mHandler = new MyHandler();
+            mHandler = new LoopHandler(this, (Activity)getContext());
         }
 
         if (autoLoop) {
@@ -342,10 +360,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      *
      * @param delayTimeInMills 延时
      */
-    private void sendScrollMessage(long delayTimeInMills) {
+    public void sendScrollMessage(long delayTimeInMills) {
         /** 先移除消息,保证最多只有一个消息 */
-        mHandler.removeMessages(SCROLL_WHAT);
-        mHandler.sendEmptyMessageDelayed(SCROLL_WHAT, delayTimeInMills);
+        mHandler.removeMessages(0);
+        mHandler.sendEmptyMessageDelayed(0, delayTimeInMills);
     }
 
     /**
@@ -355,7 +373,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     public void stopAutoLoop() {
         isAutoScroll = false;
         if (mHandler != null) {
-            mHandler.removeMessages(SCROLL_WHAT);
+            mHandler.removeMessages(0);
         }
     }
 
@@ -366,6 +384,15 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     public boolean isAutoScroll() {
         return isAutoScroll;
+    }
+
+    /**
+     * 获取自动跳转方向
+     *
+     * @return
+     */
+    public int getDirection() {
+        return direction;
     }
 
     /**
@@ -402,31 +429,15 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     protected abstract void setOnPageChangeListener();
 
-    @SuppressLint("HandlerLeak")
-    public class MyHandler extends Handler {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            switch (msg.what) {
-                case SCROLL_WHAT:
-                    if (!isAutoScroll) return;
-                    int change = (direction == LEFT) ? -1 : 1;
-                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + change, true);
-                    sendScrollMessage(mInterval);
-                default:
-                    break;
-            }
-        }
-    }
-
     /**
      * 释放资源
      */
     public void releaseResources() {
+        if(adapter != null) {
+            adapter.releaseResources();
+        }
         if (mHandler != null) {
-            mHandler.removeMessages(SCROLL_WHAT);
+            mHandler.removeMessages(0);
             mHandler = null;
         }
     }

@@ -59,7 +59,6 @@ public class AdLoopView extends BaseLoopView {
 	@SuppressWarnings("deprecation")
 	protected void initRealView() {
 		View view = null;
-		setScrollDuration(1000);	// 设置页面切换时间
 
 		if (mLoopLayoutId != 0) {
 			// If there is a custom loop view layout id set, try and inflate it
@@ -76,6 +75,7 @@ public class AdLoopView extends BaseLoopView {
 			view = createDefaultView();
 		}
 
+		setScrollDuration(1000);	// 设置页面切换时间
 		this.addView(view);
 	}
 
