@@ -13,10 +13,12 @@ import java.net.URLConnection;
  */
 public class LoopImage {
 
-    private static final int CONNECT_TIMEOUT = 5000;
-    private static final int READ_TIMEOUT = 10000;
+    /** 连接超时时间 */
+    private static final int CONNECT_TIMEOUT 	= 5000;
+    /** 读取时间超时 */
+    private static final int READ_TIMEOUT    	= 10000;
 
-    private static LoopImageCache imageCache;
+    private LoopImageCache imageCache;
 
     private String url;
 
@@ -59,7 +61,7 @@ public class LoopImage {
         return bitmap;
     }
 
-    public static void removeFromCache(String url) {
+    public void removeFromCache(String url) {
         if(imageCache != null) {
             imageCache.remove(url);
         }

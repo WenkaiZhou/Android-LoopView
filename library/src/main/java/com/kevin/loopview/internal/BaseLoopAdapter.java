@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
+import com.kevin.loopview.utils.RecycleBitmap;
+
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Iterator;

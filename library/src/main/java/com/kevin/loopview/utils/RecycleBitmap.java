@@ -1,4 +1,4 @@
-package com.kevin.loopview.internal;
+package com.kevin.loopview.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 /**
  * 版权所有：XXX有限公司</br>
  *
- * ILoopView </br>
+ * RecycleBitmap </br>
  *
  * @author zhou.wenkai ,Created on 2015-1-20 19:27:44</br>
  * @Description Major Function：<b>释放布局中所有Imageview组件占用的图片，

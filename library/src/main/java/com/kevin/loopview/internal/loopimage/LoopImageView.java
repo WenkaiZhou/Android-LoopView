@@ -24,15 +24,9 @@ import android.widget.ImageView;
  */
 public class LoopImageView extends ImageView {
 
-	/** 连接超时时间 */
-    private static final int CONNECT_TIMEOUT 	= 5000;
-    /** 读取时间超时 */
-    private static final int READ_TIMEOUT    	= 10000;
 	/** 线程池最大线程数 */
     private static final int LOADING_THREADS 	= 4;
     private static ExecutorService threadPool 	= Executors.newFixedThreadPool(LOADING_THREADS);
-    
-    private LoopImageCache imageCache;
     
     private LoopImageTask currentTask;
 
