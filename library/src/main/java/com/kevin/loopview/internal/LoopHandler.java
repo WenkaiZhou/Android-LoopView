@@ -41,6 +41,7 @@ public class LoopHandler extends Handler {
                     loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() + change, true);
                     loopView.sendScrollMessage(loopView.getInterval());
                 } else {
+                    removeMessages(0);
                     if(loopView != null) {
                         loopView.releaseResources();
                     }

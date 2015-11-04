@@ -1,5 +1,6 @@
 package com.kevin.loopview.internal.loopimage;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Handler;
 
 /**
  * Created by zhouwk on 2015/11/2 0002.
@@ -30,7 +32,6 @@ public class LoopImage {
     private LoopImageView imageView;
 
     private LoopImageCache imageCache;
-
     private String url;
 
     public LoopImage(LoopImageView imageView, String url) {
@@ -58,7 +59,7 @@ public class LoopImage {
         return bitmap;
     }
 
-    private Bitmap getBitmapFromUrl(String url) {
+    private Bitmap getBitmapFromUrl(final String url) {
         Bitmap bitmap = null;
 
         try {
@@ -83,10 +84,39 @@ public class LoopImage {
             ops.inSampleSize = inSampleSize;
             bitmap = BitmapFactory.decodeStream(is, null, ops);
         } catch (Exception e) {
-            e.printStackTrace();
+            if(imageView.getContext() instanceof Activity) {
+                regetBitmap();
+            }
         }
-
         return bitmap;
+    }
+
+    /**
+     * 如果图片下载失败,5秒之后再次访问
+     */
+    private void regetBitmap() {
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                    final Bitmap bitmap = getBitmapFromUrl(url);
+                    if (bitmap != null) {
+
+                        ((Activity) imageView.getContext()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageView.setImageBitmap(bitmap);
+                            }
+                        });
+                        imageCache.put(url, bitmap);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void removeFromCache(String url) {

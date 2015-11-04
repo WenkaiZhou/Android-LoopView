@@ -131,7 +131,6 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 				recycleBitmap.recycle(view);
 			}
 		}
-		recycleBitmap = null;
 
 		instantiateViewMap.clear();
 	}

@@ -41,7 +41,7 @@ public class LoopImageView extends ImageView {
 	public LoopImageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
-	
+
     public void setImageUrl(String url) {
         setImage(new LoopImage(this, url), null, null);
     }
@@ -69,6 +69,7 @@ public class LoopImageView extends ImageView {
         // 创建一个新的线程
         currentTask = new LoopImageTask(getContext(), image); // SmartImageTask实现Runnable方法
         currentTask.setOnCompleteHandler(new LoopImageTask.OnCompleteHandler() {
+
             @Override
             public void onComplete(Bitmap bitmap) {
                 if(bitmap != null) {
@@ -86,4 +87,7 @@ public class LoopImageView extends ImageView {
         threadPool.execute(currentTask);
     }
 
+    public static ExecutorService getThreadPool() {
+        return threadPool;
+    }
 }
