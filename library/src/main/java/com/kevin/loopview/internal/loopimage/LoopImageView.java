@@ -43,15 +43,15 @@ public class LoopImageView extends ImageView {
 	}
 	
     public void setImageUrl(String url) {
-        setImage(new LoopImage(url), null, null);
+        setImage(new LoopImage(this, url), null, null);
     }
     
     public void setImageUrl(String url, final Integer loadingResource) {
-        setImage(new LoopImage(url), loadingResource, null);
+        setImage(new LoopImage(this, url), loadingResource, null);
     }
 
     public void setImageUrl(String url, final Integer loadingResource, final Integer fallbackResource) {
-        setImage(new LoopImage(url), loadingResource, fallbackResource);
+        setImage(new LoopImage(this, url), loadingResource, fallbackResource);
     }
 
     public void setImage(final LoopImage image, final Integer loadingResource, final Integer fallbackResource) {
