@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
-    <!-- LoopViewPager -->
+
     <declare-styleable name="LoopView">
         <!-- 跳动时间间隔 -->
         <attr name="loop_interval" format="integer" />
