@@ -77,12 +77,12 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
         // 首先读取软引用,如果不存在则初始化该View
         if (instantiateViewMap.containsKey(index)) {
             SoftReference<View> reference = instantiateViewMap.remove(index);
-            if (reference != null) {
-//				ToastUtils.showShortToast(mContext, "读取软引用...");
-                view = reference.get();
-            } else {
-//				ToastUtils.showShortToast(mContext, "被回收了...");
+            if (null == reference || null == reference.get()) {
+//              ToastUtils.showShortToast(mContext, "被回收了...");
                 view = instantiateItemView(imageUrl, index);
+            } else {
+                view = reference.get();
+//              ToastUtils.showShortToast(mContext, "读取软引用...");
             }
         } else {
 //			ToastUtils.showShortToast(mContext, "初始化...");
