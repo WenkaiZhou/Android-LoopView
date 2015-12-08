@@ -8,6 +8,14 @@ Android LoopView is a powerful widget for unlimited rotation picture, It provide
 
 ![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad.gif)
 
+## Using LoopView in your application
+
+If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
+
+```
+	compile 'com.kevin:loopview:1.0.0'
+```
+
 ## Simple Usage ##
 
 ### Configured as View in layout.xml ###
