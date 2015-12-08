@@ -2,6 +2,7 @@ package com.kevin.loopview;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -35,10 +36,12 @@ public class AdLoopAdapter extends BaseLoopAdapter {
     public View instantiateItemView(String imageUrl, int position) {
         LoopImageView mImageView = new LoopImageView(mContext);
         mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        int imageViewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
-        int imageViewHeight = ViewGroup.LayoutParams.MATCH_PARENT;
-        mImageView.setLayoutParams(new ViewGroup.LayoutParams(imageViewWidth, imageViewHeight));
-        mImageView.setImageUrl(imageUrl);
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        mImageView.setLayoutParams(new ViewGroup.LayoutParams(width, height));
+        if(!TextUtils.isEmpty(imageUrl)) {
+            mImageView.setImageUrl(imageUrl);
+        }
         return mImageView;
     }
 

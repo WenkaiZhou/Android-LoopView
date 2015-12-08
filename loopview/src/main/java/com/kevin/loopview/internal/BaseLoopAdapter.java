@@ -47,7 +47,6 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
     /**
      * 初始化设置
-     *
      */
     protected void init() {
     }
@@ -92,10 +91,12 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
         if(mOnItemClickListener != null) {
             view.setOnClickListener(new OnClickListener() {
+
                 @Override
                 public void onClick(View v) { // 条目点击监听回调
                     mOnItemClickListener.onItemClick(BaseLoopAdapter.this, view, index, position);
                 }
+
             });
         }
 

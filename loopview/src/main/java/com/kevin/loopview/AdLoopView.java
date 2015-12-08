@@ -80,11 +80,11 @@ public class AdLoopView extends BaseLoopView {
     }
 
     private View createDefaultView() {
-        RelativeLayout view = new RelativeLayout(getContext());
+        RelativeLayout contentView = new RelativeLayout(getContext());
         int viewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
         int viewHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
         ViewGroup.LayoutParams viewParams = new ViewGroup.LayoutParams(viewWidth, viewHeight);
-        view.setLayoutParams(viewParams);
+        contentView.setLayoutParams(viewParams);
         // 初始化ViewPager
         mViewPager = new ViewPager(getContext());
         mViewPager.setId(R.id.loop_view_pager);
@@ -129,7 +129,7 @@ public class AdLoopView extends BaseLoopView {
         descText.setPadding(padding, padding, padding, padding);
         bottomLayout.addView(descText, descTextParams);
 
-        return view;
+        return contentView;
     }
 
     @Override
@@ -162,7 +162,7 @@ public class AdLoopView extends BaseLoopView {
     @Override
     protected void setOnPageChangeListener() {
         // 数据适配器滑动监听
-        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {

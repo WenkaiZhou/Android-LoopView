@@ -20,7 +20,9 @@ import android.widget.Scroller;
  * @author mender，Modified Date Modify Content:
  */
 public class LoopViewScroller extends Scroller{
-    private long mScrollDuration = 5000;   // 滑动速度
+
+    /** 滑动速度 */
+    private long mScrollDuration = 1500;
 
     /**
      * 设置滑动速度

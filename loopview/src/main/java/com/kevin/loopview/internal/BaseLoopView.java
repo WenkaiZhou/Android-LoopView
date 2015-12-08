@@ -194,16 +194,16 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 集合方式初始化轮转大图
      *
-     * @param datas
+     * @param data
      */
     @Override
-    public void setLoopViewPager(List<Map<String, String>> datas) {
-        if (null == datas) return;
+    public void setLoopViewPager(List<Map<String, String>> data) {
+        if (null == data || data.size() == 0) return;
         if (mLoopData == null) {
             mLoopData = new LoopData();
-            mLoopData.items = new ArrayList();
+            mLoopData.items = new ArrayList(data.size());
         }
-        for (Map<String, String> map : datas) {
+        for (Map<String, String> map : data) {
             LoopData.ItemData itemDatas =
                     mLoopData.new ItemData(map.get("id"), map.get("imageURL"),
                             map.get("link"), map.get("descText"), map.get("type"));
@@ -216,12 +216,12 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 对象方式初始化轮转大图
      *
-     * @param rotateDatas
+     * @param loopData
      */
     @Override
-    public void setLoopViewPager(LoopData rotateDatas) {
-        if (null == rotateDatas) return;
-        mLoopData = rotateDatas;
+    public void setLoopViewPager(LoopData loopData) {
+        if (null == loopData) return;
+        mLoopData = loopData;
 
         initRotateViewPager();
     }
@@ -229,12 +229,12 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * Json方式初始化轮转大图
      *
-     * @param jsonDatas
+     * @param jsonData
      */
     @Override
-    public void setLoopViewPager(String jsonDatas) {
-        if (null == jsonDatas) return;
-        mLoopData = JsonTool.toBean(jsonDatas, LoopData.class);
+    public void setLoopViewPager(String jsonData) {
+        if (null == jsonData) return;
+        mLoopData = JsonTool.toBean(jsonData, LoopData.class);
         initRotateViewPager();
     }
 
@@ -244,16 +244,16 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * @param data
      */
     public void refreshData(final List<Map<String, String>> data) {
-        if (null == data) return;
+        if (null == data || data.size() == 0) return;
         stopAutoLoop();
         removeAllViews();
         initRealView();
         mLoopData.items.clear();
         for (Map<String, String> map : data) {
-            LoopData.ItemData itemDatas =
+            LoopData.ItemData itemData =
                     mLoopData.new ItemData(map.get("id"), map.get("imageURL"),
                             map.get("link"), map.get("descText"), map.get("type"));
-            mLoopData.items.add(itemDatas);
+            mLoopData.items.add(itemData);
         }
         initRotateViewPager();
         invalidate();
@@ -296,7 +296,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
         if(null != descText) {
-            descText.setText(mLoopData.items.get(0).descText);// 初始化描述信息
+            String descStr = mLoopData.items.get(0).descText;
+            if(!TextUtils.isEmpty(descStr)) {
+                descText.setText(descStr);                    // 初始化描述信息
+            }
         }
         setViewListener();                                    // 初始化点击监听事件
         int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
