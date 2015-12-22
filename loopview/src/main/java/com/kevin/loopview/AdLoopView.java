@@ -122,7 +122,7 @@ public class AdLoopView extends BaseLoopView {
         descText.setSingleLine(true);
         descText.getPaint().setTextSize((int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics()));
-        descText.setTextColor(Color.BLACK);
+        descText.setTextColor(Color.WHITE);
         descText.setGravity(Gravity.LEFT);
         int padding = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
