@@ -1,26 +1,25 @@
 
 # Loop View for Android
-**[English](https://github.com/xuehuayous/Android-LoopView)** **[中文](https://github.com/xuehuayous/Android-LoopView/blob/master/README-zh.md)**
 
-Android LoopView is a powerful widget for unlimited rotation picture, It provides some configuration options and good control the appearance and operational requirements.
+LoopView 是一个强大的轮转大图控件，并且提供了许多配置方法来达到您的显示效果和需求。  
 
-**Simple** and **Custom layout** usage picture:  
+**简单示例** and **自定义布局示例** usage picture:  
 ![Sample AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_simple.gif)
 
 ![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad.gif)
 
-## Using LoopView in your application
+## 在项目中使用 LoopView
 
-If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
+如果您的项目使用 Gradle 构建, 只需要在您的`build.gradle`文件添加下面一行到 `dependencies` :
 
 ```
 	compile 'com.kevin:loopview:1.0.3'
 ```
 
-## Simple Usage ##
+## 简单使用 ##
 
-### Configured as View in layout.xml ###
-To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView` in your layout XML.
+### 在layout.xml 中配置LoopView ###
+在Layout文件添加`<com.kevin.loopview.AdLoopView` 
 
 	<com.kevin.loopview.AdLoopView
         android:id="@+id/main_act_adloopview"
@@ -28,26 +27,27 @@ To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView
         android:layout_height="192dp">
     </com.kevin.loopview.AdLoopView>
 
-### Configured Programmatically ###
+### 在代码中配置 ###
 
 	AdLoopView mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
 	String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
-    // Use JsonTool to parse JSON data to entity
+    // 使用 JsonTool 封装 JSON 数据到实体对象
 	LoopData loopData = JsonTool.toBean(json, LoopData.class);
-	// set AdLoopView date use entity
+	// 通过对象的方式设置数据
     mLoopView.refreshData(loopData);
-	// begin to loop
+	// 开始轮转
     mLoopView.startAutoLoop();
 
+	// 设置点击监听
 	mLoopView.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(PagerAdapter parent, View view, 
 				int position, int realPosition) {
-                // get the loop data and the action link
+                // 获取数据
                 LoopData loopData = mLoopView.getLoopData();
                 String url = loopData.items.get(position).link;
 
-                // Open connection with browser
+                // 通过系统浏览器打开跳转链接
                 Intent intent = new Intent();
                 intent.setData(Uri.parse(url));
                 intent.setAction(Intent.ACTION_VIEW);
@@ -56,11 +56,11 @@ To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView
         });
 
 
-## More configuration Usage ##
+## 更多配置 ##
 
-### XML Usage ###
+### XML 配置 ###
 
-If you decide to use AdLoopView as a view, you can define it in your xml layout like this:
+在XML中使用AdLoopView，可以有如下配置：
 
     <com.kevin.loopview.AdLoopView
         android:id="@+id/adloop_act_adloopview"
@@ -73,40 +73,40 @@ If you decide to use AdLoopView as a view, you can define it in your xml layout 
 		kevin:loop_layoutId="@layout/ad_loopview_layout">
     </com.kevin.loopview.AdLoopView>
 
-### Programme Usage ###
+### 在代码中配置 ###
 
-	// Set page switching transition time
+	// 设置ViewPager页面切换时间
 	mLoopView.setScrollDuration(1000);
-	// Set time interval
+	// 设置轮转时间间隔
 	mLoopView.setInterval(3000);
-	// To initialize the data in a collection
+	// 以集合的方式初始化数据
 	mLoopView.setLoopViewPager(List<Map<String, String>> data);
-	// Initialized data in JSON data mode
+	// 以JSON的方式初始化数据
 	mLoopView.setLoopViewPager(String jsonData);
-	// Initialized data in entiry mode
+	// 以数据实体的方式初始化数据
 	mLoopView.setLoopViewPager(LoopData rotateData);
-	// Update data in a collection mode
+	// 以集合的方式刷新数据
 	mLoopView.refreshData(final List<Map<String, String>> data);
-	// Update data in entiry mode
+	// 以数据实体的方式刷新数据
 	mLoopView.refreshData(LoopData loopData);
-	// Update data in JSON data mode
+	// 以JSON的方式刷新数据
 	mLoopView.refreshData(String jsonData);
-	// Get the running loop date
+	// 获取配置的轮转大图数据
 	mLoopView.getLoopData();
-	// Begin to auto Loop
+	// 开始自动轮转
 	mLoopView.startAutoLoop();
-	// Begin to auto Loop delay
+	// 在指定时间延迟后自动轮转
 	mLoopView.startAutoLoop(long delayTimeInMills);
-	// Stop to auto Loop
+	// 停止自动轮转
 	mLoopView.stopAutoLoop();
-	// Set a custom loop layout
+	// 设置自定义布局
 	mLoopView.setLoopLayout(int layoutResId);
 
-### Notes: ###
+### 注意: ###
 
-In custom layout you must to use those ids `loop_view_pager` in ViewPager `loop_view_dots` in indicate point parent LinearLayout and `loop_view_desc` in description TextView;
+在自定义布局时您必须使用以下 id，ViewPager的id为 `loop_view_pager`  指示点父控件的id为`loop_view_dots` 并且该父控件为LinearLayout 以及 描述文字的id为`loop_view_desc`;
 
-Make sure you at least have `loop_view_pager`.
+至少保证要包含id为 `loop_view_pager`的ViewPager
 
 ## License
 
