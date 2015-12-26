@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -63,7 +59,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /** 触摸时是否停止自动跳转 */
     private boolean stopScrollWhenTouch = true;
     /** 当前状态是否是由于触摸而停止 */
-    private boolean isStopByTouch = false;
+    private boolean isStoppedByTouch = false;
+    /** 当前状态是否是由于不可见而停止 */
+    private boolean isStoppedByInvisible = false;
     /** 当前状态是否为自动跳转 */
     private boolean isAutoScroll = true;
 
@@ -84,6 +82,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     protected OnLoopListener mOnLoopListener;
     /** 滑动控制器 */
     private LoopViewScroller mScroller;
+
+    private float mDownX;
+    private float mDownY;
 
     public BaseLoopView(Context context) {
         this(context, null);
@@ -313,6 +314,33 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         }
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+        // 当Y方向滑动距离大于X方向滑动距离时不获取滚动事件
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if(Math.abs(ev.getY() - mDownY) > Math.abs(ev.getX() - mDownX)) {
+                    getParent().requestDisallowInterceptTouchEvent(false);
+                } else {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                }
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                getParent().requestDisallowInterceptTouchEvent(false);
+                break;
+        }
+
+        return super.onInterceptTouchEvent(ev);
+    }
+
     /**
      * stopScrollWhenTouch为TRUE时
      * 按下操作停止轮转
@@ -320,19 +348,48 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        int action = MotionEventCompat.getActionMasked(ev);
 
-        if (stopScrollWhenTouch) {
-            if ((action == MotionEvent.ACTION_DOWN) && isAutoScroll) {
-                isStopByTouch = true;
-                stopAutoLoop();
-            } else if (ev.getAction() == MotionEvent.ACTION_UP && isStopByTouch) {
-                startAutoLoop(mInterval);
+        if(stopScrollWhenTouch) {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if(isAutoScroll) {
+                        stopAutoLoop();
+                        isStoppedByTouch = true;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    if(isStoppedByTouch) {
+                        startAutoLoop(mInterval);
+                        isStoppedByTouch = false;
+                    }
+                    break;
             }
         }
 
-        getParent().requestDisallowInterceptTouchEvent(true);
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+
+        // 当不可见的时候停止自动跳转
+        switch (visibility) {
+            case VISIBLE:
+                if(isStoppedByInvisible) {
+                    startAutoLoop(mInterval);
+                    isStoppedByInvisible = false;
+                }
+                break;
+            case INVISIBLE:
+            case GONE:
+                if(isAutoScroll) {
+                    stopAutoLoop();
+                    isStoppedByInvisible = true;
+                }
+                break;
+        }
     }
 
     /**
