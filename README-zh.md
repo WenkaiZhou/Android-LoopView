@@ -71,6 +71,7 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
         kevin:loop_dotMargin="5dp"
         kevin:loop_autoLoop="[true|false]"
         kevin:loop_dotSelector="@drawable/ad_dots_selector"
+		kevin:loop_defaultImg="@mipmap/ic_launcher"
 		kevin:loop_layoutId="@layout/ad_loopview_layout">
     </com.kevin.loopview.AdLoopView>
 

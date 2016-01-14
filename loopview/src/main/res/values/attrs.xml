@@ -4,13 +4,15 @@
     <declare-styleable name="LoopView">
         <!-- 跳动时间间隔 -->
         <attr name="loop_interval" format="integer" />
-        <!-- 是否自动跳转</br> -->
+        <!-- 是否自动跳转 -->
         <attr name="loop_autoLoop" format="boolean" />
-        <!-- 指示点选择器 -->
+        <!-- 指示点间距离 -->
         <attr name="loop_dotMargin" format="dimension" />
-        <!-- 指示点间距离 -->
+        <!-- 指示点选择器 -->
         <attr name="loop_dotSelector" format="reference" />
-        <!-- 指示点间距离 -->
+        <!-- 默认轮转图片 -->
+        <attr name="loop_defaultImg" format="reference" />
+        <!-- 自定义布局 -->
         <attr name="loop_layout" format="reference" />
     </declare-styleable>
 

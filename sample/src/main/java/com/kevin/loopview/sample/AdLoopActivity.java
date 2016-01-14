@@ -61,7 +61,6 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
         mLoopView.setScrollDuration(2000);
         // 设置页面切换时间间隔
         mLoopView.setInterval(3000);
-
     }
 
     /**

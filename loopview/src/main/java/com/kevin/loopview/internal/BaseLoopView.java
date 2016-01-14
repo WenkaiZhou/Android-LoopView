@@ -7,6 +7,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -53,6 +54,8 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     protected long mInterval;
     /** 指示点选择器 */
     protected int mDotSelector;
+    /** 默认图片 */
+    protected int mDefaultImgId;
     /** 是否自动跳转 */
     private boolean autoLoop = false;
 
@@ -109,6 +112,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mInterval = a.getInt(R.styleable.LoopView_loop_interval, defaultInterval);
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
+        mDefaultImgId = a.getResourceId(R.styleable.LoopView_loop_defaultImg, 0);
         mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layout, 0);
 
         a.recycle();
@@ -294,6 +298,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     private void initRotateViewPager() {
         adapter = initAdapter();
+        adapter.setDefaultImgId(mDefaultImgId);
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
         if(null != descText) {
