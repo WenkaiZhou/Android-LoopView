@@ -8,7 +8,7 @@ Android LoopView is a powerful widget for unlimited rotation picture, It provide
 ![AdLoopView Simple Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_simple.gif)
 
 **Custom layout** usage picture:  
-![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad.gif)
+![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_custom.gif)
 
 ## Using LoopView in your application
 

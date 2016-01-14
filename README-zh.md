@@ -3,11 +3,11 @@
 
 LoopView 是一个强大的轮转大图控件，并且提供了许多配置方法来达到您的显示效果和需求。  
 
-**简单示例** 和 **自定义布局示例** :  
+**简单示例**  
 ![AdLoopView Simple Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_simple.gif)
 
-**Custom layout** usage picture:  
-![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad.gif)
+**自定义布局示例**  
+![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_custom.gif)
 
 ## 在项目中使用 LoopView
 
