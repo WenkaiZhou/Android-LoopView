@@ -215,7 +215,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
             mLoopData.items.add(itemDatas);
         }
 
-        initRotateViewPager();
+        initLoopViewPager();
     }
 
     /**
@@ -228,7 +228,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         if (null == loopData) return;
         mLoopData = loopData;
 
-        initRotateViewPager();
+        initLoopViewPager();
     }
 
     /**
@@ -240,7 +240,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     public void setLoopViewPager(String jsonData) {
         if (null == jsonData) return;
         mLoopData = JsonTool.toBean(jsonData, LoopData.class);
-        initRotateViewPager();
+        initLoopViewPager();
     }
 
     /**
@@ -260,23 +260,23 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
                             map.get("link"), map.get("descText"), map.get("type"));
             mLoopData.items.add(itemData);
         }
-        initRotateViewPager();
+        initLoopViewPager();
         invalidate();
     }
 
     /**
      * 对象方式刷新数据
      *
-     * @param rotateData
+     * @param loopData
      */
-    public void refreshData(LoopData rotateData) {
-        if (null == rotateData) return;
+    public void refreshData(LoopData loopData) {
+        if (null == loopData) return;
         stopAutoLoop();
         removeAllViews();
         initRealView();
         mLoopData = null;
-        mLoopData = rotateData;
-        initRotateViewPager();
+        mLoopData = loopData;
+        initLoopViewPager();
         invalidate();
     }
 
@@ -292,11 +292,11 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         initRealView();
         mLoopData = null;
         mLoopData = JsonTool.toBean(jsonData, LoopData.class);
-        initRotateViewPager();
+        initLoopViewPager();
         invalidate();
     }
 
-    private void initRotateViewPager() {
+    private void initLoopViewPager() {
         adapter = initAdapter();
         adapter.setDefaultImgId(mDefaultImgId);
         mViewPager.setAdapter(adapter);
@@ -463,7 +463,11 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         this.mOnItemClickListener = l;
     }
 
-    public void setOnRotateListener(OnLoopListener l) {
+    /**
+     * 设置跳转监听
+     * @param l
+     */
+    public void setOnLoopListener(OnLoopListener l) {
         this.mOnLoopListener = l;
     }
 
