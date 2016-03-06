@@ -464,13 +464,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         this.mOnItemClickListener = l;
     }
 
-<<<<<<< HEAD
-=======
     /**
      * 设置跳转监听
      * @param l
      */
->>>>>>> de44868bf3cdf5c150714b34141f5fd26b9dac16
     public void setOnLoopListener(OnLoopListener l) {
         this.mOnLoopListener = l;
     }
