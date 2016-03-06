@@ -390,6 +390,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
                 }
                 break;
         }
+        System.out.print("isStoppedByInvisible=="+isStoppedByInvisible);
     }
 
     /**
@@ -405,7 +406,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * @param delayTimeInMills 延时
      */
     public void startAutoLoop(long delayTimeInMills) {
-        if (mLoopData.items.size() <= 1) return;
+        if (null == mLoopData || mLoopData.items.size() <= 1) return;
         isAutoScroll = true;
         sendScrollMessage(delayTimeInMills);
     }
@@ -458,7 +459,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         this.mOnItemClickListener = l;
     }
 
-    public void setOnRotateListener(OnLoopListener l) {
+    public void setOnLoopListener(OnLoopListener l) {
         this.mOnLoopListener = l;
     }
 

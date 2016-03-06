@@ -17,19 +17,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="11111"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="22222"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="33333"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <com.kevin.loopview.AdLoopView
                 android:id="@+id/main_act_adloopview"
@@ -40,109 +40,164 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="11111"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="22222"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="33333"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="44444"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="55555"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="66666"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="77777"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="88888"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="99999"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="11111"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="22222"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="33333"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="44444"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="55555"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="66666"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="77777"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="88888"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="99999"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="11111"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="22222"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="33333"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="44444"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="55555"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="66666"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="77777"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="88888"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="99999"
+                android:textSize="25sp" />
 
         </LinearLayout>
 

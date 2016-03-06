@@ -23,8 +23,8 @@ public class LoopHandler extends Handler {
     private final WeakReference<BaseLoopView> mLoopView;
 
     public LoopHandler(BaseLoopView loopView, Activity activity) {
-        this.mLoopView = new WeakReference<BaseLoopView>(loopView);
-        this.mActivity = new WeakReference<Activity>(activity);
+        this.mLoopView = new WeakReference<>(loopView);
+        this.mActivity = new WeakReference<>(activity);
     }
 
     @Override
