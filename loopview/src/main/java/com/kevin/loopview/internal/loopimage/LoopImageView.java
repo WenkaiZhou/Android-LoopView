@@ -52,7 +52,7 @@ public class LoopImageView extends ImageView {
 
     public void setImage(final LoopImage image, final Integer loadingResource, final Integer fallbackResource) {
         // 设置下载的时候显示的图片
-        if(loadingResource != null){
+        if(loadingResource != null && loadingResource != 0){
             setImageResource(loadingResource);
         }
 
@@ -72,7 +72,7 @@ public class LoopImageView extends ImageView {
                     setImageBitmap(bitmap);
                 } else {
                     // 如果下载失败,责显示预设的加载失败时显示的图片
-                    if(fallbackResource != null) {
+                    if(fallbackResource != null && fallbackResource != 0) {
                         setImageResource(fallbackResource);
                     }
                 }

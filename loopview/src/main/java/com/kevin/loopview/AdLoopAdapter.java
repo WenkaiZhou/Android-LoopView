@@ -40,7 +40,7 @@ public class AdLoopAdapter extends BaseLoopAdapter {
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
         mImageView.setLayoutParams(new ViewGroup.LayoutParams(width, height));
         if(!TextUtils.isEmpty(imageUrl)) {
-            mImageView.setImageUrl(imageUrl);
+            mImageView.setImageUrl(imageUrl, defaultImgId, defaultImgId);
         }
         return mImageView;
     }

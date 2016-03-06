@@ -4,17 +4,22 @@
 
 Android LoopView is a powerful widget for unlimited rotation picture, It provides some configuration options and good control the appearance and operational requirements.
 
-**Simple** and **Custom layout** usage picture:  
-![Sample AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_simple.gif)
+**Simple** usage picture:  
+![AdLoopView Simple Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_simple.gif)
 
-![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad.gif)
+**Custom layout** usage picture:  
+![AdLoopView Demo](https://raw.githubusercontent.com/xuehuayous/Android-LoopView/master/loopview_ad_custom.gif)
 
 ## Using LoopView in your application
 
 If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
 
 ```
+<<<<<<< HEAD
 	compile 'com.kevin:loopview:1.0.6'
+=======
+	compile 'com.kevin:loopview:1.0.5'
+>>>>>>> de44868bf3cdf5c150714b34141f5fd26b9dac16
 ```
 
 ## Simple Usage ##
@@ -70,6 +75,7 @@ If you decide to use AdLoopView as a view, you can define it in your xml layout 
         kevin:loop_dotMargin="5dp"
         kevin:loop_autoLoop="[true|false]"
         kevin:loop_dotSelector="@drawable/ad_dots_selector"
+		kevin:loop_defaultImg="@mipmap/ic_launcher"
 		kevin:loop_layoutId="@layout/ad_loopview_layout">
     </com.kevin.loopview.AdLoopView>
 

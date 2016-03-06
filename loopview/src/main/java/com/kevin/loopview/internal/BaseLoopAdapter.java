@@ -34,6 +34,8 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
     /** 条目点击的监听回调 */
     protected OnItemClickListener mOnItemClickListener;
     protected ViewPager mViewPager;
+    /** 默认图片 */
+    protected int defaultImgId;
     /** 轮转缓存集合 */
     Map<Integer, SoftReference<View>> instantiateViewMap = new HashMap();
 
@@ -53,6 +55,15 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
     public void setLoopData(LoopData loopData) {
         this.mLoopData = loopData;
+    }
+
+    /**
+     * 设置默认图片
+     *
+     * @param defaultImgId
+     */
+    public void setDefaultImgId(int defaultImgId) {
+        this.defaultImgId = defaultImgId;
     }
 
     @Override
