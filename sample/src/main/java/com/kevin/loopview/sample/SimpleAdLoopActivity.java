@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
+import android.widget.Button;
 
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
@@ -40,6 +41,13 @@ public class SimpleAdLoopActivity extends Activity implements BaseLoopAdapter.On
     private void initViews() {
         mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
         initRotateView();
+
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SimpleAdLoopActivity.this, AdLoopActivity.class));
+            }
+        });
     }
 
     /**
