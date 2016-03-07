@@ -378,7 +378,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     @Override
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
-
         // 当不可见的时候停止自动跳转
         switch (visibility) {
             case VISIBLE:
