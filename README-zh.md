@@ -14,11 +14,7 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 如果您的项目使用 Gradle 构建, 只需要在您的`build.gradle`文件添加下面一行到 `dependencies` :
 
 ```
-<<<<<<< HEAD
 	compile 'com.kevin:loopview:1.0.6'
-=======
-	compile 'com.kevin:loopview:1.0.5'
->>>>>>> de44868bf3cdf5c150714b34141f5fd26b9dac16
 ```
 
 ## 简单使用 ##

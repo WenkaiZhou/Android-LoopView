@@ -15,11 +15,7 @@ Android LoopView is a powerful widget for unlimited rotation picture, It provide
 If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
 
 ```
-<<<<<<< HEAD
 	compile 'com.kevin:loopview:1.0.6'
-=======
-	compile 'com.kevin:loopview:1.0.5'
->>>>>>> de44868bf3cdf5c150714b34141f5fd26b9dac16
 ```
 
 ## Simple Usage ##
