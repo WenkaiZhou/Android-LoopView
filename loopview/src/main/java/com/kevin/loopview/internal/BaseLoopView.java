@@ -7,7 +7,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -63,8 +64,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     private boolean stopScrollWhenTouch = true;
     /** 当前状态是否是由于触摸而停止 */
     private boolean isStoppedByTouch = false;
-    /** 当前状态是否是由于不可见而停止 */
-    private boolean isStoppedByInvisible = false;
     /** 当前状态是否为自动跳转 */
     private boolean isAutoScroll = true;
 
@@ -375,28 +374,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         return super.dispatchTouchEvent(ev);
     }
 
-    @Override
-    protected void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        // 当不可见的时候停止自动跳转
-        switch (visibility) {
-            case VISIBLE:
-                if(isStoppedByInvisible) {
-                    startAutoLoop(mInterval);
-                    isStoppedByInvisible = false;
-                }
-                break;
-            case INVISIBLE:
-            case GONE:
-                if(isAutoScroll) {
-                    stopAutoLoop();
-                    isStoppedByInvisible = true;
-                }
-                break;
-        }
-        System.out.print("isStoppedByInvisible=="+isStoppedByInvisible);
-    }
-
     /**
      * 开始自动跳转
      */
@@ -453,6 +430,22 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     public int getDirection() {
         return direction;
+    }
+
+    /**
+     * 判断是否显示
+     */
+    public boolean isVisible() {
+        ViewGroup parentView = (ViewGroup)this.getParent();
+        Rect scrollBounds = new Rect();
+        parentView.getHitRect(scrollBounds);
+        if (this.getLocalVisibleRect(scrollBounds)) {
+            //子控件至少有一个像素在可视范围内
+            return true;
+        } else {
+            //子控件完全不在可视范围内
+            return false;
+        }
     }
 
     /**

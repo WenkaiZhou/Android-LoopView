@@ -36,7 +36,7 @@ public class LoopHandler extends Handler {
                 Activity activity = mActivity.get();
                 BaseLoopView loopView = mLoopView.get();
                 if (activity != null && loopView != null) {
-                    if (!loopView.isAutoScroll()) return;
+                    if (!loopView.isAutoScroll() && !loopView.isVisible()) return;
                     int change = (loopView.getDirection() == BaseLoopView.LEFT) ? -1 : 1;
                     loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() + change, true);
                     loopView.sendScrollMessage(loopView.getInterval());
