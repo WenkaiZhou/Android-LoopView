@@ -31,23 +31,30 @@ public class LoopHandler extends Handler {
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
 
-        switch (msg.what) {
-            case 0:
-                Activity activity = mActivity.get();
-                BaseLoopView loopView = mLoopView.get();
-                if (activity != null && loopView != null) {
-                    if (!loopView.isAutoScroll() && !loopView.isVisible()) return;
+        Activity activity = mActivity.get();
+        BaseLoopView loopView = mLoopView.get();
+        if (activity != null && loopView != null) {
+            if (!loopView.isAutoScroll()) return;
+
+            switch (msg.what) {
+                case 0: // 自动跳转
                     int change = (loopView.getDirection() == BaseLoopView.LEFT) ? -1 : 1;
                     loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() + change, true);
                     loopView.sendScrollMessage(loopView.getInterval());
-                } else {
-                    removeMessages(0);
-                    if(loopView != null) {
-                        loopView.releaseResources();
-                    }
-                }
-            default:
-                break;
+                    break;
+                case 1: // 由不可见到可见跳转一次
+                    loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() - 1, false);
+                    loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() + 1, false);
+                    loopView.sendScrollMessage(loopView.getInterval());
+                    break;
+            }
+
+        } else {
+            removeMessages(0);
+            removeMessages(1);
+            if (loopView != null) {
+                loopView.releaseResources();
+            }
         }
     }
 
