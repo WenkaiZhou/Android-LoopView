@@ -11,6 +11,8 @@ import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.internal.loopimage.LoopImageView;
 
+import java.lang.reflect.Method;
+
 /**
  * 版权所有：XXX有限公司
  *
@@ -40,7 +42,37 @@ public class AdLoopAdapter extends BaseLoopAdapter {
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
         mImageView.setLayoutParams(new ViewGroup.LayoutParams(width, height));
         if(!TextUtils.isEmpty(imageUrl)) {
-            mImageView.setImageUrl(imageUrl, defaultImgId, defaultImgId);
+            // 优先选用Picasso加载图片
+            try {
+                Class clazz = Class.forName("com.squareup.picasso.Picasso");
+                Method with = clazz.getMethod("with", Context.class);
+                Object obj = with.invoke(null, mContext);
+                Method load = obj.getClass().getMethod("load", String.class);
+                obj = load.invoke(obj, imageUrl);
+                if (defaultImgId != 0) {
+                    Method error = obj.getClass().getMethod("error", int.class);
+                    obj = error.invoke(obj, defaultImgId);
+                }
+                Method into = obj.getClass().getMethod("into", ImageView.class);
+                into.invoke(obj, mImageView);
+            } catch (Exception e) {
+                // 选用Glide加载图片
+                try {
+                    Class clazz = Class.forName("com.bumptech.glide.Glide");
+                    Method with = clazz.getMethod("with", Context.class);
+                    Object obj = with.invoke(null, mContext);
+                    Method load = obj.getClass().getMethod("load", String.class);
+                    obj = load.invoke(obj, imageUrl);
+                    if (defaultImgId != 0) {
+                        Method error = obj.getClass().getMethod("error", int.class);
+                        obj = error.invoke(obj, defaultImgId);
+                    }
+                    Method into = obj.getClass().getMethod("into", ImageView.class);
+                    into.invoke(obj, mImageView);
+                } catch (Exception e1) {
+                    mImageView.setImageUrl(imageUrl, defaultImgId, defaultImgId);
+                }
+            }
         }
         return mImageView;
     }
