@@ -262,10 +262,8 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
             mLoopData.items = new ArrayList(data.size());
         }
         for (Map<String, String> map : data) {
-            LoopData.ItemData itemDatas =
-                    mLoopData.new ItemData(map.get("id"), map.get("imageURL"),
-                            map.get("link"), map.get("descText"), map.get("type"));
-            mLoopData.items.add(itemDatas);
+            LoopData.ItemData itemData = mLoopData.new ItemData(map.get("img"), map.get("desc"), map.get("link"));
+            mLoopData.items.add(itemData);
         }
 
         initLoopViewPager();
@@ -296,9 +294,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         initRealView();
         mLoopData.items.clear();
         for (Map<String, String> map : data) {
-            LoopData.ItemData itemData =
-                    mLoopData.new ItemData(map.get("id"), map.get("imageURL"),
-                            map.get("link"), map.get("descText"), map.get("type"));
+            LoopData.ItemData itemData = mLoopData.new ItemData(map.get("img"), map.get("desc"), map.get("link"));
             mLoopData.items.add(itemData);
         }
         initLoopViewPager();
@@ -327,7 +323,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
         if (null != descText) {
-            String descStr = mLoopData.items.get(0).descText;
+            String descStr = mLoopData.items.get(0).desc;
             if (!TextUtils.isEmpty(descStr)) {
                 descText.setText(descStr);                    // 初始化描述信息
             }

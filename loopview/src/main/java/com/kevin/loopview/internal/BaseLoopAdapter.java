@@ -107,7 +107,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         final View view;
         final int index = position % mLoopData.items.size();
-        String imageUrl = mLoopData.items.get(index).imgUrl;
+        String imageUrl = mLoopData.items.get(index).img;
 
         // 首先读取软引用,如果不存在则初始化该View
         if (instantiateViewMap.containsKey(index)) {

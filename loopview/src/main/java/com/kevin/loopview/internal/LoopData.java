@@ -36,13 +36,9 @@ public class LoopData {
 
     public class ItemData {
         /**
-         * ID
-         */
-        public String id;
-        /**
          * 图片地址
          */
-        public String imgUrl;
+        public String img;
         /**
          * 链接操作
          */
@@ -50,21 +46,15 @@ public class LoopData {
         /**
          * 描述信息
          */
-        public String descText;
-        /**
-         * 类型
-         */
-        public String type;
+        public String desc;
 
         public ItemData() {
         }
 
-        public ItemData(String id, String imgUrl, String link, String descText, String type) {
-            this.id = id;
-            this.imgUrl = imgUrl;
+        public ItemData(String img, String desc, String link) {
+            this.img = img;
             this.link = link;
-            this.descText = descText;
-            this.type = type;
+            this.desc = desc;
         }
     }
 

@@ -191,10 +191,10 @@ public class AdLoopView extends BaseLoopView {
                 }
                 currentPosition = i;
                 if (null != descText) {
-                    if (!TextUtils.isEmpty(mLoopData.items.get(i).descText)) {
+                    if (!TextUtils.isEmpty(mLoopData.items.get(i).desc)) {
                         if (descText.getVisibility() != View.VISIBLE)
                             descText.setVisibility(View.VISIBLE);
-                        String imageDesc = mLoopData.items.get(i).descText;
+                        String imageDesc = mLoopData.items.get(i).desc;
                         descText.setText(imageDesc);
                     } else {
                         if (descText.getVisibility() == View.VISIBLE)
