@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 23
-        versionCode 8
-        versionName "1.0.9"
+        versionCode 9
+        versionName "1.1.0"
     }
     buildTypes {
         release {
@@ -21,4 +21,8 @@ dependencies {
     implementation 'com.android.support:support-v4:23.3.0'
 }
 
-//apply from: "bintrayUpload.gradle"
+// -------
+ext {
+    kevinSourceDocFiles = [rootProject.file('gradle/android-sources-docs.gradle')]
+}
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

@@ -14,15 +14,15 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 如果您的项目使用 Gradle 构建, 只需要在您的`build.gradle`文件添加下面一行到 `dependencies` :
 
 ```
-	compile 'com.kevin:loopview:1.0.9'
+	compile 'com.kevin:loopview:1.1.0'
 ```
 
 ## 简单使用 ##
 
 ### 在layout.xml 中配置LoopView ###
-在Layout文件添加`<com.kevin.loopview.AdLoopView` 
+在Layout文件添加`<com.kevin.loopview.BannerView`
 
-	<com.kevin.loopview.AdLoopView
+	<com.kevin.loopview.BannerView
         android:id="@+id/main_act_adloopview"
         android:layout_width="match_parent"
         android:layout_height="192dp">
@@ -30,32 +30,26 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 
 ### 在代码中配置 ###
 
-	AdLoopView mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
-	String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
-    // 使用 JsonTool 封装 JSON 数据到实体对象
-	LoopData loopData = JsonTool.toBean(json, LoopData.class);
-	// 通过对象的方式设置数据
-    mLoopView.refreshData(loopData);
-	// 开始轮转
-    mLoopView.startAutoLoop();
+```
+BannerView mBannerView = (BannerView) this.findViewById(R.id.main_act_banner);
+String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
+LoopData loopData = new Gson().fromJson(json, LoopData.class);
+// 通过对象的方式设置数据
+mBannerView.setData(loopData);
+// 开始播放
+mBannerView.startAutoLoop();
 
-	// 设置点击监听
-	mLoopView.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(PagerAdapter parent, View view, 
-				int position, int realPosition) {
-                // 获取数据
-                LoopData loopData = mLoopView.getLoopData();
-                String url = loopData.items.get(position).link;
-
-                // 通过系统浏览器打开跳转链接
-                Intent intent = new Intent();
-                intent.setData(Uri.parse(url));
-                intent.setAction(Intent.ACTION_VIEW);
-                startActivity(intent);
-            }
-        });
-
+mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
+    @Override
+    public void onItemClick(View view, LoopData.ItemData itemData, int position) {
+        // 通过系统浏览器打开跳转链接
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(itemData.link));
+        intent.setAction(Intent.ACTION_VIEW);
+        startActivity(intent);
+    }
+});
+```
 
 ## 更多配置 ##
 
@@ -63,7 +57,7 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 
 在XML中使用AdLoopView，可以有如下配置：
 
-    <com.kevin.loopview.AdLoopView
+    <com.kevin.loopview.BannerView
         android:id="@+id/adloop_act_adloopview"
         android:layout_width="match_parent"
         android:layout_height="192dp"
@@ -82,11 +76,9 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 	// 设置轮转时间间隔
 	mLoopView.setInterval(3000);
 	// 以集合的方式初始化数据
-	mLoopView.setLoopViewPager(List<Map<String, String>> data);
-	// 以JSON的方式初始化数据
-	mLoopView.setLoopViewPager(String jsonData);
+	mLoopView.setData(List<Map<String, String>> data);
 	// 以数据实体的方式初始化数据
-	mLoopView.setLoopViewPager(LoopData rotateData);
+	mLoopView.setData(LoopData rotateData);
 	// 以集合的方式刷新数据
 	mLoopView.refreshData(final List<Map<String, String>> data);
 	// 以数据实体的方式刷新数据
@@ -94,7 +86,7 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 	// 以JSON的方式刷新数据
 	mLoopView.refreshData(String jsonData);
 	// 获取配置的轮转大图数据
-	mLoopView.getLoopData();
+	mLoopView.getData();
 	// 开始自动轮转
 	mLoopView.startAutoLoop();
 	// 在指定时间延迟后自动轮转

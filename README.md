@@ -15,47 +15,43 @@ Android LoopView is a powerful widget for unlimited rotation picture, It provide
 If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
 
 ```
-	compile 'com.kevin:loopview:1.0.9'
+compile 'com.kevin:loopview:1.1.0'
 ```
 
 ## Simple Usage ##
 
 ### Configured as View in layout.xml ###
-To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView` in your layout XML.
+To add the LoopView to your application, specify `<com.kevin.loopview.BannerView` in your layout XML.
 
-	<com.kevin.loopview.AdLoopView
-        android:id="@+id/main_act_adloopview"
-        android:layout_width="match_parent"
-        android:layout_height="192dp">
-    </com.kevin.loopview.AdLoopView>
+```
+<com.kevin.loopview.BannerView
+    android:id="@+id/main_act_adloopview"
+    android:layout_width="match_parent"
+    android:layout_height="192dp">
+</com.kevin.loopview.BannerView>
+```
 
 ### Configured Programmatically ###
 
-	AdLoopView mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
-	String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
-    // Use JsonTool to parse JSON data to entity
-	LoopData loopData = JsonTool.toBean(json, LoopData.class);
-	// set AdLoopView date use entity
-    mLoopView.refreshData(loopData);
-	// begin to loop
-    mLoopView.startAutoLoop();
+```
+BannerView mBannerView = (BannerView) this.findViewById(R.id.main_act_banner);
+String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
+LoopData loopData = new Gson().fromJson(json, LoopData.class);
+mBannerView.setData(loopData);
+// begin to loop
+mBannerView.startAutoLoop();
 
-	mLoopView.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(PagerAdapter parent, View view, 
-				int position, int realPosition) {
-                // get the loop data and the action link
-                LoopData loopData = mLoopView.getLoopData();
-                String url = loopData.items.get(position).link;
-
-                // Open connection with browser
-                Intent intent = new Intent();
-                intent.setData(Uri.parse(url));
-                intent.setAction(Intent.ACTION_VIEW);
-                startActivity(intent);
-            }
-        });
-
+mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
+    @Override
+    public void onItemClick(View view, LoopData.ItemData itemData, int position) {
+        // Open connection with browser
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(itemData.link));
+        intent.setAction(Intent.ACTION_VIEW);
+        startActivity(intent);
+    }
+});
+```
 
 ## More configuration Usage ##
 
@@ -63,7 +59,7 @@ To add the LoopView to your application, specify `<com.kevin.loopview.AdLoopView
 
 If you decide to use AdLoopView as a view, you can define it in your xml layout like this:
 
-    <com.kevin.loopview.AdLoopView
+    <com.kevin.loopview.BannerView
         android:id="@+id/adloop_act_adloopview"
         android:layout_width="match_parent"
         android:layout_height="192dp"
@@ -82,19 +78,15 @@ If you decide to use AdLoopView as a view, you can define it in your xml layout 
 	// Set time interval
 	mLoopView.setInterval(3000);
 	// To initialize the data in a collection
-	mLoopView.setLoopViewPager(List<Map<String, String>> data);
-	// Initialized data in JSON data mode
-	mLoopView.setLoopViewPager(String jsonData);
+	mLoopView.setData(List<Map<String, String>> data);
 	// Initialized data in entiry mode
-	mLoopView.setLoopViewPager(LoopData rotateData);
+	mLoopView.setData(LoopData rotateData);
 	// Update data in a collection mode
 	mLoopView.refreshData(final List<Map<String, String>> data);
 	// Update data in entiry mode
 	mLoopView.refreshData(LoopData loopData);
-	// Update data in JSON data mode
-	mLoopView.refreshData(String jsonData);
 	// Get the running loop date
-	mLoopView.getLoopData();
+	mLoopView.getData();
 	// Begin to auto Loop
 	mLoopView.startAutoLoop();
 	// Begin to auto Loop delay

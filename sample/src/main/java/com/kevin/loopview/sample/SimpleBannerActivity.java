@@ -73,17 +73,7 @@ public class SimpleBannerActivity extends Activity {
     private void initLoopView() {
         String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
         LoopData loopData = new Gson().fromJson(json, LoopData.class);
-
-        List<Map<String, String>> dataList = new ArrayList<>();
-        for (LoopData.ItemData itemData : loopData.items) {
-            Map<String, String> map = new HashMap<>();
-            map.put("img", itemData.img);
-            map.put("desc", itemData.desc);
-            map.put("link", itemData.link);
-            dataList.add(map);
-        }
-
-        mBannerView.setData(dataList);
+        mBannerView.setData(loopData);
         mBannerView.startAutoLoop();
     }
 
