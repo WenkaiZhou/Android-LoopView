@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2018 Kevin zhou
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kevin.loopview;
 
 import android.content.Context;
@@ -22,16 +37,15 @@ import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.BaseLoopView;
 
 /**
- * 版权所有：XXX有限公司
- *
  * AdLoopView
  *
- * @author zhou.wenkai ,Created on 2015-1-14 19:30:18
- * Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
- *
- * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
+ * @author zwenkai@foxmail.com, Created on 2015-1-14 19:30:18
+ *         Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
+ *         <p/>
+ *         Note: If you modify this class please fill in the following content as a record.
  * @author mender，Modified Date Modify Content:
  */
+
 public class AdLoopView extends BaseLoopView {
 
     public AdLoopView(Context context) {
@@ -71,11 +85,11 @@ public class AdLoopView extends BaseLoopView {
             descText = (TextView) view.findViewById(R.id.loop_view_desc);
         }
 
-        if(view == null) {
+        if (view == null) {
             view = createDefaultView();
         }
 
-        setScrollDuration(1000);	// 设置页面切换时间
+        setScrollDuration(1000);    // 设置页面切换时间
         this.addView(view);
     }
 
@@ -94,8 +108,8 @@ public class AdLoopView extends BaseLoopView {
         this.addView(mViewPager, viewPagerParams);
         // 初始化下方指示条
         RelativeLayout bottomLayout = new RelativeLayout(getContext());
-        int bottomLayoutWidth =  LayoutParams.MATCH_PARENT;
-        int bottomLayoutHeight =  LayoutParams.WRAP_CONTENT;
+        int bottomLayoutWidth = LayoutParams.MATCH_PARENT;
+        int bottomLayoutHeight = LayoutParams.WRAP_CONTENT;
         LayoutParams bottomLayoutParams = new LayoutParams(bottomLayoutWidth, bottomLayoutHeight);
         bottomLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, mViewPager.getId());
         Drawable mBackground = new ColorDrawable(Color.DKGRAY);
@@ -137,21 +151,23 @@ public class AdLoopView extends BaseLoopView {
         return new AdLoopAdapter(getContext(), mLoopData, mViewPager);
     }
 
-    /** 初始化指示点 */
+    /**
+     * 初始化指示点
+     */
     @Override
     protected void initDots(int size) {
-        if(null != dotsView) {
+        if (null != dotsView) {
             dotsView.removeAllViews();
-            for(int i=0; i<size; i++){
+            for (int i = 0; i < size; i++) {
                 ImageView dot = new ImageView(getContext());
                 dot.setBackgroundResource(mDotSelector);
                 int dotWidth = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int dotHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
                 LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotWidth, dotHeight);
-                dotParams.setMargins(0, (int)mDotMargin, (int)mDotMargin, (int)mDotMargin);
-                if(i == 0){
+                dotParams.setMargins(0, (int) mDotMargin, (int) mDotMargin, (int) mDotMargin);
+                if (i == 0) {
                     dot.setEnabled(true);
-                }else{
+                } else {
                     dot.setEnabled(false);
                 }
                 dotsView.addView(dot, dotParams);
@@ -167,30 +183,30 @@ public class AdLoopView extends BaseLoopView {
             @Override
             public void onPageSelected(int position) {
                 int i = position % mLoopData.items.size();
-                if(null != dotsView) {
+                if (null != dotsView) {
                     dotsView.getChildAt(i).setEnabled(true);
                 }
-                if(null != dotsView && currentPosition != -1) {
+                if (null != dotsView && currentPosition != -1) {
                     dotsView.getChildAt(currentPosition).setEnabled(false);
                 }
                 currentPosition = i;
-                if(null != descText) {
-                    if(!TextUtils.isEmpty(mLoopData.items.get(i).descText)) {
-                        if(descText.getVisibility() != View.VISIBLE)
+                if (null != descText) {
+                    if (!TextUtils.isEmpty(mLoopData.items.get(i).descText)) {
+                        if (descText.getVisibility() != View.VISIBLE)
                             descText.setVisibility(View.VISIBLE);
                         String imageDesc = mLoopData.items.get(i).descText;
                         descText.setText(imageDesc);
                     } else {
-                        if(descText.getVisibility() == View.VISIBLE)
+                        if (descText.getVisibility() == View.VISIBLE)
                             descText.setVisibility(View.GONE);
                     }
                 }
 
                 // 跳转到头部尾部的监听回调
-                if(mOnLoopListener != null) {
-                    if(i == 0) {
+                if (mOnLoopListener != null) {
+                    if (i == 0) {
                         mOnLoopListener.onLoopToStart(position);
-                    } else if(i == mLoopData.items.size() -1) {
+                    } else if (i == mLoopData.items.size() - 1) {
                         mOnLoopListener.onLoopToEnd(position);
                     }
                 }
@@ -199,10 +215,12 @@ public class AdLoopView extends BaseLoopView {
 
             @Override
             public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {}
+                                       int positionOffsetPixels) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
     }

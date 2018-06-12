@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2018 Kevin zhou
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kevin.loopview.internal;
 
 import java.util.ArrayList;
@@ -23,66 +38,109 @@ import com.kevin.loopview.R;
 import com.kevin.loopview.utils.JsonTool;
 
 /**
- * 版权所有：XXX有限公司
- *
  * BaseLoopView
  *
- * @author zhou.wenkai ,Created on 2015-1-14 19:30:18
+ * @author zwenkai@foxmail.com, Created on 2015-1-14 19:30:18
+ *         Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
+ *         <p/>
+ *         Note: If you modify this class please fill in the following content as a record.
  * @author mender，Modified Date Modify Content:
- * Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
- *
- * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
  */
+
 public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
-    /** ViewPager */
+    /**
+     * ViewPager
+     */
     protected ViewPager mViewPager;
-    /** 设置的自定义布局id */
+    /**
+     * 设置的自定义布局id
+     */
     protected int mLoopLayoutId;
-    /** ViewPager数据适配器 */
+    /**
+     * ViewPager数据适配器
+     */
     private BaseLoopAdapter adapter;
-    /** 底部指示点父控件 */
+    /**
+     * 底部指示点父控件
+     */
     protected LinearLayout dotsView;
-    /** 描述文字 */
+    /**
+     * 描述文字
+     */
     protected TextView descText;
-    /** 指示点的位置 */
+    /**
+     * 指示点的位置
+     */
     protected int currentPosition = -1;
-    /** 指示点距离 */
+    /**
+     * 指示点距离
+     */
     protected float mDotMargin;
-    /** 自动跳转的时间间隔 */
+    /**
+     * 自动跳转的时间间隔
+     */
     protected long mInterval;
-    /** 指示点选择器 */
+    /**
+     * 指示点选择器
+     */
     protected int mDotSelector;
-    /** 默认图片 */
+    /**
+     * 默认图片
+     */
     protected int mDefaultImgId;
-    /** 是否自动跳转 */
+    /**
+     * 是否自动跳转
+     */
     private boolean autoLoop = false;
 
-    /** 触摸时是否停止自动跳转 */
+    /**
+     * 触摸时是否停止自动跳转
+     */
     private boolean stopScrollWhenTouch = true;
-    /** 当前状态是否是由于触摸而停止 */
+    /**
+     * 当前状态是否是由于触摸而停止
+     */
     private boolean isStoppedByTouch = false;
-    /** 当前状态是否是由于不可见而停止 */
+    /**
+     * 当前状态是否是由于不可见而停止
+     */
     private boolean isStoppedByInvisible = false;
-    /** 当前状态是否为自动跳转 */
+    /**
+     * 当前状态是否为自动跳转
+     */
     private boolean isAutoScroll = true;
 
-    /** 自动跳转的方向为自右向左 */
+    /**
+     * 自动跳转的方向为自右向左
+     */
     public static final int LEFT = 0;
-    /** 自动跳转的方向为自左向右 */
+    /**
+     * 自动跳转的方向为自左向右
+     */
     public static final int RIGHT = 1;
-    /** 自动跳转方向,默认自左向右 */
+    /**
+     * 自动跳转方向,默认自左向右
+     */
     protected int direction = RIGHT;
 
-    /** 数据实体对象 */
+    /**
+     * 数据实体对象
+     */
     protected LoopData mLoopData;
 
     private Handler mHandler;
-    /** 条目点击的接口回调 */
+    /**
+     * 条目点击的接口回调
+     */
     protected BaseLoopAdapter.OnItemClickListener mOnItemClickListener;
-    /** 自动跳转状态的接口回调 */
+    /**
+     * 自动跳转状态的接口回调
+     */
     protected OnLoopListener mOnLoopListener;
-    /** 滑动控制器 */
+    /**
+     * 滑动控制器
+     */
     private LoopViewScroller mScroller;
 
     private float mDownX;
@@ -180,7 +238,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /**
      * 获取封装数据
-     *
      */
     @Override
     public LoopData getLoopData() {
@@ -189,7 +246,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /**
      * 获取当前指示位置
-     *
      */
     public int getCurrentPosition() {
         return currentPosition;
@@ -300,9 +356,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         adapter.setDefaultImgId(mDefaultImgId);
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
-        if(null != descText) {
+        if (null != descText) {
             String descStr = mLoopData.items.get(0).descText;
-            if(!TextUtils.isEmpty(descStr)) {
+            if (!TextUtils.isEmpty(descStr)) {
                 descText.setText(descStr);                    // 初始化描述信息
             }
         }
@@ -310,7 +366,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
         mViewPager.setCurrentItem(startPosition, false);      // 设置当前显示的位置
         if (mHandler == null) {
-            mHandler = new LoopHandler(this, (Activity)getContext());
+            mHandler = new LoopHandler(this, (Activity) getContext());
         }
 
         if (autoLoop) {
@@ -328,7 +384,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
                 mDownY = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(Math.abs(ev.getY() - mDownY) > Math.abs(ev.getX() - mDownX)) {
+                if (Math.abs(ev.getY() - mDownY) > Math.abs(ev.getX() - mDownX)) {
                     getParent().requestDisallowInterceptTouchEvent(false);
                 } else {
                     getParent().requestDisallowInterceptTouchEvent(true);
@@ -353,17 +409,17 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
-        if(stopScrollWhenTouch) {
+        if (stopScrollWhenTouch) {
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    if(isAutoScroll) {
+                    if (isAutoScroll) {
                         stopAutoLoop();
                         isStoppedByTouch = true;
                     }
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    if(isStoppedByTouch) {
+                    if (isStoppedByTouch) {
                         startAutoLoop(mInterval);
                         isStoppedByTouch = false;
                     }
@@ -380,14 +436,14 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         // 当不可见的时候停止自动跳转
         switch (visibility) {
             case VISIBLE:
-                if(isStoppedByInvisible) {
+                if (isStoppedByInvisible) {
                     startCurrentAutoLoop();
                     isStoppedByInvisible = false;
                 }
                 break;
             case INVISIBLE:
             case GONE:
-                if(isAutoScroll) {
+                if (isAutoScroll) {
                     stopAutoLoop();
                     isStoppedByInvisible = true;
                 }
@@ -440,7 +496,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * 移除所有消息
      */
     public void removeAllMessages() {
-        if(null != mHandler) {
+        if (null != mHandler) {
             mHandler.removeMessages(0);
             mHandler.removeMessages(1);
         }
@@ -477,6 +533,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /**
      * 注册点击监听的方法
+     *
      * @param l
      */
     public void setOnClickListener(BaseLoopAdapter.OnItemClickListener l) {
@@ -485,6 +542,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /**
      * 设置跳转监听
+     *
      * @param l
      */
     public void setOnLoopListener(OnLoopListener l) {
@@ -517,7 +575,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * 释放资源
      */
     public void releaseResources() {
-        if(adapter != null) {
+        if (adapter != null) {
             adapter.releaseResources();
         }
         if (mHandler != null) {
@@ -528,7 +586,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     /**
      * OnLoopListener
-     *
+     * <p>
      * <b>定义一个接口,当Adapter被点击的时候作为回调被调用</b>
      */
     public interface OnLoopListener {
@@ -536,14 +594,14 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         /**
          * LoopView 跳转到第一个时候会被调用
          *
-         * @param realPosition	当前的绝对位置
+         * @param realPosition 当前的绝对位置
          */
         void onLoopToStart(int realPosition);
 
         /**
          * LoopView 跳转到最后一个时候会被调用
          *
-         * @param realPosition	当前的绝对位置
+         * @param realPosition 当前的绝对位置
          */
         void onLoopToEnd(int realPosition);
     }

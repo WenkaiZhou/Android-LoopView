@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2018 Kevin zhou
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kevin.loopview.utils;
 
 import java.lang.reflect.Constructor;
@@ -14,16 +29,15 @@ import org.json.JSONObject;
 import android.util.Log;
 
 /**
- * 版权所有：XXX有限公司
- *
  * JsonTool
  *
- * @author zhou.wenkai ,Created on 2015-10-8 09:04:23
- * 		   Major Function：<b>JSON 操作 工具类</b>
- *
- *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
+ * @author zwenkai@foxmail.com, Created on 2015-10-8 09:04:23
+ *         Major Function：<b>JSON 操作 工具类</b>
+ *         <p/>
+ *         Note: If you modify this class please fill in the following content as a record.
  * @author mender，Modified Date Modify Content:
  */
+
 public class JsonTool {
 
     private static boolean DEBUG = false;
@@ -32,7 +46,7 @@ public class JsonTool {
      * 将JSON字符串封装到对象
      *
      * @param jsonStr 待封装的JSON字符串
-     * @param clazz 待封装的实例字节码
+     * @param clazz   待封装的实例字节码
      * @return T: 封装JSON数据的对象
      * @version 1.0
      */
@@ -82,8 +96,8 @@ public class JsonTool {
      * JSONObject 封装到 对象实例
      *
      * @param job 待封装的JSONObject
-     * @param c 待封装的实例对象class
-     * @param v	待封装实例的外部类实例对象</br>只有内部类存在,外部类时传递null
+     * @param c   待封装的实例对象class
+     * @param v   待封装实例的外部类实例对象</br>只有内部类存在,外部类时传递null
      * @return T:封装数据的实例对象
      * @version 1.0
      * @date 2015-10-9
@@ -93,7 +107,7 @@ public class JsonTool {
     private static <T, V> T parseObject(JSONObject job, Class<T> c, V v) {
         T t = null;
         try {
-            if(null == v) {
+            if (null == v) {
                 t = c.newInstance();
             } else {
                 Constructor<?> constructor = c.getDeclaredConstructors()[0];
@@ -106,7 +120,7 @@ public class JsonTool {
                     c.toString() + " should provide a default constructor " +
                             "(a public constructor with no arguments)");
         } catch (Exception e) {
-            if(DEBUG)
+            if (DEBUG)
                 e.printStackTrace();
         }
 
@@ -117,10 +131,10 @@ public class JsonTool {
             String name = field.getName();
 
             // if the object don`t has a mapping for name, then continue
-            if(!job.has(name)) continue;
+            if (!job.has(name)) continue;
 
             String typeName = type.getName();
-            if(typeName.equals("java.lang.String")) {
+            if (typeName.equals("java.lang.String")) {
                 try {
                     String value = job.getString(name);
                     if (value != null && value.equals("null")) {
@@ -128,81 +142,81 @@ public class JsonTool {
                     }
                     field.set(t, value);
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                     try {
                         field.set(t, "");
                     } catch (Exception e1) {
-                        if(DEBUG)
+                        if (DEBUG)
                             e1.printStackTrace();
                     }
                 }
-            } else if(typeName.equals("int") ||
+            } else if (typeName.equals("int") ||
                     typeName.equals("java.lang.Integer")) {
                 try {
                     field.set(t, job.getInt(name));
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("boolean") ||
+            } else if (typeName.equals("boolean") ||
                     typeName.equals("java.lang.Boolean")) {
                 try {
                     field.set(t, job.getBoolean(name));
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("float") ||
+            } else if (typeName.equals("float") ||
                     typeName.equals("java.lang.Float")) {
                 try {
                     field.set(t, Float.valueOf(job.getString(name)));
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("double") ||
+            } else if (typeName.equals("double") ||
                     typeName.equals("java.lang.Double")) {
                 try {
                     field.set(t, job.getDouble(name));
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("long") ||
+            } else if (typeName.equals("long") ||
                     typeName.equals("java.lang.Long")) {
                 try {
                     field.set(t, job.getLong(name));
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("java.util.List") ||
-                    typeName.equals("java.util.ArrayList")){
+            } else if (typeName.equals("java.util.List") ||
+                    typeName.equals("java.util.ArrayList")) {
                 try {
                     Object obj = job.get(name);
                     Type genericType = field.getGenericType();
                     String className = genericType.toString().replace("<", "")
                             .replace(type.getName(), "").replace(">", "");
                     Class<?> clazz = Class.forName(className);
-                    if(obj instanceof JSONArray) {
-                        ArrayList<?> objList = parseArray((JSONArray)obj, clazz, t);
+                    if (obj instanceof JSONArray) {
+                        ArrayList<?> objList = parseArray((JSONArray) obj, clazz, t);
                         field.set(t, objList);
                     }
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
             } else {
                 try {
                     Object obj = job.get(name);
                     Class<?> clazz = Class.forName(typeName);
-                    if(obj instanceof JSONObject) {
-                        Object parseJson = parseObject((JSONObject)obj, clazz, t);
+                    if (obj instanceof JSONObject) {
+                        Object parseJson = parseObject((JSONObject) obj, clazz, t);
                         field.set(t, parseJson);
                     }
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
 
@@ -216,8 +230,8 @@ public class JsonTool {
      * 将 JSONArray 封装到 ArrayList 对象
      *
      * @param array 待封装的JSONArray
-     * @param c 待封装实体字节码
-     * @param v 待封装实例的外部类实例对象</br>只有内部类存在,外部类时传递null
+     * @param c     待封装实体字节码
+     * @param v     待封装实例的外部类实例对象</br>只有内部类存在,外部类时传递null
      * @return ArrayList<T>: 封装后的实体集合
      * @version 1.0
      * @date 2015-10-8
@@ -227,7 +241,7 @@ public class JsonTool {
         ArrayList<T> list = new ArrayList<T>(array.length());
         try {
             for (int i = 0; i < array.length(); i++) {
-                if(array.get(i) instanceof JSONObject) {
+                if (array.get(i) instanceof JSONObject) {
                     T t = parseObject(array.getJSONObject(i), c, v);
                     list.add(t);
                 } else {
@@ -236,7 +250,7 @@ public class JsonTool {
 
             }
         } catch (Exception e) {
-            if(DEBUG)
+            if (DEBUG)
                 e.printStackTrace();
         }
         return list;
@@ -263,19 +277,19 @@ public class JsonTool {
             String name = field.getName();
 
             // 'this$Number' 是内部类的外部类引用(指针)字段
-            if(name.contains("this$")) continue;
+            if (name.contains("this$")) continue;
 
             String typeName = type.getName();
-            if(typeName.equals("java.lang.String")) {
+            if (typeName.equals("java.lang.String")) {
                 try {
-                    sb.append("\""+name+"\":");
-                    sb.append(stringToJson((String)field.get(t)));
+                    sb.append("\"" + name + "\":");
+                    sb.append(stringToJson((String) field.get(t)));
                     sb.append(",");
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("boolean") ||
+            } else if (typeName.equals("boolean") ||
                     typeName.equals("java.lang.Boolean") ||
                     typeName.equals("int") ||
                     typeName.equals("java.lang.Integer") ||
@@ -286,47 +300,47 @@ public class JsonTool {
                     typeName.equals("long") ||
                     typeName.equals("java.lang.Long")) {
                 try {
-                    sb.append("\""+name+"\":");
+                    sb.append("\"" + name + "\":");
                     sb.append(field.get(t));
                     sb.append(",");
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
-            } else if(typeName.equals("java.util.List") ||
-                    typeName.equals("java.util.ArrayList")){
+            } else if (typeName.equals("java.util.List") ||
+                    typeName.equals("java.util.ArrayList")) {
                 try {
                     List<?> objList = (List<?>) field.get(t);
-                    if(null != objList && objList.size() > 0) {
-                        sb.append("\""+name+"\":");
+                    if (null != objList && objList.size() > 0) {
+                        sb.append("\"" + name + "\":");
                         sb.append("[");
                         String toJson = listToJson((List<?>) field.get(t));
                         sb.append(toJson);
-                        sb.setCharAt(sb.length()-1, ']');
+                        sb.setCharAt(sb.length() - 1, ']');
                         sb.append(",");
                     }
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
             } else {
                 try {
-                    sb.append("\""+name+"\":");
+                    sb.append("\"" + name + "\":");
                     sb.append("{");
                     sb.append(objectToJson(field.get(t)));
-                    sb.setCharAt(sb.length()-1, '}');
+                    sb.setCharAt(sb.length() - 1, '}');
                     sb.append(",");
                 } catch (Exception e) {
-                    if(DEBUG)
+                    if (DEBUG)
                         e.printStackTrace();
                 }
             }
 
         }
-        if(sb.length() == 1) {
+        if (sb.length() == 1) {
             sb.append("}");
         }
-        sb.setCharAt(sb.length()-1, '}');
+        sb.setCharAt(sb.length() - 1, '}');
         return sb.toString();
     }
 
@@ -339,13 +353,13 @@ public class JsonTool {
      * @date 2015-10-11
      * @Author zhou.wenkai
      */
-    private static<T> String listToJson(List<T> objList) {
+    private static <T> String listToJson(List<T> objList) {
         final StringBuilder sb = new StringBuilder();
         for (T t : objList) {
-            if(t instanceof String) {
+            if (t instanceof String) {
                 sb.append(stringToJson((String) t));
                 sb.append(",");
-            } else if(t instanceof Boolean ||
+            } else if (t instanceof Boolean ||
                     t instanceof Integer ||
                     t instanceof Float ||
                     t instanceof Double) {
@@ -369,7 +383,7 @@ public class JsonTool {
      * @Author zhou.wenkai
      */
     private static String stringToJson(final String str) {
-        if(str == null || str.length() == 0) {
+        if (str == null || str.length() == 0) {
             return "\"\"";
         }
         final StringBuilder sb = new StringBuilder(str.length() + 2 << 4);
@@ -391,7 +405,7 @@ public class JsonTool {
      *
      * @param job
      * @param className 待生成Bean对象的名称
-     * @param outCount 外部类的个数
+     * @param outCount  外部类的个数
      * @return LinkedList<String>: 生成的Bean对象
      * @version 1.0
      * @date 2015-10-16
@@ -417,11 +431,11 @@ public class JsonTool {
             String key = (String) it.next();
             try {
                 Object obj = job.get(key);
-                if(obj instanceof JSONArray) {
+                if (obj instanceof JSONArray) {
                     // 判断类是否为基本数据类型,如果为自定义类则字段类型取将key的首字母大写作为内部类名称
-                    String fieldType = ((JSONArray)obj).get(0) instanceof JSONObject ?
-                            "" : ((JSONArray)obj).get(0).getClass().getSimpleName();
-                    if(fieldType == "") {
+                    String fieldType = ((JSONArray) obj).get(0) instanceof JSONObject ?
+                            "" : ((JSONArray) obj).get(0).getClass().getSimpleName();
+                    if (fieldType == "") {
                         fieldType = String.valueOf(Character.isUpperCase(key.charAt(0)) ?
                                 key.charAt(0) : Character.toUpperCase(key.charAt(0))) + key.substring(1);
                     }
@@ -429,23 +443,23 @@ public class JsonTool {
                     sb.append(fieldFrontSpace + "public List<" + fieldType + "> " + key + ";");
 
                     // 如果字段类型为自定义类类型,则取JSONArray中第一个JSONObject生成Bean
-                    if(((JSONArray)obj).get(0) instanceof JSONObject) {
+                    if (((JSONArray) obj).get(0) instanceof JSONObject) {
                         sb.append(separator);
                         sb.append(separator);
-                        sb.append(fieldFrontSpace + "/** "+ fieldType +" is the inner class of "+ className +" */");
+                        sb.append(fieldFrontSpace + "/** " + fieldType + " is the inner class of " + className + " */");
                         sb.append(separator);
-                        sb.append(createObject((JSONObject)((JSONArray)obj).get(0), fieldType, outCount+1));
+                        sb.append(createObject((JSONObject) ((JSONArray) obj).get(0), fieldType, outCount + 1));
                     }
-                } else if(obj instanceof JSONObject) {
+                } else if (obj instanceof JSONObject) {
                     String fieldType = String.valueOf(Character.isUpperCase(key.charAt(0)) ?
                             key.charAt(0) : Character.toUpperCase(key.charAt(0))) + key.substring(1);
                     sb.append(separator);
                     sb.append(fieldFrontSpace + "public List<" + fieldType + "> " + key + ";");
                     sb.append(separator);
                     sb.append(separator);
-                    sb.append(fieldFrontSpace + "/** "+ fieldType +" is the inner class of "+ className +" */");
+                    sb.append(fieldFrontSpace + "/** " + fieldType + " is the inner class of " + className + " */");
                     sb.append(separator);
-                    sb.append(createObject((JSONObject)obj, fieldType, outCount+1));
+                    sb.append(createObject((JSONObject) obj, fieldType, outCount + 1));
                 } else {
                     String type = obj.getClass().getSimpleName();
                     sb.append(separator);

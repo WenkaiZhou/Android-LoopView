@@ -1,3 +1,18 @@
+/*
+ * Copyright (c) 2018 Kevin zhou
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kevin.loopview.internal;
 
 import android.content.Context;
@@ -7,7 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-import com.kevin.loopview.utils.RecycleBitmap;
+import com.kevin.loopview.utils.RecyclerBitmap;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
@@ -15,28 +30,37 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * 版权所有：XXX有限公司
- *
  * BaseLoopAdapter
  *
- * @author zhou.wenkai ,Created on 2015-1-14 22:16:35
- * Major Function：<b>自定义控件可以自动跳动的ViewPager数据适配器基类</b>
- *
- * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
+ * @author zwenkai@foxmail.com, Created on 2015-1-14 22:16:35
+ *         Major Function：<b>自定义控件可以自动跳动的ViewPager数据适配器基类</b>
+ *         <p/>
+ *         Note: If you modify this class please fill in the following content as a record.
  * @author mender，Modified Date Modify Content:
  */
+
 public abstract class BaseLoopAdapter extends PagerAdapter {
 
-    /** 上下文 */
-    protected Context	mContext;
-    /** ViewPager填充数据 */
+    /**
+     * 上下文
+     */
+    protected Context mContext;
+    /**
+     * ViewPager填充数据
+     */
     protected LoopData mLoopData;
-    /** 条目点击的监听回调 */
+    /**
+     * 条目点击的监听回调
+     */
     protected OnItemClickListener mOnItemClickListener;
     protected ViewPager mViewPager;
-    /** 默认图片 */
+    /**
+     * 默认图片
+     */
     protected int defaultImgId;
-    /** 轮转缓存集合 */
+    /**
+     * 轮转缓存集合
+     */
     Map<Integer, SoftReference<View>> instantiateViewMap = new HashMap();
 
     public BaseLoopAdapter(Context context, LoopData loopData, ViewPager viewPager) {
@@ -68,7 +92,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        if(mLoopData.items.size() <= 1){
+        if (mLoopData.items.size() <= 1) {
             return mLoopData.items.size();
         }
         return Integer.MAX_VALUE;
@@ -100,7 +124,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
             view = instantiateItemView(imageUrl, index);
         }
 
-        if(mOnItemClickListener != null) {
+        if (mOnItemClickListener != null) {
             view.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -131,14 +155,14 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
         mLoopData = null;
         mOnItemClickListener = null;
 
-        RecycleBitmap recycleBitmap = new RecycleBitmap(true);
+        RecyclerBitmap recyclerBitmap = new RecyclerBitmap(true);
         Iterator<Map.Entry<Integer, SoftReference<View>>> it = instantiateViewMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<Integer, SoftReference<View>> entry = it.next();
             SoftReference<View> reference = entry.getValue();
             View view = reference.get();
-            if(view != null) {
-                recycleBitmap.recycle(view);
+            if (view != null) {
+                recyclerBitmap.recycle(view);
             }
         }
 
@@ -147,14 +171,16 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
     /**
      * 控件操作
+     *
      * @param imageUrl
      */
     public abstract View instantiateItemView(String imageUrl, int position);
 
     /**
      * 注册回调监听
-     *
+     * <p>
      * 注：因为ViewPager没有条目点击的回调方法,所以这里参照<code>ListView</code>的监听设置方式
+     *
      * @param listener
      */
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -169,10 +195,10 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
         /**
          * PagerAdapter 的每一条目被点击的时候会被回调
          *
-         * @param parent 		被点击的View的Adapter
-         * @param view			被点击的View
-         * @param position 		被点击的相对位置
-         * @param realPosition	被点击的绝对位置
+         * @param parent       被点击的View的Adapter
+         * @param view         被点击的View
+         * @param position     被点击的相对位置
+         * @param realPosition 被点击的绝对位置
          */
         void onItemClick(PagerAdapter parent, View view, int position, int realPosition);
     }
