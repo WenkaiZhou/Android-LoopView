@@ -40,21 +40,21 @@ public class LoopData {
          */
         public String img;
         /**
-         * 链接操作
-         */
-        public String link;
-        /**
          * 描述信息
          */
         public String desc;
+        /**
+         * 链接操作
+         */
+        public String link;
 
         public ItemData() {
         }
 
         public ItemData(String img, String desc, String link) {
             this.img = img;
-            this.link = link;
             this.desc = desc;
+            this.link = link;
         }
     }
 

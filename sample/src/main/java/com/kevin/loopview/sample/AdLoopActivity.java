@@ -5,27 +5,30 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.kevin.loopview.AdLoopView;
+import com.kevin.loopview.BannerView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
+import com.kevin.loopview.internal.ImageLoader;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.sample.utils.LocalFileUtils;
 
 /**
  * 版权所有：XXX有限公司</br>
- *
+ * <p>
  * AdLoopActivity </br>
  *
  * @author zhou.wenkai ,Created on 2015-10-20 14:32:13</br>
- * @Description Major Function：<b>广告轮播控件的使用</b> </br>
- *
- * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  * @author mender，Modified Date Modify Content:
+ * @Description Major Function：<b>广告轮播控件的使用</b> </br>
+ * <p>
+ * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  */
-public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener{
+public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener {
 
-    AdLoopView mLoopView;
+    BannerView mBannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,13 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
     }
 
     private void initViews() {
-        mLoopView = findViewById(R.id.adloop_act_adloopview);
+        mBannerView = findViewById(R.id.adloop_act_adloopview);
+        mBannerView.setImageLoader(new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, String url, int placeholder) {
+                Glide.with(imageView.getContext()).load(url).into(imageView);
+            }
+        });
         initRotateView();
     }
 
@@ -54,13 +63,13 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
         String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
         LoopData loopData = new Gson().fromJson(json, LoopData.class);
 
-        if(null != loopData) {
-            mLoopView.refreshData(loopData);
+        if (null != loopData) {
+            mBannerView.refreshData(loopData);
         }
         // 设置页面切换过度事件
-        mLoopView.setScrollDuration(2000);
+        mBannerView.setScrollDuration(2000);
         // 设置页面切换时间间隔
-        mLoopView.setInterval(3000);
+        mBannerView.setInterval(3000);
     }
 
     /**
@@ -70,13 +79,12 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
      * @date 2015-10-20 14:05:47
      */
     private void initEvents() {
-        mLoopView.setOnItemClickListener(this);
+        mBannerView.setOnItemClickListener(this);
     }
 
-
     @Override
-    public void onItemClick(View view, int position, int realPosition) {
-        LoopData loopData = mLoopView.getLoopData();
+    public void onItemClick(View view, LoopData.ItemData itemData, int position) {
+        LoopData loopData = mBannerView.getData();
         String url = loopData.items.get(position).link;
 
         Intent intent = new Intent();
@@ -85,8 +93,4 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

@@ -54,14 +54,14 @@ public interface ILoopView {
      *
      * @param data
      */
-    void setLoopViewPager(List<Map<String, String>> data);
+    void setData(List<Map<String, String>> data);
 
     /**
      * 对象方式初始化轮转大图
      *
      * @param rotateData
      */
-    void setLoopViewPager(LoopData rotateData);
+    void setData(LoopData rotateData);
 
     /**
      * 集合方式刷新数据
@@ -82,7 +82,7 @@ public interface ILoopView {
      *
      * @return
      */
-    LoopData getLoopData();
+    LoopData getData();
 
     /**
      * 开始自动跳转

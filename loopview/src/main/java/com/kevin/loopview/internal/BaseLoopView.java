@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -84,9 +85,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     protected int mDotSelector;
     /**
-     * 默认图片
+     * 默认占位图片
      */
-    protected int mDefaultImgId;
+    protected int mPlaceholderId;
+    protected ImageLoader mImageLoader;
     /**
      * 是否自动跳转
      */
@@ -167,7 +169,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mInterval = a.getInt(R.styleable.LoopView_loop_interval, defaultInterval);
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
-        mDefaultImgId = a.getResourceId(R.styleable.LoopView_loop_defaultImg, 0);
+        mPlaceholderId = a.getResourceId(R.styleable.LoopView_loop_placeholder, 0);
         mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layout, 0);
 
         a.recycle();
@@ -187,9 +189,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         adapter.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 
             @Override
-            public void onItemClick(View view, int position, int realPosition) {
+            public void onItemClick(View view, LoopData.ItemData itemData, int position) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(view, position, realPosition);
+                    mOnItemClickListener.onItemClick(view, mLoopData.items.get(position), position);
                 }
             }
         });
@@ -238,7 +240,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * 获取封装数据
      */
     @Override
-    public LoopData getLoopData() {
+    public LoopData getData() {
         return mLoopData;
     }
 
@@ -255,18 +257,17 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * @param data
      */
     @Override
-    public void setLoopViewPager(List<Map<String, String>> data) {
+    public void setData(List<Map<String, String>> data) {
         if (null == data || data.size() == 0) return;
-        if (mLoopData == null) {
-            mLoopData = new LoopData();
-            mLoopData.items = new ArrayList(data.size());
-        }
+
+        LoopData loopData = new LoopData();
+        loopData.items = new ArrayList(data.size());
         for (Map<String, String> map : data) {
-            LoopData.ItemData itemData = mLoopData.new ItemData(map.get("img"), map.get("desc"), map.get("link"));
-            mLoopData.items.add(itemData);
+            LoopData.ItemData itemData = loopData.new ItemData(map.get("img"), map.get("desc"), map.get("link"));
+            loopData.items.add(itemData);
         }
 
-        initLoopViewPager();
+        setData(loopData);
     }
 
     /**
@@ -275,11 +276,15 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * @param loopData
      */
     @Override
-    public void setLoopViewPager(LoopData loopData) {
+    public void setData(LoopData loopData) {
         if (null == loopData) return;
-        mLoopData = loopData;
 
-        initLoopViewPager();
+        if (null == mLoopData) {
+            mLoopData = loopData;
+            initLoopViewPager();
+        } else {
+            refreshData(loopData);
+        }
     }
 
     /**
@@ -287,6 +292,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      *
      * @param data
      */
+    @Override
     public void refreshData(final List<Map<String, String>> data) {
         if (null == data || data.size() == 0) return;
         stopAutoLoop();
@@ -306,6 +312,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      *
      * @param loopData
      */
+    @Override
     public void refreshData(LoopData loopData) {
         if (null == loopData) return;
         stopAutoLoop();
@@ -317,9 +324,15 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         invalidate();
     }
 
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+    }
+
     private void initLoopViewPager() {
         adapter = initAdapter();
-        adapter.setDefaultImgId(mDefaultImgId);
+        adapter.setPlaceholderId(mPlaceholderId);
+        adapter.setImageLoader(mImageLoader);
         mViewPager.setAdapter(adapter);
         initDots(mLoopData.items.size());                     // 初始化指示点
         if (null != descText) {
@@ -417,6 +430,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         }
     }
 
+    public void setImageLoader(ImageLoader imageLoader) {
+        this.mImageLoader = imageLoader;
+    }
+
     /**
      * 开始自动跳转
      */
@@ -453,7 +470,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     public void startCurrentAutoLoop() {
         if (null == mLoopData || mLoopData.items.size() <= 1) return;
         isAutoScroll = true;
-        /** 先移除消息,保证最多只有一个消息 */
+        /** 先移除消息, 保证最多只有一个消息 */
         removeAllMessages();
         mHandler.sendEmptyMessage(1);
     }
@@ -560,16 +577,45 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         /**
          * LoopView 跳转到第一个时候会被调用
          *
+         * @param position     当前相对位置
          * @param realPosition 当前的绝对位置
          */
-        void onLoopToStart(int realPosition);
+        void onLoopToStart(int position, int realPosition);
+
+        /**
+         * LoopView 跳转到下一个时候会被调用
+         *
+         * @param position     当前相对位置
+         * @param realPosition 当前的绝对位置
+         */
+        void onLoopToNext(int position, int realPosition);
 
         /**
          * LoopView 跳转到最后一个时候会被调用
          *
+         * @param position     当前相对位置
          * @param realPosition 当前的绝对位置
          */
-        void onLoopToEnd(int realPosition);
+        void onLoopToEnd(int position, int realPosition);
     }
+
+    public class SimpleOnLoopListener implements OnLoopListener {
+
+        @Override
+        public void onLoopToStart(int position, int realPosition) {
+
+        }
+
+        @Override
+        public void onLoopToNext(int position, int realPosition) {
+
+        }
+
+        @Override
+        public void onLoopToEnd(int position, int realPosition) {
+
+        }
+    }
+
 
 }

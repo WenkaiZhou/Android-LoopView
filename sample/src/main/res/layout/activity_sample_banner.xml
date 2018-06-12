@@ -29,8 +29,8 @@
                 android:text="33333"
                 android:textSize="25sp" />
 
-            <com.kevin.loopview.AdLoopView
-                android:id="@+id/main_act_adloopview"
+            <com.kevin.loopview.BannerView
+                android:id="@+id/main_act_banner"
                 android:layout_width="match_parent"
                 android:layout_height="192dp" />
 

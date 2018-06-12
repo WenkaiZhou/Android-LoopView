@@ -37,7 +37,7 @@ import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.BaseLoopView;
 
 /**
- * AdLoopView
+ * BannerView
  *
  * @author zwenkai@foxmail.com, Created on 2015-1-14 19:30:18
  *         Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
@@ -46,17 +46,17 @@ import com.kevin.loopview.internal.BaseLoopView;
  * @author mender，Modified Date Modify Content:
  */
 
-public class AdLoopView extends BaseLoopView {
+public class BannerView extends BaseLoopView {
 
-    public AdLoopView(Context context) {
+    public BannerView(Context context) {
         this(context, null);
     }
 
-    public AdLoopView(Context context, AttributeSet attrs) {
+    public BannerView(Context context, AttributeSet attrs) {
         this(context, attrs, -1);
     }
 
-    public AdLoopView(Context context, AttributeSet attrs, int defStyle) {
+    public BannerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -148,7 +148,7 @@ public class AdLoopView extends BaseLoopView {
 
     @Override
     protected BaseLoopAdapter initAdapter() {
-        return new AdLoopAdapter(getContext(), mLoopData, mViewPager);
+        return new BannerAdapter(getContext(), mLoopData, mViewPager);
     }
 
     /**
@@ -182,19 +182,19 @@ public class AdLoopView extends BaseLoopView {
 
             @Override
             public void onPageSelected(int position) {
-                int i = position % mLoopData.items.size();
+                int index = position % mLoopData.items.size();
                 if (null != dotsView) {
-                    dotsView.getChildAt(i).setEnabled(true);
+                    dotsView.getChildAt(index).setEnabled(true);
                 }
                 if (null != dotsView && currentPosition != -1) {
                     dotsView.getChildAt(currentPosition).setEnabled(false);
                 }
-                currentPosition = i;
+                currentPosition = index;
                 if (null != descText) {
-                    if (!TextUtils.isEmpty(mLoopData.items.get(i).desc)) {
+                    if (!TextUtils.isEmpty(mLoopData.items.get(index).desc)) {
                         if (descText.getVisibility() != View.VISIBLE)
                             descText.setVisibility(View.VISIBLE);
-                        String imageDesc = mLoopData.items.get(i).desc;
+                        String imageDesc = mLoopData.items.get(index).desc;
                         descText.setText(imageDesc);
                     } else {
                         if (descText.getVisibility() == View.VISIBLE)
@@ -204,10 +204,12 @@ public class AdLoopView extends BaseLoopView {
 
                 // 跳转到头部尾部的监听回调
                 if (mOnLoopListener != null) {
-                    if (i == 0) {
-                        mOnLoopListener.onLoopToStart(position);
-                    } else if (i == mLoopData.items.size() - 1) {
-                        mOnLoopListener.onLoopToEnd(position);
+                    if (index == 0) {
+                        mOnLoopListener.onLoopToStart(index, position);
+                    }
+                    mOnLoopListener.onLoopToNext(index, position);
+                    if (index == mLoopData.items.size() - 1) {
+                        mOnLoopListener.onLoopToEnd(index, position);
                     }
                 }
 

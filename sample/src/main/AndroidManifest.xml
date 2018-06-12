@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SimpleAdLoopActivity"
+            android:name=".SimpleBannerActivity"
             android:label="SampleAdLoopView" >
         </activity>
         <activity

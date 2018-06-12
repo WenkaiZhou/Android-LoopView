@@ -55,9 +55,14 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
     protected OnItemClickListener mOnItemClickListener;
     protected ViewPager mViewPager;
     /**
-     * 默认图片
+     * 占位图
      */
-    protected int defaultImgId;
+    protected int mPlaceholderId;
+
+    /**
+     * 图片加载器
+     */
+    protected ImageLoader mImageLoader;
     /**
      * 轮转缓存集合
      */
@@ -82,12 +87,16 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
     }
 
     /**
-     * 设置默认图片
+     * 设置占位图片
      *
-     * @param defaultImgId
+     * @param placeholderId
      */
-    public void setDefaultImgId(int defaultImgId) {
-        this.defaultImgId = defaultImgId;
+    public void setPlaceholderId(int placeholderId) {
+        this.mPlaceholderId = mPlaceholderId;
+    }
+
+    public void setImageLoader(ImageLoader imageLoader) {
+        this.mImageLoader = imageLoader;
     }
 
     @Override
@@ -129,7 +138,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
                 @Override
                 public void onClick(View v) { // 条目点击监听回调
-                    mOnItemClickListener.onItemClick(view, index, position);
+                    mOnItemClickListener.onItemClick(view, mLoopData.items.get(index), index);
                 }
 
             });
@@ -196,10 +205,10 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
          * PagerAdapter 的每一条目被点击的时候会被回调
          *
          * @param view         被点击的View
+         * @param itemData     被点击条目数据
          * @param position     被点击的相对位置
-         * @param realPosition 被点击的绝对位置
          */
-        void onItemClick(View view, int position, int realPosition);
+        void onItemClick(View view, LoopData.ItemData itemData, int position);
     }
 
 }

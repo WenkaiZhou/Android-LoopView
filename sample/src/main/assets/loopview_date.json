@@ -1,25 +1,28 @@
 {
-    "items": [
-        {
-            "id": "0",
-            "descText": "传递数据纠结吗？",
-            "imgUrl": "http://cms.csdnimg.cn/article/201305/21/519b0d442e3e7.jpg",
-            "link":"https://github.com/greenrobot/EventBus",
-            "type":"ad"
-        },
-        {
-            "id": "1",
-            "descText": "OOM了肿么办，不用怕！",
-            "imgUrl": "http://cms.csdnimg.cn/article/201305/03/51834d562e039_middle.jpg",
-            "link":"https://github.com/nostra13/Android-Universal-Image-Loader",
-            "type":"ad"
-        },
-        {
-            "id": "2",
-            "descText": "不想写sql语句唉",
-            "imgUrl": "http://www.strongcms.net/uploads/allimg/c120202/132Q962920TP-1W17.png",
-            "link":"http://ormlite.com/sqlite_java_android_orm.shtml",
-            "type":"ad"
-        }
-    ]
+  "items": [
+    {
+      "id": "5397",
+      "img": "https://eimg.smzdm.com/201806/08/5b1a71b82ce299430.png",
+      "desc": "给爱书一个安身之地 300元以下书架推荐榜",
+      "link": "https://m.smzdm.com/list/2615?from=app"
+    },
+    {
+      "id": "5271",
+      "img": "https://eimg.smzdm.com/201806/08/5b19df3fe4b9c4179.jpg",
+      "desc": "618好物热卖榜",
+      "link": "https://m.smzdm.com/ge/tag/434212/"
+    },
+    {
+      "id": "5269",
+      "img": "https://eimg.smzdm.com/201806/08/5b19ddeceeb8e2917.png",
+      "desc": "远离过万传说 618之显示屏必买榜",
+      "link": "https://m.smzdm.com/list/2740?from=app"
+    },
+    {
+      "id": "5270",
+      "img": "https://eimg.smzdm.com/201806/08/5b19de30b39538048.png",
+      "desc": "拒做油腻中年人 绿茶助你刮肠胃",
+      "link": "https://m.smzdm.com/list/3035?from=app"
+    }
+  ]
 }

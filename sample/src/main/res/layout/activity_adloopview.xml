@@ -3,33 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.kevin.loopview.BannerView
+        android:id="@+id/adloop_act_adloopview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.kevin.loopview.AdLoopView
-                android:id="@+id/adloop_act_adloopview"
-                android:layout_width="match_parent"
-                android:layout_height="192dp"
-                kevin:loop_autoLoop="true"
-                kevin:loop_defaultImg="@mipmap/ic_launcher"
-                kevin:loop_dotMargin="5dp"
-                kevin:loop_dotSelector="@drawable/ad_dots_selector"
-                kevin:loop_interval="5000"
-                kevin:loop_layout="@layout/ad_loopview_layout" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1000dp">
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="192dp"
+        kevin:loop_autoLoop="true"
+        kevin:loop_dotMargin="5dp"
+        kevin:loop_dotSelector="@drawable/ad_dots_selector"
+        kevin:loop_interval="5000"
+        kevin:loop_layout="@layout/ad_loopview_layout"
+        kevin:loop_placeholder="@mipmap/ic_launcher" />
 
 </RelativeLayout>

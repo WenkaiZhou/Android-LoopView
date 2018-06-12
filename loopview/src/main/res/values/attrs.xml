@@ -11,7 +11,7 @@
         <!-- 指示点选择器 -->
         <attr name="loop_dotSelector" format="reference" />
         <!-- 默认轮转图片 -->
-        <attr name="loop_defaultImg" format="reference" />
+        <attr name="loop_placeholder" format="reference" />
         <!-- 自定义布局 -->
         <attr name="loop_layout" format="reference" />
     </declare-styleable>
