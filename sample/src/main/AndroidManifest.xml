@@ -22,7 +22,7 @@
             android:label="SampleAdLoopView" >
         </activity>
         <activity
-            android:name=".AdLoopActivity"
+            android:name=".BannerActivity"
             android:label="AdLoopView" >
         </activity>
     </application>

@@ -26,7 +26,7 @@ import com.kevin.loopview.sample.utils.LocalFileUtils;
  * <p>
  * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！</br>
  */
-public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemClickListener {
+public class BannerActivity extends Activity implements BaseLoopAdapter.OnItemClickListener {
 
     BannerView mBannerView;
 

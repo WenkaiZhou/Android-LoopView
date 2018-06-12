@@ -59,7 +59,7 @@ public class SimpleBannerActivity extends Activity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SimpleBannerActivity.this, AdLoopActivity.class));
+                startActivity(new Intent(SimpleBannerActivity.this, BannerActivity.class));
             }
         });
     }

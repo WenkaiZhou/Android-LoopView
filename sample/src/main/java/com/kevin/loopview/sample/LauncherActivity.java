@@ -22,6 +22,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.kevin.loopview.BannerView;
+
 public class LauncherActivity extends ListActivity { 
 
 	public static final String[] options = { "SampleAdLoopView", "AdLoopView"};
@@ -42,7 +44,7 @@ public class LauncherActivity extends ListActivity {
 				intent = new Intent(this, SimpleBannerActivity.class);
 				break;
 			case 1:
-				intent = new Intent(this, AdLoopActivity.class);
+				intent = new Intent(this, BannerActivity.class);
 				break;
 		}
 
