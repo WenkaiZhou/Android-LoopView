@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.sample.utils.LocalFileUtils;
-import com.kevin.loopview.utils.JsonTool;
 
 /**
  * 版权所有：XXX有限公司</br>
@@ -38,7 +37,7 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
     }
 
     private void initViews() {
-        mLoopView = (AdLoopView) this.findViewById(R.id.adloop_act_adloopview);
+        mLoopView = findViewById(R.id.adloop_act_adloopview);
         initRotateView();
     }
 
@@ -53,7 +52,8 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
 //        mLoopView.setLoopLayout(R.layout.ad_loopview_layout);
         // 设置数据
         String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
-        LoopData loopData = JsonTool.toBean(json, LoopData.class);
+        LoopData loopData = new Gson().fromJson(json, LoopData.class);
+
         if(null != loopData) {
             mLoopView.refreshData(loopData);
         }
@@ -70,12 +70,12 @@ public class AdLoopActivity extends Activity implements BaseLoopAdapter.OnItemCl
      * @date 2015-10-20 14:05:47
      */
     private void initEvents() {
-        mLoopView.setOnClickListener(this);
+        mLoopView.setOnItemClickListener(this);
     }
 
 
     @Override
-    public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+    public void onItemClick(View view, int position, int realPosition) {
         LoopData loopData = mLoopView.getLoopData();
         String url = loopData.items.get(position).link;
 

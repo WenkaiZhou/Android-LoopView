@@ -129,7 +129,7 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
 
                 @Override
                 public void onClick(View v) { // 条目点击监听回调
-                    mOnItemClickListener.onItemClick(BaseLoopAdapter.this, view, index, position);
+                    mOnItemClickListener.onItemClick(view, index, position);
                 }
 
             });
@@ -195,12 +195,11 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
         /**
          * PagerAdapter 的每一条目被点击的时候会被回调
          *
-         * @param parent       被点击的View的Adapter
          * @param view         被点击的View
          * @param position     被点击的相对位置
          * @param realPosition 被点击的绝对位置
          */
-        void onItemClick(PagerAdapter parent, View view, int position, int realPosition);
+        void onItemClick(View view, int position, int realPosition);
     }
 
 }

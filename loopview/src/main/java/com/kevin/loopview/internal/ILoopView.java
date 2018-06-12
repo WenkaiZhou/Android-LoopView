@@ -64,13 +64,6 @@ public interface ILoopView {
     void setLoopViewPager(LoopData rotateData);
 
     /**
-     * Json方式初始化轮转大图
-     *
-     * @param jsonData
-     */
-    void setLoopViewPager(String jsonData);
-
-    /**
      * 集合方式刷新数据
      *
      * @param data
@@ -83,13 +76,6 @@ public interface ILoopView {
      * @param loopData
      */
     void refreshData(LoopData loopData);
-
-    /**
-     * Json方式刷新数据
-     *
-     * @param jsonData
-     */
-    void refreshData(String jsonData);
 
     /**
      * 获取数据

@@ -4,15 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
-import android.widget.Button;
 
+import com.google.gson.Gson;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.sample.utils.LocalFileUtils;
-import com.kevin.loopview.utils.JsonTool;
 
 /**
  * 版权所有：XXX有限公司</br>
@@ -39,8 +37,8 @@ public class SimpleAdLoopActivity extends Activity implements BaseLoopAdapter.On
     }
 
     private void initViews() {
-        mLoopView = (AdLoopView) this.findViewById(R.id.main_act_adloopview);
-        initRotateView();
+        mLoopView = findViewById(R.id.main_act_adloopview);
+        initLoopView();
 
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,9 +54,9 @@ public class SimpleAdLoopActivity extends Activity implements BaseLoopAdapter.On
      * @return void
      * @date 2015-10-9 21:32:12
      */
-    private void initRotateView() {
+    private void initLoopView() {
         String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
-        LoopData loopData = JsonTool.toBean(json, LoopData.class);
+        LoopData loopData = new Gson().fromJson(json, LoopData.class);
         if(null != loopData) {
             mLoopView.refreshData(loopData);
             mLoopView.startAutoLoop();
@@ -72,12 +70,12 @@ public class SimpleAdLoopActivity extends Activity implements BaseLoopAdapter.On
      * @date 2015-10-20 14:05:47
      */
     private void initEvents() {
-        mLoopView.setOnClickListener(this);
+        mLoopView.setOnItemClickListener(this);
     }
 
 
     @Override
-    public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+    public void onItemClick(View view, int position, int realPosition) {
         LoopData loopData = mLoopView.getLoopData();
         String url = loopData.items.get(position).link;
 

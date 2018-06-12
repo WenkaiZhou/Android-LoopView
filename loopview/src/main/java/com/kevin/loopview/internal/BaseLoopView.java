@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -35,7 +34,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kevin.loopview.R;
-import com.kevin.loopview.utils.JsonTool;
 
 /**
  * BaseLoopView
@@ -189,9 +187,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         adapter.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 
             @Override
-            public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+            public void onItemClick(View view, int position, int realPosition) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(parent, view, position, realPosition);
+                    mOnItemClickListener.onItemClick(view, position, realPosition);
                 }
             }
         });
@@ -287,18 +285,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     }
 
     /**
-     * Json方式初始化轮转大图
-     *
-     * @param jsonData
-     */
-    @Override
-    public void setLoopViewPager(String jsonData) {
-        if (null == jsonData) return;
-        mLoopData = JsonTool.toBean(jsonData, LoopData.class);
-        initLoopViewPager();
-    }
-
-    /**
      * 集合方式刷新数据
      *
      * @param data
@@ -331,22 +317,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         initRealView();
         mLoopData = null;
         mLoopData = loopData;
-        initLoopViewPager();
-        invalidate();
-    }
-
-    /**
-     * Json方式刷新数据
-     *
-     * @param jsonData
-     */
-    public void refreshData(String jsonData) {
-        if (TextUtils.isEmpty(jsonData)) return;
-        stopAutoLoop();
-        removeAllViews();
-        initRealView();
-        mLoopData = null;
-        mLoopData = JsonTool.toBean(jsonData, LoopData.class);
         initLoopViewPager();
         invalidate();
     }
@@ -536,7 +506,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      *
      * @param l
      */
-    public void setOnClickListener(BaseLoopAdapter.OnItemClickListener l) {
+    public void setOnItemClickListener(BaseLoopAdapter.OnItemClickListener l) {
         this.mOnItemClickListener = l;
     }
 
