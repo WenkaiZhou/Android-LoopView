@@ -35,6 +35,13 @@ To add the LoopView to your application, specify `<com.kevin.loopview.BannerView
 
 ```
 BannerView mBannerView = (BannerView) this.findViewById(R.id.main_act_banner);
+// set image loader, Can set up any image engine.
+mBannerView.setImageLoader(new ImageLoader() {
+    @Override
+    public void loadImage(ImageView imageView, String url, int placeholder) {
+        Glide.with(imageView.getContext()).load(url).into(imageView);
+    }
+});
 String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
 LoopData loopData = new Gson().fromJson(json, LoopData.class);
 mBannerView.setData(loopData);

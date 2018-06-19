@@ -32,6 +32,13 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 
 ```
 BannerView mBannerView = (BannerView) this.findViewById(R.id.main_act_banner);
+// 设置 image loader, 可以设置任何图片加载引擎
+mBannerView.setImageLoader(new ImageLoader() {
+    @Override
+    public void loadImage(ImageView imageView, String url, int placeholder) {
+        Glide.with(imageView.getContext()).load(url).into(imageView);
+    }
+});
 String json = LocalFileUtils.getStringFormAsset(this, "loopview_date.json");
 LoopData loopData = new Gson().fromJson(json, LoopData.class);
 // 通过对象的方式设置数据
