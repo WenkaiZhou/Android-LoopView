@@ -23,7 +23,7 @@ compile 'com.kevin:loopview:1.1.0'
 在Layout文件添加`<com.kevin.loopview.BannerView`
 
 	<com.kevin.loopview.BannerView
-        android:id="@+id/main_act_adloopview"
+        android:id="@+id/main_act_banner"
         android:layout_width="match_parent"
         android:layout_height="192dp">
     </com.kevin.loopview.AdLoopView>
