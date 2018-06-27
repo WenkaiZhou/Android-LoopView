@@ -56,6 +56,54 @@ public class LoopData {
             this.desc = desc;
             this.link = link;
         }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other == this) {
+                return true;
+            }
+
+            if (other instanceof ItemData) {
+                ItemData itemData = (ItemData) other;
+                if (null == itemData.img) {
+                    return null == img;
+                }
+                if (null == itemData.desc) {
+                    return null == desc;
+                }
+                if (null == itemData.link) {
+                    return null == link;
+                }
+                return itemData.img.equals(img)
+                        && itemData.desc.equals(desc)
+                        && itemData.link.equals(link);
+            } else {
+                return false;
+            }
+        }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof LoopData) {
+            LoopData loopData = (LoopData) obj;
+            if (null != loopData.items
+                    && null != loopData
+                    && loopData.items.size() == items.size()) {
+                for (int i = 0; i < items.size(); i++) {
+                    if (!items.get(i).equals(loopData.items.get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

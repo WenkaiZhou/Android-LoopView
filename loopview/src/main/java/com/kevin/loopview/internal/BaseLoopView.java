@@ -288,7 +288,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     @Override
     public void setData(LoopData loopData) {
-        if (null == loopData) return;
+        if (null == loopData || loopData.equals(mLoopData)) return;
 
         if (null == mLoopData) {
             mLoopData = loopData;
