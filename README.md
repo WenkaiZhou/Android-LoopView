@@ -15,7 +15,7 @@ Android LoopView is a powerful widget for unlimited rotation picture, It provide
 If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
 
 ```
-compile 'com.kevin:loopview:1.1.0'
+compile 'com.kevin:loopview:1.2.0'
 ```
 
 ## Simple Usage ##
@@ -86,12 +86,14 @@ If you decide to use AdLoopView as a view, you can define it in your xml layout 
 	mLoopView.setInterval(3000);
 	// To initialize the data in a collection
 	mLoopView.setData(List<Map<String, String>> data);
-	// Initialized data in entiry mode
+	// Initialized data in entity mode
 	mLoopView.setData(LoopData rotateData);
-	// Update data in a collection mode
-	mLoopView.refreshData(final List<Map<String, String>> data);
-	// Update data in entiry mode
-	mLoopView.refreshData(LoopData loopData);
+    // Initialized data in a collection mode
+    mLoopView.setData(List<String> images);
+    // Initialized data in a collection mode
+    mLoopView.setData(List<String> images, List<String> links);
+    // Initialized data in a collection mode
+    mLoopView.setData(List<String> images, List<String> descs, List<String> links);
 	// Get the running loop date
 	mLoopView.getData();
 	// Begin to auto Loop

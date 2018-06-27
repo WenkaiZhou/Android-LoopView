@@ -14,7 +14,7 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 如果您的项目使用 Gradle 构建, 只需要在您的`build.gradle`文件添加下面一行到 `dependencies` :
 
 ```
-compile 'com.kevin:loopview:1.1.0'
+compile 'com.kevin:loopview:1.2.0'
 ```
 
 ## 简单使用 ##
@@ -82,16 +82,14 @@ mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 	mLoopView.setScrollDuration(1000);
 	// 设置轮转时间间隔
 	mLoopView.setInterval(3000);
-	// 以集合的方式初始化数据
-	mLoopView.setData(List<Map<String, String>> data);
 	// 以数据实体的方式初始化数据
-	mLoopView.setData(LoopData rotateData);
-	// 以集合的方式刷新数据
-	mLoopView.refreshData(final List<Map<String, String>> data);
-	// 以数据实体的方式刷新数据
-	mLoopView.refreshData(LoopData loopData);
-	// 以JSON的方式刷新数据
-	mLoopView.refreshData(String jsonData);
+	mLoopView.setData(LoopData loopData);
+	// 以集合的方式初始化数据(图片集合)
+	mLoopView.setData(List<String> images);
+	// 以集合的方式初始化数据(图片集合、链接集合)
+    mLoopView.setData(List<String> images, List<String> links);
+    // 以集合的方式初始化数据(图片集合、描述集合、链接集合)
+    mLoopView.setData(List<String> images, List<String> descs, List<String> links);
 	// 获取配置的轮转大图数据
 	mLoopView.getData();
 	// 开始自动轮转
