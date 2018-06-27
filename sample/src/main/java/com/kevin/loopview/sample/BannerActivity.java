@@ -15,6 +15,9 @@ import com.kevin.loopview.internal.ImageLoader;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.sample.utils.LocalFileUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 版权所有：XXX有限公司</br>
  * <p>
@@ -47,16 +50,16 @@ public class BannerActivity extends Activity implements BaseLoopAdapter.OnItemCl
                 Glide.with(imageView.getContext()).load(url).into(imageView);
             }
         });
-        initRotateView();
+        initBannerView();
     }
 
     /**
-     * 初始化LoopView
+     * 初始化BannerView
      *
      * @return void
      * @date 2015-10-9 21:32:12
      */
-    private void initRotateView() {
+    private void initBannerView() {
         // 设置自定义布局
 //        mLoopView.setLoopLayout(R.layout.ad_loopview_layout);
         // 设置数据
@@ -64,7 +67,17 @@ public class BannerActivity extends Activity implements BaseLoopAdapter.OnItemCl
         LoopData loopData = new Gson().fromJson(json, LoopData.class);
 
         if (null != loopData) {
-            mBannerView.refreshData(loopData);
+//            mBannerView.setData(loopData);
+
+            List<String> images = new ArrayList<>(); // 图片集合
+            List<String> descs = new ArrayList<>();
+            List<String> links = new ArrayList<>();
+            for (LoopData.ItemData item : loopData.items) {
+                images.add(item.img);
+                descs.add(item.desc);
+                links.add(item.link);
+            }
+            mBannerView.setData(images, descs, links);
         }
         // 设置页面切换过度事件
         mBannerView.setScrollDuration(2000);

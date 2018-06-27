@@ -26,12 +26,12 @@ import com.kevin.loopview.BannerView;
 
 public class LauncherActivity extends ListActivity { 
 
-	public static final String[] options = { "SampleAdLoopView", "AdLoopView"};
+	public static final String[] options = { "SimpleBannerView", "BannerView"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options));
+		setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, options));
 	}
 
 	@Override

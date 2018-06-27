@@ -17,11 +17,6 @@ import com.kevin.loopview.internal.ImageLoader;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.sample.utils.LocalFileUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * 版权所有：XXX有限公司</br>
  * <p>
