@@ -64,46 +64,50 @@ mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 
 ### XML Usage ###
 
-If you decide to use AdLoopView as a view, you can define it in your xml layout like this:
+If you decide to use BannerView as a view, you can define it in your xml layout like this:
 
-    <com.kevin.loopview.BannerView
-        android:id="@+id/adloop_act_adloopview"
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        kevin:loop_interval="5000"
-        kevin:loop_dotMargin="5dp"
-        kevin:loop_autoLoop="[true|false]"
-        kevin:loop_dotSelector="@drawable/ad_dots_selector"
-		kevin:loop_defaultImg="@mipmap/ic_launcher"
-		kevin:loop_layoutId="@layout/ad_loopview_layout">
-    </com.kevin.loopview.AdLoopView>
+```
+<com.kevin.loopview.BannerView
+    android:id="@+id/adloop_act_adloopview"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    app:loop_interval="5000"
+    app:loop_dotMargin="5dp"
+    app:loop_autoLoop="[true|false]"
+    app:loop_dotSelector="@drawable/ad_dots_selector"
+    app:loop_placeholder="@mipmap/ic_launcher"
+    app:loop_layoutId="@layout/ad_loopview_layout">
+</com.kevin.loopview.AdLoopView>
+```
 
 ### Programme Usage ###
 
-	// Set page switching transition time
-	mLoopView.setScrollDuration(1000);
-	// Set time interval
-	mLoopView.setInterval(3000);
-	// To initialize the data in a collection
-	mLoopView.setData(List<Map<String, String>> data);
-	// Initialized data in entity mode
-	mLoopView.setData(LoopData rotateData);
-    // Initialized data in a collection mode
-    mLoopView.setData(List<String> images);
-    // Initialized data in a collection mode
-    mLoopView.setData(List<String> images, List<String> links);
-    // Initialized data in a collection mode
-    mLoopView.setData(List<String> images, List<String> descs, List<String> links);
-	// Get the running loop date
-	mLoopView.getData();
-	// Begin to auto Loop
-	mLoopView.startAutoLoop();
-	// Begin to auto Loop delay
-	mLoopView.startAutoLoop(long delayTimeInMills);
-	// Stop to auto Loop
-	mLoopView.stopAutoLoop();
-	// Set a custom loop layout
-	mLoopView.setLoopLayout(int layoutResId);
+```
+// Set page switching transition time
+mLoopView.setScrollDuration(1000);
+// Set time interval
+mLoopView.setInterval(3000);
+// To initialize the data in a collection
+mLoopView.setData(List<Map<String, String>> data);
+// Initialized data in entity mode
+mLoopView.setData(LoopData rotateData);
+// Initialized data in a collection mode
+mLoopView.setData(List<String> images);
+// Initialized data in a collection mode
+mLoopView.setData(List<String> images, List<String> links);
+// Initialized data in a collection mode
+mLoopView.setData(List<String> images, List<String> descs, List<String> links);
+// Get the running loop date
+mLoopView.getData();
+// Begin to auto Loop
+mLoopView.startAutoLoop();
+// Begin to auto Loop delay
+mLoopView.startAutoLoop(long delayTimeInMills);
+// Stop to auto Loop
+mLoopView.stopAutoLoop();
+// Set a custom loop layout
+mLoopView.setLoopLayout(int layoutResId);
+```
 
 ### Notes: ###
 

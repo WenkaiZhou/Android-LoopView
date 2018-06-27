@@ -62,44 +62,48 @@ mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 
 ### XML 配置 ###
 
-在XML中使用AdLoopView，可以有如下配置：
+在XML中使用BannerView，可以有如下配置：
 
-    <com.kevin.loopview.BannerView
-        android:id="@+id/adloop_act_adloopview"
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        kevin:loop_interval="5000"
-        kevin:loop_dotMargin="5dp"
-        kevin:loop_autoLoop="[true|false]"
-        kevin:loop_dotSelector="@drawable/ad_dots_selector"
-		kevin:loop_defaultImg="@mipmap/ic_launcher"
-		kevin:loop_layoutId="@layout/ad_loopview_layout">
-    </com.kevin.loopview.AdLoopView>
+```
+<com.kevin.loopview.BannerView
+    android:id="@+id/adloop_act_adloopview"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    kevin:loop_interval="5000"
+    kevin:loop_dotMargin="5dp"
+    kevin:loop_autoLoop="[true|false]"
+    kevin:loop_dotSelector="@drawable/ad_dots_selector"
+    kevin:loop_placeholder="@mipmap/ic_launcher"
+    kevin:loop_layoutId="@layout/ad_loopview_layout">
+</com.kevin.loopview.AdLoopView>
+```
 
 ### 在代码中配置 ###
 
-	// 设置ViewPager页面切换时间
-	mLoopView.setScrollDuration(1000);
-	// 设置轮转时间间隔
-	mLoopView.setInterval(3000);
-	// 以数据实体的方式初始化数据
-	mLoopView.setData(LoopData loopData);
-	// 以集合的方式初始化数据(图片集合)
-	mLoopView.setData(List<String> images);
-	// 以集合的方式初始化数据(图片集合、链接集合)
-    mLoopView.setData(List<String> images, List<String> links);
-    // 以集合的方式初始化数据(图片集合、描述集合、链接集合)
-    mLoopView.setData(List<String> images, List<String> descs, List<String> links);
-	// 获取配置的轮转大图数据
-	mLoopView.getData();
-	// 开始自动轮转
-	mLoopView.startAutoLoop();
-	// 在指定时间延迟后自动轮转
-	mLoopView.startAutoLoop(long delayTimeInMills);
-	// 停止自动轮转
-	mLoopView.stopAutoLoop();
-	// 设置自定义布局
-	mLoopView.setLoopLayout(int layoutResId);
+```
+// 设置ViewPager页面切换时间
+mLoopView.setScrollDuration(1000);
+// 设置轮转时间间隔
+mLoopView.setInterval(3000);
+// 以数据实体的方式初始化数据
+mLoopView.setData(LoopData loopData);
+// 以集合的方式初始化数据(图片集合)
+mLoopView.setData(List<String> images);
+// 以集合的方式初始化数据(图片集合、链接集合)
+mLoopView.setData(List<String> images, List<String> links);
+// 以集合的方式初始化数据(图片集合、描述集合、链接集合)
+mLoopView.setData(List<String> images, List<String> descs, List<String> links);
+// 获取配置的轮转大图数据
+mLoopView.getData();
+// 开始自动轮转
+mLoopView.startAutoLoop();
+// 在指定时间延迟后自动轮转
+mLoopView.startAutoLoop(long delayTimeInMills);
+// 停止自动轮转
+mLoopView.stopAutoLoop();
+// 设置自定义布局
+mLoopView.setLoopLayout(int layoutResId);
+```
 
 ### 注意: ###
 
