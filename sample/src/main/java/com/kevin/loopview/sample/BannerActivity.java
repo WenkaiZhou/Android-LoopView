@@ -77,6 +77,8 @@ public class BannerActivity extends Activity implements BaseLoopAdapter.OnItemCl
                 descs.add(item.desc);
                 links.add(item.link);
             }
+//            mBannerView.setData(images);
+//            mBannerView.setData(images, links);
             mBannerView.setData(images, descs, links);
         }
         // 设置页面切换过度事件
