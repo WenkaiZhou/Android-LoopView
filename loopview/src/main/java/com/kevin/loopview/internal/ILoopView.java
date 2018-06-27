@@ -49,18 +49,18 @@ public interface ILoopView {
     void setInterval(long interval);
 
     /**
-     * 初始化轮转大图
-     *
-     * @param images
-     */
-    void setData(List<String> images);
-
-    /**
      * 对象方式初始化轮转大图
      *
      * @param rotateData
      */
     void setData(LoopData rotateData);
+
+    /**
+     * 初始化轮转大图
+     *
+     * @param images
+     */
+    void setData(List<String> images);
 
     /**
      * 初始化轮转大图

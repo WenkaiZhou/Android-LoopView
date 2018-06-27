@@ -251,10 +251,27 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     }
 
     /**
-     * 集合方式初始化轮转大图
+     * 对象方式初始化轮转大图
      *
-     * @param images
+     * @param loopData
      */
+    @Override
+    public void setData(LoopData loopData) {
+        if (null == loopData || loopData.equals(mLoopData)) return;
+
+        if (null == mLoopData) {
+            mLoopData = loopData;
+            initLoopViewPager();
+        } else {
+            stopAutoLoop();
+            removeAllViews();
+            initRealView();
+            mLoopData = loopData;
+            initLoopViewPager();
+            invalidate();
+        }
+    }
+
     @Override
     public void setData(List<String> images) {
         setData(images, null);
@@ -279,28 +296,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
             loopData.items.add(itemData);
         }
         setData(loopData);
-    }
-
-    /**
-     * 对象方式初始化轮转大图
-     *
-     * @param loopData
-     */
-    @Override
-    public void setData(LoopData loopData) {
-        if (null == loopData || loopData.equals(mLoopData)) return;
-
-        if (null == mLoopData) {
-            mLoopData = loopData;
-            initLoopViewPager();
-        } else {
-            stopAutoLoop();
-            removeAllViews();
-            initRealView();
-            mLoopData = loopData;
-            initLoopViewPager();
-            invalidate();
-        }
     }
 
     @Override
