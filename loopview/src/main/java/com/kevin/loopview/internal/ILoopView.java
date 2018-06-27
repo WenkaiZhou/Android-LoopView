@@ -16,7 +16,6 @@
 package com.kevin.loopview.internal;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * ILoopView
@@ -50,11 +49,11 @@ public interface ILoopView {
     void setInterval(long interval);
 
     /**
-     * 集合方式初始化轮转大图
+     * 初始化轮转大图
      *
-     * @param data
+     * @param images
      */
-    void setData(List<Map<String, String>> data);
+    void setData(List<String> images);
 
     /**
      * 对象方式初始化轮转大图
@@ -64,18 +63,21 @@ public interface ILoopView {
     void setData(LoopData rotateData);
 
     /**
-     * 集合方式刷新数据
+     * 初始化轮转大图
      *
-     * @param data
+     * @param images
+     * @param links
      */
-    void refreshData(final List<Map<String, String>> data);
+    void setData(List<String> images, List<String> links);
 
     /**
-     * 对象方式刷新数据
+     * 初始化轮转大图
      *
-     * @param loopData
+     * @param images
+     * @param descs
+     * @param links
      */
-    void refreshData(LoopData loopData);
+    void setData(List<String> images, List<String> descs, List<String> links);
 
     /**
      * 获取数据

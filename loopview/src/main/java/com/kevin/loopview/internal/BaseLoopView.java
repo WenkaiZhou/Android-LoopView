@@ -17,7 +17,6 @@ package com.kevin.loopview.internal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
@@ -254,19 +253,31 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 集合方式初始化轮转大图
      *
-     * @param data
+     * @param images
      */
     @Override
-    public void setData(List<Map<String, String>> data) {
-        if (null == data || data.size() == 0) return;
+    public void setData(List<String> images) {
+        setData(images, null);
+    }
+
+    @Override
+    public void setData(List<String> images, List<String> links) {
+        setData(images, null, links);
+    }
+
+    @Override
+    public void setData(List<String> images, List<String> descs, List<String> links) {
+        if (null == images || images.size() == 0) return;
 
         LoopData loopData = new LoopData();
-        loopData.items = new ArrayList(data.size());
-        for (Map<String, String> map : data) {
-            LoopData.ItemData itemData = loopData.new ItemData(map.get("img"), map.get("desc"), map.get("link"));
+        loopData.items = new ArrayList(images.size());
+
+        for (int i = 0; i < images.size(); i++) {
+            String desc = (null != descs && descs.size() > i) ? descs.get(i) : null;
+            String link = (null != links && links.size() > i) ? links.get(i) : null;
+            LoopData.ItemData itemData = loopData.new ItemData(images.get(i), desc, link);
             loopData.items.add(itemData);
         }
-
         setData(loopData);
     }
 
@@ -283,45 +294,13 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
             mLoopData = loopData;
             initLoopViewPager();
         } else {
-            refreshData(loopData);
+            stopAutoLoop();
+            removeAllViews();
+            initRealView();
+            mLoopData = loopData;
+            initLoopViewPager();
+            invalidate();
         }
-    }
-
-    /**
-     * 集合方式刷新数据
-     *
-     * @param data
-     */
-    @Override
-    public void refreshData(final List<Map<String, String>> data) {
-        if (null == data || data.size() == 0) return;
-        stopAutoLoop();
-        removeAllViews();
-        initRealView();
-        mLoopData.items.clear();
-        for (Map<String, String> map : data) {
-            LoopData.ItemData itemData = mLoopData.new ItemData(map.get("img"), map.get("desc"), map.get("link"));
-            mLoopData.items.add(itemData);
-        }
-        initLoopViewPager();
-        invalidate();
-    }
-
-    /**
-     * 对象方式刷新数据
-     *
-     * @param loopData
-     */
-    @Override
-    public void refreshData(LoopData loopData) {
-        if (null == loopData) return;
-        stopAutoLoop();
-        removeAllViews();
-        initRealView();
-        mLoopData = null;
-        mLoopData = loopData;
-        initLoopViewPager();
-        invalidate();
     }
 
     @Override
@@ -616,6 +595,5 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
         }
     }
-
 
 }
