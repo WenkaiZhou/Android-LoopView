@@ -176,9 +176,10 @@ public class BannerView extends BaseLoopView {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void setOnPageChangeListener() {
         // 数据适配器滑动监听
-        mViewPager.addOnPageChangeListener(new OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
