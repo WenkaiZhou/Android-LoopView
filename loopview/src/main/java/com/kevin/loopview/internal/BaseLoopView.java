@@ -172,8 +172,6 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layout, 0);
 
         a.recycle();
-
-        initRealView();
     }
 
     /**
@@ -257,19 +255,16 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     @Override
     public void setData(LoopData loopData) {
-        if (null == loopData || loopData.equals(mLoopData)) return;
-
-        if (null == mLoopData) {
-            mLoopData = loopData;
-            initLoopViewPager();
-        } else {
-            stopAutoLoop();
-            removeAllViews();
-            initRealView();
-            mLoopData = loopData;
-            initLoopViewPager();
-            invalidate();
+        if (null == loopData || loopData.equals(mLoopData)) {
+            return;
         }
+
+        stopAutoLoop();
+        removeAllViews();
+        initRealView();
+        mLoopData = loopData;
+        initLoopViewPager();
+        invalidate();
     }
 
     @Override
