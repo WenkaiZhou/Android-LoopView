@@ -164,7 +164,7 @@ public class BannerView extends BaseLoopView {
                 int dotWidth = LinearLayout.LayoutParams.WRAP_CONTENT;
                 int dotHeight = LinearLayout.LayoutParams.WRAP_CONTENT;
                 LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotWidth, dotHeight);
-                dotParams.setMargins(0, (int) mDotMargin, (int) mDotMargin, (int) mDotMargin);
+                dotParams.setMargins((int) mDotMargin, (int) mDotMargin, (int) mDotMargin, (int) mDotMargin);
                 if (i == 0) {
                     dot.setEnabled(true);
                 } else {
