@@ -14,19 +14,19 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 如果您的项目使用 Gradle 构建, 只需要在您的`build.gradle`文件添加下面一行到 `dependencies` :
 
 ```
-compile 'com.kevin:loopview:1.4.0'
+compile 'com.kevin:loopview:1.4.1'
 ```
 
 ## 简单使用 ##
 
-### 在layout.xml 中配置LoopView ###
+### 在layout.xml 中配置BannerView ###
 在Layout文件添加`<com.kevin.loopview.BannerView`
 
 	<com.kevin.loopview.BannerView
         android:id="@+id/main_act_banner"
         android:layout_width="match_parent"
         android:layout_height="192dp">
-    </com.kevin.loopview.AdLoopView>
+    </com.kevin.loopview.BannerView>
 
 ### 在代码中配置 ###
 
