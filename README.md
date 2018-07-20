@@ -67,6 +67,8 @@ mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 If you decide to use BannerView as a view, you can define it in your xml layout like this:
 
 ```
+xmlns:app="http://schemas.android.com/apk/res-auto"
+
 <com.kevin.loopview.BannerView
     android:id="@+id/adloop_act_adloopview"
     android:layout_width="match_parent"
@@ -76,8 +78,8 @@ If you decide to use BannerView as a view, you can define it in your xml layout 
     app:loop_autoLoop="[true|false]"
     app:loop_dotSelector="@drawable/ad_dots_selector"
     app:loop_placeholder="@mipmap/ic_launcher"
-    app:loop_layoutId="@layout/ad_loopview_layout">
-</com.kevin.loopview.AdLoopView>
+    app:loop_layout="@layout/ad_loopview_layout">
+</com.kevin.loopview.BannerView>
 ```
 
 ### Programme Usage ###

@@ -65,17 +65,19 @@ mBannerView.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
 在XML中使用BannerView，可以有如下配置：
 
 ```
+xmlns:app="http://schemas.android.com/apk/res-auto"
+
 <com.kevin.loopview.BannerView
     android:id="@+id/adloop_act_adloopview"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    kevin:loop_interval="5000"
-    kevin:loop_dotMargin="5dp"
-    kevin:loop_autoLoop="[true|false]"
-    kevin:loop_dotSelector="@drawable/ad_dots_selector"
-    kevin:loop_placeholder="@mipmap/ic_launcher"
-    kevin:loop_layoutId="@layout/ad_loopview_layout">
-</com.kevin.loopview.AdLoopView>
+    app:loop_interval="5000"
+    app:loop_dotMargin="5dp"
+    app:loop_autoLoop="[true|false]"
+    app:loop_dotSelector="@drawable/ad_dots_selector"
+    app:loop_placeholder="@mipmap/ic_launcher"
+    app:loop_layout="@layout/ad_loopview_layout">
+</com.kevin.loopview.BannerView>
 ```
 
 ### 在代码中配置 ###
