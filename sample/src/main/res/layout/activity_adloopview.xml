@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:kevin="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,11 +7,11 @@
         android:id="@+id/adloop_act_adloopview"
         android:layout_width="match_parent"
         android:layout_height="192dp"
-        kevin:loop_autoLoop="true"
-        kevin:loop_dotMargin="5dp"
-        kevin:loop_dotSelector="@drawable/ad_dots_selector"
-        kevin:loop_interval="5000"
-        kevin:loop_layout="@layout/ad_loopview_layout"
-        kevin:loop_placeholder="@mipmap/ic_launcher" />
+        app:loop_autoLoop="true"
+        app:loop_dotMargin="5dp"
+        app:loop_dotSelector="@drawable/ad_dots_selector"
+        app:loop_interval="5000"
+        app:loop_layout="@layout/ad_loopview_layout"
+        app:loop_placeholder="@mipmap/ic_launcher" />
 
 </RelativeLayout>
