@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -85,6 +86,9 @@ public class BannerActivity extends Activity implements BaseLoopAdapter.OnItemCl
         mBannerView.setScrollDuration(2000);
         // 设置页面切换时间间隔
         mBannerView.setInterval(3000);
+
+        ViewPager viewPager = mBannerView.getViewPager();
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
     /**
