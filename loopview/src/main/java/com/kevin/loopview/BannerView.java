@@ -85,65 +85,8 @@ public class BannerView extends BaseLoopView {
             descText = (TextView) view.findViewById(R.id.loop_view_desc);
         }
 
-        if (view == null) {
-            view = createDefaultView();
-        }
-
         setScrollDuration(1000);    // 设置页面切换时间
         this.addView(view);
-    }
-
-    private View createDefaultView() {
-        RelativeLayout contentView = new RelativeLayout(getContext());
-        int viewWidth = ViewGroup.LayoutParams.MATCH_PARENT;
-        int viewHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
-        ViewGroup.LayoutParams viewParams = new ViewGroup.LayoutParams(viewWidth, viewHeight);
-        contentView.setLayoutParams(viewParams);
-        // 初始化ViewPager
-        mViewPager = new ViewPager(getContext());
-        mViewPager.setId(R.id.loop_view_pager);
-        int viewPagerWidth = LayoutParams.MATCH_PARENT;
-        int viewPagerHeight = LayoutParams.WRAP_CONTENT;
-        LayoutParams viewPagerParams = new LayoutParams(viewPagerWidth, viewPagerHeight);
-        this.addView(mViewPager, viewPagerParams);
-        // 初始化下方指示条
-        RelativeLayout bottomLayout = new RelativeLayout(getContext());
-        int bottomLayoutWidth = LayoutParams.MATCH_PARENT;
-        int bottomLayoutHeight = LayoutParams.WRAP_CONTENT;
-        LayoutParams bottomLayoutParams = new LayoutParams(bottomLayoutWidth, bottomLayoutHeight);
-        bottomLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, mViewPager.getId());
-        Drawable mBackground = new ColorDrawable(Color.DKGRAY);
-        mBackground.setAlpha((int) (0.3 * 255));
-        bottomLayout.setBackgroundDrawable(mBackground);
-        bottomLayout.setGravity(Gravity.CENTER_VERTICAL);
-        this.addView(bottomLayout, bottomLayoutParams);
-        // 初始化指示点父控件
-        dotsView = new LinearLayout(getContext());
-        dotsView.setId(R.id.loop_view_dots);
-        int dotsViewWidth = LayoutParams.WRAP_CONTENT;
-        int dotsViewHeight = LayoutParams.WRAP_CONTENT;
-        LayoutParams dotsViewParams = new LayoutParams(dotsViewWidth, dotsViewHeight);
-        dotsView.setOrientation(LinearLayout.HORIZONTAL);
-        dotsViewParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        dotsViewParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-        bottomLayout.addView(dotsView, dotsViewParams);
-        // 初始描述文字
-        descText = new TextView(getContext());
-        int descTextWidth = LayoutParams.MATCH_PARENT;
-        int descTextHeight = LayoutParams.WRAP_CONTENT;
-        LayoutParams descTextParams = new LayoutParams(descTextWidth, descTextHeight);
-        descTextParams.addRule(RelativeLayout.LEFT_OF, dotsView.getId());
-        descText.setSingleLine(true);
-        descText.getPaint().setTextSize((int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics()));
-        descText.setTextColor(Color.WHITE);
-        descText.setGravity(Gravity.LEFT);
-        int padding = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
-        descText.setPadding(padding, padding, padding, padding);
-        bottomLayout.addView(descText, descTextParams);
-
-        return contentView;
     }
 
     @Override

@@ -169,7 +169,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
         mPlaceholderId = a.getResourceId(R.styleable.LoopView_loop_placeholder, 0);
-        mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layout, 0);
+        mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layout, R.layout.layout_banner_view);
 
         a.recycle();
     }
