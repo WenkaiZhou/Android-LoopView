@@ -406,6 +406,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 开始自动跳转
      */
+    @Override
     public void startAutoLoop() {
         startAutoLoop(mInterval);
     }
@@ -415,8 +416,11 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      *
      * @param delayTimeInMills 延时
      */
+    @Override
     public void startAutoLoop(long delayTimeInMills) {
-        if (null == mLoopData || mLoopData.items.size() <= 1) return;
+        if (null == mLoopData || mLoopData.items.size() <= 1) {
+            return;
+        }
         isAutoScroll = true;
         sendScrollMessage(delayTimeInMills);
     }
@@ -526,6 +530,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
     /**
      * 释放资源
      */
+    @Override
     public void releaseResources() {
         if (adapter != null) {
             adapter.releaseResources();
