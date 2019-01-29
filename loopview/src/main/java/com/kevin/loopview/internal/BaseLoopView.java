@@ -279,7 +279,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
     @Override
     public void setData(List<String> images, List<String> descs, List<String> links) {
-        if (null == images || images.size() == 0) return;
+        if (null == images || images.size() == 0) {
+            return;
+        }
 
         LoopData loopData = new LoopData();
         loopData.items = new ArrayList(images.size());
@@ -303,16 +305,22 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         adapter.setPlaceholderId(mPlaceholderId);
         adapter.setImageLoader(mImageLoader);
         mViewPager.setAdapter(adapter);
-        initDots(mLoopData.items.size());                     // 初始化指示点
+        // 初始化指示点
+        initDots(mLoopData.items.size());
         if (null != descText) {
             String descStr = mLoopData.items.get(0).desc;
+            // 初始化描述信息
             if (!TextUtils.isEmpty(descStr)) {
-                descText.setText(descStr);                    // 初始化描述信息
+                descText.setText(descStr);
+            } else {
+                descText.setVisibility(View.GONE);
             }
         }
-        setViewListener();                                    // 初始化点击监听事件
+        // 初始化点击监听事件
+        setViewListener();
         int startPosition = Integer.MAX_VALUE / 2 - Integer.MAX_VALUE / 2 % mLoopData.items.size();
-        mViewPager.setCurrentItem(startPosition, false);      // 设置当前显示的位置
+        // 设置当前显示的位置
+        mViewPager.setCurrentItem(startPosition, false);
         if (mHandler == null) {
             mHandler = new LoopHandler(this, (Activity) getContext());
         }

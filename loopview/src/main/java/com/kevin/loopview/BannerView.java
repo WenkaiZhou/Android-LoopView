@@ -85,7 +85,8 @@ public class BannerView extends BaseLoopView {
             descText = (TextView) view.findViewById(R.id.loop_view_desc);
         }
 
-        setScrollDuration(1000);    // 设置页面切换时间
+        // 设置页面切换时间
+        setScrollDuration(1000);
         this.addView(view);
     }
 
@@ -136,13 +137,15 @@ public class BannerView extends BaseLoopView {
                 currentPosition = index;
                 if (null != descText) {
                     if (!TextUtils.isEmpty(mLoopData.items.get(index).desc)) {
-                        if (descText.getVisibility() != View.VISIBLE)
+                        if (descText.getVisibility() != View.VISIBLE) {
                             descText.setVisibility(View.VISIBLE);
+                        }
                         String imageDesc = mLoopData.items.get(index).desc;
                         descText.setText(imageDesc);
                     } else {
-                        if (descText.getVisibility() == View.VISIBLE)
+                        if (descText.getVisibility() == View.VISIBLE) {
                             descText.setVisibility(View.GONE);
+                        }
                     }
                 }
 
