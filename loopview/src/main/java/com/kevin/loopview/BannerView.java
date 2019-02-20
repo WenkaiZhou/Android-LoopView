@@ -65,6 +65,7 @@ public class BannerView extends BaseLoopView {
      *
      * @param layoutResId Layout id to be inflated
      */
+    @Override
     public void setLoopLayout(int layoutResId) {
         mLoopLayoutId = layoutResId;
     }

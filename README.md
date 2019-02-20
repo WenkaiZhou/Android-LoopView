@@ -76,6 +76,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
     app:loop_interval="5000"
     app:loop_dotMargin="5dp"
     app:loop_autoLoop="[true|false]"
+    app:loop_alwaysShowDot="[true|false]"
     app:loop_dotSelector="@drawable/ad_dots_selector"
     app:loop_placeholder="@mipmap/ic_launcher"
     app:loop_layout="@layout/ad_loopview_layout">

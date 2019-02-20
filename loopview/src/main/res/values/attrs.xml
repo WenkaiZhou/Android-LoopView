@@ -10,6 +10,8 @@
         <attr name="loop_dotMargin" format="dimension" />
         <!-- 指示点选择器 -->
         <attr name="loop_dotSelector" format="reference" />
+        <!-- 一直显示指示点，默认只有一个条目时隐藏 -->
+        <attr name="loop_alwaysShowDot" format="boolean" />
         <!-- 默认轮转图片 -->
         <attr name="loop_placeholder" format="reference" />
         <!-- 自定义布局 -->

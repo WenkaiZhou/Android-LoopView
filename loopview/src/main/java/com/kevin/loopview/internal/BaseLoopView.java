@@ -84,9 +84,16 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     protected int mDotSelector;
     /**
+     * 是否一直显示指示点，默认只有一个条目时隐藏
+     */
+    protected boolean mAlwaysShowDot;
+    /**
      * 默认占位图片
      */
     protected int mPlaceholderId;
+    /**
+     * 图片加载器
+     */
     protected ImageLoader mImageLoader;
     /**
      * 是否自动跳转
@@ -169,6 +176,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
         mPlaceholderId = a.getResourceId(R.styleable.LoopView_loop_placeholder, 0);
+        mAlwaysShowDot = a.getBoolean(R.styleable.LoopView_loop_alwaysShowDot, false);
         mLoopLayoutId = a.getResourceId(R.styleable.LoopView_loop_layout, R.layout.layout_banner_view);
 
         a.recycle();
@@ -306,7 +314,10 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         adapter.setImageLoader(mImageLoader);
         mViewPager.setAdapter(adapter);
         // 初始化指示点
-        initDots(mLoopData.items.size());
+        int size = mLoopData.items.size();
+        if (size > 1 || mAlwaysShowDot) {
+            initDots(size);
+        }
         if (null != descText) {
             String descStr = mLoopData.items.get(0).desc;
             // 初始化描述信息
