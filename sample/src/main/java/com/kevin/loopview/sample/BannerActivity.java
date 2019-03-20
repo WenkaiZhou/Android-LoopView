@@ -82,7 +82,7 @@ public class BannerActivity extends Activity implements BaseLoopAdapter.OnItemCl
 //            mBannerView.setData(images, links);
             mBannerView.setData(images, descs, links);
         }
-        // 设置页面切换过度事件
+        // 设置页面切换过度时间
         mBannerView.setScrollDuration(2000);
         // 设置页面切换时间间隔
         mBannerView.setInterval(3000);

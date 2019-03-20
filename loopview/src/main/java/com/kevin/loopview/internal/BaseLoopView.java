@@ -39,9 +39,9 @@ import com.kevin.loopview.R;
  * BaseLoopView
  *
  * @author zwenkai@foxmail.com, Created on 2015-1-14 19:30:18
- *         Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
- *         <p/>
- *         Note: If you modify this class please fill in the following content as a record.
+ * Major Function：<b>自定义控件可以自动跳动的ViewPager</b>
+ * <p/>
+ * Note: If you modify this class please fill in the following content as a record.
  * @author mender，Modified Date Modify Content:
  */
 
@@ -79,6 +79,12 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * 自动跳转的时间间隔
      */
     protected long mInterval;
+
+    /**
+     * 页面切换时间间隔
+     */
+    protected long mScrollDuration;
+
     /**
      * 指示点选择器
      */
@@ -173,6 +179,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
 
         mDotMargin = a.getDimension(R.styleable.LoopView_loop_dotMargin, defaultDotMargin);
         mInterval = a.getInt(R.styleable.LoopView_loop_interval, defaultInterval);
+        mScrollDuration = a.getInt(R.styleable.LoopView_loop_scrollDuration, 0);
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
         mPlaceholderId = a.getResourceId(R.styleable.LoopView_loop_placeholder, 0);
@@ -210,7 +217,14 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      */
     @Override
     public void setScrollDuration(long duration) {
-        mScroller = new LoopViewScroller(getContext());
+        if (duration <= 0) {
+            return;
+        }
+
+        this.mScrollDuration = duration;
+        if (mScroller == null) {
+            mScroller = new LoopViewScroller(getContext());
+        }
         mScroller.setScrollDuration(duration);
         mScroller.initViewPagerScroll(mViewPager);
     }
@@ -270,6 +284,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         stopAutoLoop();
         removeAllViews();
         initRealView();
+        setScrollDuration(mScrollDuration);
         mLoopData = loopData;
         initLoopViewPager();
         invalidate();

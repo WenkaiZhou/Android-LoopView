@@ -14,7 +14,7 @@ LoopView 是一个强大的轮转大图控件，并且提供了许多配置方�
 如果您的项目使用 Gradle 构建, 只需要在您的`build.gradle`文件添加下面一行到 `dependencies` :
 
 ```
-implementation 'com.kevin:loopview:1.5.2'
+implementation 'com.kevin:loopview:1.5.3'
 ```
 
 ## 简单使用 ##
@@ -72,6 +72,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="192dp"
     app:loop_interval="5000"
+    app:loop_scrollDuration="2000"
     app:loop_dotMargin="5dp"
     app:loop_autoLoop="[true|false]"
     app:loop_alwaysShowDot="[true|false]"

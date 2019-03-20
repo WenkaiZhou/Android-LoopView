@@ -68,6 +68,9 @@ public class LoopViewScroller extends Scroller {
     }
 
     public void initViewPagerScroll(ViewPager viewPager) {
+        if (viewPager == null) {
+            return;
+        }
         try {
             Field mScroller = ViewPager.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);

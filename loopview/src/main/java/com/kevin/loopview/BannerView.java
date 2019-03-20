@@ -79,15 +79,13 @@ public class BannerView extends BaseLoopView {
             // If there is a custom loop view layout id set, try and inflate it
             view = LayoutInflater.from(getContext()).inflate(mLoopLayoutId, null);
             // ViewPager
-            mViewPager = (ViewPager) view.findViewById(R.id.loop_view_pager);
+            mViewPager = view.findViewById(R.id.loop_view_pager);
             // 指示点父控件
-            dotsView = (LinearLayout) view.findViewById(R.id.loop_view_dots);
+            dotsView = view.findViewById(R.id.loop_view_dots);
             // 描述文字
-            descText = (TextView) view.findViewById(R.id.loop_view_desc);
+            descText = view.findViewById(R.id.loop_view_desc);
         }
 
-        // 设置页面切换时间
-        setScrollDuration(1000);
         this.addView(view);
     }
 
