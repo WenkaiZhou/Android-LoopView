@@ -173,13 +173,14 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         final float defaultDotMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 3, getResources().getDisplayMetrics());
         final int defaultInterval = 3000;
+        final int defaultScrollDuration = 1000;
 
         // 设置样式属性
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoopView);
 
         mDotMargin = a.getDimension(R.styleable.LoopView_loop_dotMargin, defaultDotMargin);
         mInterval = a.getInt(R.styleable.LoopView_loop_interval, defaultInterval);
-        mScrollDuration = a.getInt(R.styleable.LoopView_loop_scrollDuration, 0);
+        mScrollDuration = a.getInt(R.styleable.LoopView_loop_scrollDuration, defaultScrollDuration);
         autoLoop = a.getBoolean(R.styleable.LoopView_loop_autoLoop, false);
         mDotSelector = a.getResourceId(R.styleable.LoopView_loop_dotSelector, R.drawable.loop_view_dots_selector);
         mPlaceholderId = a.getResourceId(R.styleable.LoopView_loop_placeholder, 0);
