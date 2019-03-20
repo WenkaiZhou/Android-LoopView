@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 28
-        versionCode 20
-        versionName "1.5.3"
+        versionCode 21
+        versionName "1.5.5"
     }
     buildTypes {
         release {
@@ -25,4 +25,4 @@ dependencies {
 ext {
     kevinSourceDocFiles = [rootProject.file('gradle/android-sources-docs.gradle')]
 }
-//apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
