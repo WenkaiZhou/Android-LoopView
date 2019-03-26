@@ -46,6 +46,7 @@ public class BannerAdapter extends BaseLoopAdapter {
      *
      * @param imageUrl
      */
+    @Override
     public View instantiateItemView(String imageUrl, int position) {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);

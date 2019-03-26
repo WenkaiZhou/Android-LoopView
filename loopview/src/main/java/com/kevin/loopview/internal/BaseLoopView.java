@@ -477,7 +477,9 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
      * 由于控件嵌套入RecyclerView时由不可见到可见出现页面切换时间间隔为0现象
      */
     public void startCurrentAutoLoop() {
-        if (null == mLoopData || mLoopData.items.size() <= 1) return;
+        if (null == mLoopData || mLoopData.items.size() <= 1) {
+            return;
+        }
         isAutoScroll = true;
         /** 先移除消息, 保证最多只有一个消息 */
         removeAllMessages();

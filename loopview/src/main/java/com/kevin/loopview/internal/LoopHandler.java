@@ -25,9 +25,9 @@ import java.lang.ref.WeakReference;
  * LoopHandler
  *
  * @author zwenkai@foxmail.com, Created on 2015-11-2 17:58:21
- *         Major Function：<b>LoopHandler</b>
- *         <p/>
- *         Note: If you modify this class please fill in the following content as a record.
+ * Major Function：<b>LoopHandler</b>
+ * <p/>
+ * Note: If you modify this class please fill in the following content as a record.
  * @author mender，Modified Date Modify Content:
  */
 
@@ -48,7 +48,9 @@ public class LoopHandler extends Handler {
         Activity activity = mActivity.get();
         BaseLoopView loopView = mLoopView.get();
         if (activity != null && loopView != null) {
-            if (!loopView.isAutoScroll()) return;
+            if (!loopView.isAutoScroll()) {
+                return;
+            }
 
             switch (msg.what) {
                 case 0: // 自动跳转
@@ -60,6 +62,9 @@ public class LoopHandler extends Handler {
                     loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() - 1, false);
                     loopView.getViewPager().setCurrentItem(loopView.getViewPager().getCurrentItem() + 1, false);
                     loopView.sendScrollMessage(loopView.getInterval());
+                    break;
+                default:
+                    // :Can't reach;
                     break;
             }
 
