@@ -6,7 +6,7 @@ import android.view.View;
 /**
  * ZoomOutPageTransformer
  *
- * @author zhouwenkai@baidu.com, Created on 2018-11-02 16:04:49
+ * @author zewnkai@foxmail.com, Created on 2018-11-02 16:04:49
  * Major Function：<b></b>
  * <p/>
  * Note: If you modify this class please fill in the following content as a record.
