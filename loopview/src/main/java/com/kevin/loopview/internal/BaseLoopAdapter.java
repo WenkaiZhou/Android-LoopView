@@ -22,11 +22,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-import com.kevin.loopview.utils.RecyclerBitmap;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -163,18 +161,6 @@ public abstract class BaseLoopAdapter extends PagerAdapter {
     public void releaseResources() {
         mLoopData = null;
         mOnItemClickListener = null;
-
-        RecyclerBitmap recyclerBitmap = new RecyclerBitmap(true);
-        Iterator<Map.Entry<Integer, SoftReference<View>>> it = instantiateViewMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, SoftReference<View>> entry = it.next();
-            SoftReference<View> reference = entry.getValue();
-            View view = reference.get();
-            if (view != null) {
-                recyclerBitmap.recycle(view);
-            }
-        }
-
         instantiateViewMap.clear();
     }
 
