@@ -283,6 +283,7 @@ public abstract class BaseLoopView extends RelativeLayout implements ILoopView {
         }
 
         stopAutoLoop();
+        currentPosition = -1;
         removeAllViews();
         initRealView();
         setScrollDuration(mScrollDuration);
