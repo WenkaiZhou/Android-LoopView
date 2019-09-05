@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -32,6 +31,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.kevin.loopview.R;
 

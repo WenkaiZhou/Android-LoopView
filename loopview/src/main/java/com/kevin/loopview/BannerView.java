@@ -16,22 +16,14 @@
 package com.kevin.loopview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.BaseLoopView;
@@ -122,7 +114,7 @@ public class BannerView extends BaseLoopView {
     @SuppressWarnings("deprecation")
     protected void setOnPageChangeListener() {
         // 数据适配器滑动监听
-        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {

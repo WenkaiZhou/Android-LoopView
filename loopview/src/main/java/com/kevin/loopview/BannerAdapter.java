@@ -16,10 +16,11 @@
 package com.kevin.loopview;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;

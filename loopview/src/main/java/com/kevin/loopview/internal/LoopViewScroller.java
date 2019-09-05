@@ -17,11 +17,11 @@ package com.kevin.loopview.internal;
 
 import java.lang.reflect.Field;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * LoopViewScroller

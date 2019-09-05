@@ -1,7 +1,8 @@
 package com.kevin.loopview.sample;
 
-import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * ZoomOutPageTransformer
