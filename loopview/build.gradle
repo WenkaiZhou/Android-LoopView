@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 28
-        versionCode 22
-        versionName "1.5.6"
+        versionCode 23
+        versionName "2.0.0"
     }
     buildTypes {
         release {
@@ -18,7 +18,6 @@ android {
 }
 
 dependencies {
-//    compileOnly 'com.android.support:support-v4:28.0.0'
     compileOnly 'androidx.viewpager:viewpager:1.0.0'
 }
 
