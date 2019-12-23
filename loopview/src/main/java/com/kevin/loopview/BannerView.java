@@ -129,9 +129,11 @@ public class BannerView extends BaseLoopView {
                 int index = position % mLoopData.items.size();
                 if (null != dotsView) {
                     dotsView.getChildAt(index).setEnabled(true);
+                    dotsView.getChildAt(index).requestLayout();
                 }
                 if (null != dotsView && currentPosition != -1) {
                     dotsView.getChildAt(currentPosition).setEnabled(false);
+                    dotsView.getChildAt(currentPosition).requestLayout();
                 }
                 currentPosition = index;
                 if (null != descText) {
