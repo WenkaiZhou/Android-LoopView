@@ -21,7 +21,7 @@ implementation 'com.kevin:loopview:1.5.6'
 
 **androidX**
 ```
-implementation 'com.kevin:loopview:2.0.0'
+implementation 'com.kevin:loopview:2.0.1'
 ```
 
 ## Simple Usage ##
